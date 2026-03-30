@@ -1,0 +1,63 @@
+.Parent {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: var(--bg-primary);
+  transition: background-color var(--transition-normal);
+  overflow: hidden;
+}
+
+.Parent.dark-theme {
+  background: var(--bg-primary);
+}
+
+/* TOP DIVIDER */
+.top {
+  width: 100%;
+  height: 80px;
+  flex-shrink: 0;
+}
+
+/* BOTTOM DIVIDER */
+.bottom {
+  width: 100%;
+  height: calc(100vh - 80px);
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 0;
+  background: var(--bg-primary);
+  overflow: hidden;
+}
+
+@media (max-width: 576px) {
+  .top {
+    height: 70px;
+  }
+
+  .bottom {
+    height: calc(100vh - 70px);
+    gap: 0;
+  }
+}
+
+/* Custom Scrollbar for Sidebar */
+.Parent-sidebar::-webkit-scrollbar {
+  width: 0px;
+}
+
+.Parent-sidebar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.Parent-sidebar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+
+.Parent-sidebar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}

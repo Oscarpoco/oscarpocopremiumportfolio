@@ -1,0 +1,507 @@
+@import url("https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Space+Mono:wght@400;700&display=swap");
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.intro-container {
+  position: fixed;
+  inset: 0;
+  background: #04070f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  overflow: hidden;
+  font-family: "Syne", sans-serif;
+}
+
+/* ── Noise grain overlay ── */
+.intro-container::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
+}
+
+/* ── Diagonal grid ── */
+.intro-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(41, 98, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(41, 98, 255, 0.06) 1px, transparent 1px);
+  background-size: 72px 72px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Radial vignette ── */
+.intro-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 80% 80% at 50% 50%,
+    transparent 30%,
+    #04070f 100%
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ── Ambient light blob ── */
+.intro-ambient {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(41, 98, 255, 0.12) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 1;
+  animation: ambient-breathe 4s ease-in-out infinite;
+}
+
+@keyframes ambient-breathe {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.15);
+    opacity: 1;
+  }
+}
+
+/* ── Particles ── */
+.intro-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.intro-particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: #2962ff;
+}
+
+/* ── Scanning line ── */
+.intro-scanline {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(41, 98, 255, 0.5) 30%,
+    rgba(100, 149, 255, 0.8) 50%,
+    rgba(41, 98, 255, 0.5) 70%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 4;
+  top: -2px;
+  box-shadow: 0 0 20px rgba(41, 98, 255, 0.4);
+}
+
+/* ── Corner brackets ── */
+.intro-corner {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.intro-corner::before,
+.intro-corner::after {
+  content: "";
+  position: absolute;
+  background: rgba(41, 98, 255, 0.6);
+}
+
+.intro-corner::before {
+  width: 100%;
+  height: 1px;
+  top: 0;
+  left: 0;
+}
+.intro-corner::after {
+  width: 1px;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.intro-corner--tl {
+  top: 32px;
+  left: 32px;
+}
+.intro-corner--tr {
+  top: 32px;
+  right: 32px;
+  transform: scaleX(-1);
+}
+.intro-corner--bl {
+  bottom: 32px;
+  left: 32px;
+  transform: scaleY(-1);
+}
+.intro-corner--br {
+  bottom: 32px;
+  right: 32px;
+  transform: scale(-1);
+}
+
+/* ── HUD label ── */
+.intro-hud {
+  position: absolute;
+  z-index: 5;
+  font-family: "Space Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: rgba(41, 98, 255, 0.5);
+  pointer-events: none;
+}
+
+.intro-hud--tl {
+  top: 48px;
+  left: 80px;
+}
+.intro-hud--tr {
+  top: 48px;
+  right: 80px;
+  text-align: right;
+}
+.intro-hud--bl {
+  bottom: 48px;
+  left: 80px;
+}
+.intro-hud--br {
+  bottom: 48px;
+  right: 80px;
+  text-align: right;
+}
+
+/* ── Main content ── */
+.intro-content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* ── Logo mark ── */
+.intro-logo-wrapper {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 36px;
+}
+
+.intro-logo-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  border: 1px solid rgba(41, 98, 255, 0.4);
+  animation: ring-rotate 8s linear infinite;
+}
+
+.intro-logo-ring::before {
+  content: "";
+  position: absolute;
+  top: -3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #2962ff;
+  box-shadow: 0 0 10px #2962ff;
+}
+
+@keyframes ring-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.intro-logo-box {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: rgba(41, 98, 255, 0.12);
+  border: 1px solid rgba(41, 98, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+.intro-logo-icon {
+  font-size: 26px;
+  color: #6495ff;
+  filter: drop-shadow(0 0 8px rgba(41, 98, 255, 0.6));
+}
+
+/* ── Name ── */
+.intro-name {
+  font-size: clamp(42px, 6vw, 72px);
+  font-weight: 800;
+  color: #f0f4ff;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.intro-name span {
+  color: #2962ff;
+}
+
+/* ── Divider line ── */
+.intro-divider {
+  width: 48px;
+  height: 1px;
+  background: rgba(41, 98, 255, 0.5);
+  margin: 0 auto 20px;
+}
+
+/* ── Title ── */
+.intro-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 44px;
+}
+
+.intro-title-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #2962ff;
+  box-shadow: 0 0 8px #2962ff;
+}
+
+.intro-title-text {
+  font-family: "Space Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 0.25em;
+  color: #6495ff;
+  text-transform: uppercase;
+}
+
+.intro-cursor {
+  font-family: "Space Mono", monospace;
+  font-size: 14px;
+  color: #2962ff;
+  line-height: 1;
+}
+
+/* ── Progress bar ── */
+.intro-progress-wrapper {
+  width: 280px;
+  margin-bottom: 14px;
+}
+
+.intro-progress-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.intro-progress-label {
+  font-family: "Space Mono", monospace;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  color: rgba(100, 149, 255, 0.5);
+  text-transform: uppercase;
+}
+
+.intro-progress-track {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.06);
+  position: relative;
+  overflow: visible;
+}
+
+.intro-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #1a3aff, #6495ff);
+  position: relative;
+  box-shadow: 0 0 12px rgba(41, 98, 255, 0.6);
+}
+
+.intro-progress-fill::after {
+  content: "";
+  position: absolute;
+  right: -1px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #6495ff;
+  box-shadow: 0 0 8px #6495ff;
+}
+
+/* ── Tagline ── */
+.intro-tagline {
+  font-family: "Space Mono", monospace;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  color: rgba(100, 149, 255, 0.35);
+  text-transform: uppercase;
+}
+
+/* ── Big number reveal ── */
+.intro-reveal {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.reveal-eyebrow {
+  font-family: "Space Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  color: rgba(100, 149, 255, 0.6);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.reveal-number {
+  font-size: clamp(120px, 22vw, 220px);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(41, 98, 255, 0.4);
+  background: linear-gradient(135deg, #f0f4ff 0%, #6495ff 40%, #2962ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 60px rgba(41, 98, 255, 0.5));
+  position: relative;
+}
+
+.reveal-label {
+  font-size: clamp(13px, 2vw, 18px);
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  color: #c8d8ff;
+  text-transform: uppercase;
+  margin-top: 20px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.reveal-sub {
+  font-family: "Space Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: rgba(100, 149, 255, 0.4);
+  margin-top: 8px;
+  text-transform: uppercase;
+}
+
+/* ── Horizontal rule accents on reveal ── */
+.reveal-rule {
+  width: 100%;
+  max-width: 400px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(41, 98, 255, 0.4),
+    transparent
+  );
+  margin: 24px auto 0;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .intro-corner {
+    width: 28px;
+    height: 28px;
+  }
+  .intro-corner--tl,
+  .intro-corner--tr {
+    top: 20px;
+  }
+  .intro-corner--bl,
+  .intro-corner--br {
+    bottom: 20px;
+  }
+  .intro-corner--tl,
+  .intro-corner--bl {
+    left: 20px;
+  }
+  .intro-corner--tr,
+  .intro-corner--br {
+    right: 20px;
+  }
+
+  .intro-hud--tl,
+  .intro-hud--bl {
+    left: 56px;
+  }
+  .intro-hud--tr,
+  .intro-hud--br {
+    right: 56px;
+  }
+  .intro-hud--tl,
+  .intro-hud--tr {
+    top: 34px;
+  }
+  .intro-hud--bl,
+  .intro-hud--br {
+    bottom: 34px;
+  }
+
+  .intro-progress-wrapper {
+    width: 220px;
+  }
+}
+
+@media (max-width: 480px) {
+  .intro-hud {
+    display: none;
+  }
+  .reveal-label {
+    letter-spacing: 0.15em;
+  }
+}

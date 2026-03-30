@@ -1,0 +1,48 @@
+.Parent-dashboard {
+    flex: 1;
+    /* height: 100%; */
+    overflow: hidden;
+    background: var(--bg-primary);
+    transition: background-color var(--transition-normal);
+}
+
+.Parent-dashboard.dark-mode {
+    background: var(--bg-primary);
+}
+
+.Child-dashboard {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+.dashboard-content-wrapper {
+    width: 100%;
+    min-height: 100vh;
+}
+
+/* Custom scrollbar for dashboard */
+.Child-dashboard::-webkit-scrollbar {
+    width: 8px;
+}
+
+.Child-dashboard::-webkit-scrollbar-track {
+    background: var(--bg-tertiary);
+}
+
+.Child-dashboard::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: var(--radius-full);
+}
+
+.Child-dashboard::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-light);
+}
+
+@media (max-width: 576px) {
+    .Child-dashboard::-webkit-scrollbar {
+        width: 4px;
+    }
+}
