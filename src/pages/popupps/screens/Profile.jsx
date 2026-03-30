@@ -171,7 +171,7 @@ function Profile({ onClose, handleDownload }) {
               <h3>About Me</h3>
               <p className="about-me-text">
                 Passionate developer with a knack for creating elegant, responsive and user-friendly
-                web applications. Specialized in React.js ecosystem with 1+ years of professional
+                web applications. Specialized in React.js ecosystem with 3+ years of professional
                 experience building scalable solutions for various industries.
               </p>
 

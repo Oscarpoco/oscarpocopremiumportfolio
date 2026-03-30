@@ -92,12 +92,13 @@
 .active-indicator {
     position: absolute;
     right: 0;
-    top: 50%;
+    top: 0;
+    bottom: 0;
     transform: translateY(-50%);
-    width: 4px;
-    height: 24px;
+    width: 7px;
+    /* height: 24px; */
     background: linear-gradient(180deg, #4285F4, #2363C7);
-    border-radius: 4px 0 0 4px;
+    /* border-radius: 4px 0 0 4px; */
     box-shadow: -2px 0 10px rgba(35, 99, 199, 0.5);
 }
 

@@ -1,5 +1,5 @@
 import React from "react";
-import {  motion } from "framer-motion";
+import { motion } from "framer-motion";
 import "../styles/NavigationBar.css";
 
 // ICONS
@@ -58,16 +58,22 @@ function NavigationBar({ onOpen, darkMode, toggleTheme, activeItem }) {
           {activeItem}
         </motion.span>
       </motion.div>
+
+      <span className="current-section-label" style={{ color: "green", fontSize: "16px", marginTop: "4px", fontWeight: "200" }}>
+        53 designs in one portfolio
+      </span>
       <motion.div
         className="active-section-indicator"
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.3 }}
         style={{ backgroundColor: "aquamarine", cursor: "pointer" }}
-        onClick={() => window.open("https://oscar-oldsite.vercel.app/", "_blank")}
+        onClick={() =>
+          window.open("https://oscar-oldsite.vercel.app/", "_blank")
+        }
       >
         <span className="current-section-label" style={{ color: "black" }}>
-          CLICK HERE TO VIEW THE OLD SITE
+          VIEW THE OLD SITE
         </span>
       </motion.div>
 

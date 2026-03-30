@@ -93,7 +93,7 @@ function ExperienceCard({ exp, index, isActive, onHover }) {
 
       {/* Card accent */}
       <motion.div
-        className="card-accent"
+        className="card-accent-1"
         animate={{
           height: isHovered ? "100%" : "100%",
           opacity: isHovered ? 1 : 0.7,

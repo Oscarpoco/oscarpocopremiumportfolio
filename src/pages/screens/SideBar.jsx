@@ -128,13 +128,13 @@ function SideBar({ activeItem, setActiveItem, darkMode }) {
                                 <motion.div 
                                     className="stats-progress-fill"
                                     initial={{ width: 0 }}
-                                    animate={{ width: "70%" }}
+                                    animate={{ width: "100%" }}
                                     transition={{ delay: 1.2, duration: 1, ease: "easeOut" }}
                                 />
                             </div>
                             <div className="stats-details">
-                                <span className="stats-text">2 Active Projects</span>
-                                <span className="stats-percentage">70%</span>
+                                <span className="stats-text">3 Done Projects</span>
+                                <span className="stats-percentage">100%</span>
                             </div>
                         </div>
                     </div>

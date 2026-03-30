@@ -53,14 +53,12 @@ function App() {
 
   // PROFILE STATE
   const [isProfile, setIsProfile] = useState(false);
-
-  // AUTH
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  
 
   // DARK MODE - Default to dark theme
   const [darkMode, setDarkMode] = useState(() => {
     const savedTheme = localStorage.getItem('theme');
-    return savedTheme ? JSON.parse(savedTheme) : true;
+    return savedTheme ? JSON.parse(savedTheme) : false;
   });
 
   // MOBILE VIEW unsupported overlay
@@ -200,7 +198,6 @@ function App() {
       <div className='top'>
         <NavigationBar
           onOpen={() => setIsProfile(true)}
-          isAuthenticated={isAuthenticated}
           toggleTheme={toggleTheme}
           darkMode={darkMode}
           activeItem={activeItem}
@@ -213,15 +210,12 @@ function App() {
         <SideBar
           activeItem={activeItem}
           setActiveItem={setActiveItem}
-          isAuthenticated={isAuthenticated}
           darkMode={darkMode}
         />
 
         {/* DASHBOARD */}
         <Dashboard
           activeItem={activeItem}
-          isAuthenticated={isAuthenticated}
-         
           toggleTheme={toggleTheme}
           darkMode={darkMode}
           handleDownload={handleDownload}
@@ -236,7 +230,6 @@ function App() {
         (
           <Profile
             onClose={() => setIsProfile(false)}
-            isAuthenticated={isAuthenticated}
             handleDownload={handleDownload}
             darkMode={darkMode}
           />
