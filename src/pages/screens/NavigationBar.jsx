@@ -82,8 +82,7 @@ function NavigationBar({ onOpen, darkMode, toggleTheme, activeItem }) {
         >
           <p className="name">Oscar Poco</p>
           <div className="status-wrapper">
-            <span className="status-dot"></span>
-            <p className="role">Available for work</p>
+            <p className="role">CLICK TO VIEW 1 PAGE PORFOLIO</p>
           </div>
         </motion.div>
 

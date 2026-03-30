@@ -21,7 +21,7 @@ export const portfolioStats = [
             id: 2,
             title: "EXPERIENCE",
             icon: <FaCalendarAlt className="folder-icon" />,
-            count: "1+",
+            count: "3+",
             subtitle: "Years",
             color: "#1FA463", 
             gradient: "linear-gradient(135deg, #1FA463, #27AE60)",

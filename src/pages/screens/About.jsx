@@ -45,7 +45,7 @@ const portfolioStats = [
         title: "SKILLS",
         navigateTo: "Skills",
         icon: <MdCode className="folder-icon" />,
-        count: "10+",
+        count: "20+",
         color: "#10b981",
         gradient: "linear-gradient(135deg, #10b981 0%, #34d399 100%)",
         description: "Explore my tech stack"
@@ -55,7 +55,7 @@ const portfolioStats = [
         title: "CERTIFICATIONS",
         navigateTo: "Education",
         icon: <MdSchool className="folder-icon" />,
-        count: "2+",
+        count: "12+",
         subtitle: "Certs",
         color: "#f59e0b",
         gradient: "linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%)",
@@ -217,7 +217,7 @@ function About({ darkMode, toggleTheme, handleDownload, navigateToSection }) {
                                 animate={{ opacity: 1, x: 0 }}
                                 transition={{ delay: 0.6 }}
                             >
-                                Available for hire
+                                Open For Opportunities | Hire
                             </motion.span>
                         </div>
                         <h2 className="profile-title">React Developer</h2>
@@ -228,7 +228,7 @@ function About({ darkMode, toggleTheme, handleDownload, navigateToSection }) {
                         </p>
                         <div className="profile-update-row">
                             <p className="portfolio-update-date">
-                                Last updated: 26 February 2026
+                                Last updated: 28 March 2026
                             </p>
                             <div className="skills-container-1">
                                 {['React.js', 'TypeScript', 'Node.js', 'Redux', 'React Native', 'UI/UX'].map((skill, index) => (
