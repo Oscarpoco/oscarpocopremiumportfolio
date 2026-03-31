@@ -82,17 +82,43 @@
         }
       }
 
-      /* Cursor glow */
-      .cursor-glow {
+      /* ===== CLICK EFFECTS ===== */
+
+      /* Click ripple effect */
+      .click-ripple {
         position: fixed;
-        width: 30px;
-        height: 30px;
         border-radius: 50%;
-        background: cyan;
+        border: 2px solid rgba(0, 255, 255, 0.8);
         pointer-events: none;
-        filter: blur(10px);
         z-index: 9999;
       }
+
+      @keyframes ripple-expand {
+        0% {
+          transform: scale(0);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(1);
+          opacity: 0;
+        }
+      }
+
+      /* Particle effect */
+      .particle {
+        position: fixed;
+        pointer-events: none;
+        z-index: 9998;
+      }
+
+      .particle-dot {
+        width: 4px;
+        height: 4px;
+        background: #00ffff;
+        border-radius: 50%;
+        box-shadow: 0 0 8px rgba(0, 255, 255, 0.8);
+      }
+
     </style>
   </head>
 
@@ -102,7 +128,6 @@
     </div>
 
     <div class="bg-glow"></div>
-    <div class="cursor-glow" id="cursor"></div>
 
     <div id="root"></div>
 
@@ -116,12 +141,88 @@
         }, 800);
       });
 
-      // Cursor glow effect
-      const cursor = document.getElementById("cursor");
-      document.addEventListener("mousemove", (e) => {
-        cursor.style.left = e.clientX + "px";
-        cursor.style.top = e.clientY + "px";
+      // ===== CLICK EFFECTS ONLY =====
+      
+      // Click ripple and particles
+      document.addEventListener("click", (e) => {
+        createRipple(e.clientX, e.clientY);
+        createParticleBurst(e.clientX, e.clientY);
       });
+
+      // Ripple effect
+      function createRipple(x, y) {
+        const ripple = document.createElement("div");
+        ripple.className = "click-ripple";
+        ripple.style.left = x + "px";
+        ripple.style.top = y + "px";
+        ripple.style.width = "20px";
+        ripple.style.height = "20px";
+        ripple.style.marginLeft = "-10px";
+        ripple.style.marginTop = "-10px";
+        
+        document.body.appendChild(ripple);
+        
+        ripple.style.animation = "ripple-expand 0.8s ease-out forwards";
+        
+        setTimeout(() => ripple.remove(), 800);
+      }
+
+      // Particle burst effect
+      function createParticleBurst(x, y) {
+        const particleCount = 12;
+        
+        for (let i = 0; i < particleCount; i++) {
+          const angle = (i / particleCount) * Math.PI * 2;
+          const velocity = 3 + Math.random() * 3;
+          const vx = Math.cos(angle) * velocity;
+          const vy = Math.sin(angle) * velocity;
+          
+          createParticle(x, y, vx, vy);
+        }
+      }
+
+      // Single particle
+      function createParticle(x, y, vx, vy) {
+        const particle = document.createElement("div");
+        particle.className = "particle";
+        
+        const dot = document.createElement("div");
+        dot.className = "particle-dot";
+        particle.appendChild(dot);
+        
+        particle.style.left = x + "px";
+        particle.style.top = y + "px";
+        document.body.appendChild(particle);
+        
+        let px = x;
+        let py = y;
+        let currentVx = vx;
+        let currentVy = vy;
+        let life = 1;
+        const decay = 0.02;
+        
+        function animateParticle() {
+          if (life <= 0) {
+            particle.remove();
+            return;
+          }
+          
+          // Apply velocity with gravity
+          currentVy += 0.15; // gravity
+          px += currentVx;
+          py += currentVy;
+          life -= decay;
+          
+          particle.style.left = px + "px";
+          particle.style.top = py + "px";
+          particle.style.opacity = life;
+          
+          requestAnimationFrame(animateParticle);
+        }
+        
+        animateParticle();
+      }
+
       // Animated typing title effect
       const titles = [
         "Oscar Poco ",
