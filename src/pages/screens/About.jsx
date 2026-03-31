@@ -293,7 +293,7 @@ function About({ darkMode, toggleTheme, handleDownload, navigateToSection }) {
                         <motion.div
                             className={`folder-card ${hoveredCard === stat.id ? 'hovered' : ''}`}
                             key={stat.id}
-                            style={{ background: stat.gradient }}
+                            // style={{ background: stat.gradient }}
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.2 + index * 0.1, duration: 0.5 }}
@@ -329,19 +329,7 @@ function About({ darkMode, toggleTheme, handleDownload, navigateToSection }) {
                                 {stat.subtitle && <span className="count-subtitle">{stat.subtitle}</span>}
                             </div>
                             <p className="folder-description">{stat.description}</p>
-                            <motion.div 
-                                className="folder-cta"
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: hoveredCard === stat.id ? 1 : 0.7 }}
-                            >
-                                <span>Explore</span>
-                                <motion.div
-                                    animate={{ x: hoveredCard === stat.id ? 5 : 0 }}
-                                    transition={{ duration: 0.2 }}
-                                >
-                                    <FaArrowRight />
-                                </motion.div>
-                            </motion.div>
+                            
                         </motion.div>
                     ))}
                 </div>

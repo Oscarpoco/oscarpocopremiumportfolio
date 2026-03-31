@@ -78,8 +78,8 @@ function SideBar({ activeItem, setActiveItem, darkMode }) {
                                 <motion.div 
                                     className="nav-icon-wrapper"
                                     style={{ 
-                                        background: isActive ? `${item.color}20` : 'transparent',
-                                        borderColor: isActive ? item.color : 'transparent'
+                                        background: 'transparent',
+                                      
                                     }}
                                     animate={{
                                         scale: isActive ? 1.1 : 1,
@@ -102,6 +102,7 @@ function SideBar({ activeItem, setActiveItem, darkMode }) {
                                             animate={{ opacity: 1, scale: 1 }}
                                             exit={{ opacity: 0, scale: 0 }}
                                             transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                                            style={{ backgroundColor: isActive ? item.color : 'inherit' }}
                                         />
                                     )}
                                 </AnimatePresence>
