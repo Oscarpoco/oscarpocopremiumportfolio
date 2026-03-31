@@ -31,6 +31,11 @@
   gap: 0;
   background: var(--bg-primary);
   overflow: hidden;
+  scrollbar-width: none;
+}
+
+.bottom::-webkit-scrollbar {
+  display: none;
 }
 
 @media (max-width: 576px) {
@@ -41,6 +46,11 @@
   .bottom {
     height: calc(100vh - 70px);
     gap: 0;
+    scrollbar-width: none;
+  }
+
+  .bottom::-webkit-scrollbar {
+    display: none;
   }
 }
 

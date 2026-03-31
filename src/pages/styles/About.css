@@ -13,6 +13,11 @@
   background-color: var(--bg-primary);
   display: flex;
   flex-direction: column;
+  scrollbar-width: none; 
+}
+
+.about-container::-webkit-scrollbar {
+  display: none; 
 }
 
 /* THEME TOGGLE */

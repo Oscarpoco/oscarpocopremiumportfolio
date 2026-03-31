@@ -4,6 +4,7 @@
     overflow: hidden;
     background: var(--bg-primary);
     transition: background-color var(--transition-normal);
+    scrollbar-width: none;
 }
 
 .Parent-dashboard.dark-mode {
@@ -16,33 +17,24 @@
     overflow-y: auto;
     overflow-x: hidden;
     scroll-behavior: smooth;
+    scrollbar-width: none;
 }
 
 .dashboard-content-wrapper {
     width: 100%;
     min-height: 100vh;
+    scrollbar-width: none;
 }
 
-/* Custom scrollbar for dashboard */
+/* Custom scrollbar for dashboard - Hidden for horizontal progress bar */
 .Child-dashboard::-webkit-scrollbar {
-    width: 8px;
+    width: 0px; /* Hide the scrollbar */
 }
 
-.Child-dashboard::-webkit-scrollbar-track {
-    background: var(--bg-tertiary);
-}
-
-.Child-dashboard::-webkit-scrollbar-thumb {
-    background: var(--primary);
-    border-radius: var(--radius-full);
-}
-
-.Child-dashboard::-webkit-scrollbar-thumb:hover {
-    background: var(--primary-light);
+.Parent-dashboard::-webkit-scrollbar {
+  display: none;
 }
 
 @media (max-width: 576px) {
-    .Child-dashboard::-webkit-scrollbar {
-        width: 4px;
-    }
+    /* No scrollbar styles needed since it's hidden */
 }

@@ -9,6 +9,7 @@
     transition: all var(--transition-normal);
     position: relative;
     z-index: 100;
+    padding-top: 3px; /* Make room for scroll progress bar */
 }
 
 /* DARK MODE STYLES */
@@ -258,7 +259,7 @@
 
 @media (max-width: 768px) {
     .Parent-nav {
-        padding: 0 16px;
+        padding: 3px 16px 0 16px; /* Added top padding for progress bar */
         height: 70px;
     }
 
@@ -286,7 +287,7 @@
 
 @media (max-width: 576px) {
     .Parent-nav {
-        padding: 0 12px;
+        padding: 3px 12px 0 12px; /* Added top padding for progress bar */
     }
 
     .Portfolio-name {

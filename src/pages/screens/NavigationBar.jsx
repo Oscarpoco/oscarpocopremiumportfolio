@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import "../styles/NavigationBar.css";
 
@@ -11,6 +11,35 @@ import oscar from "./../../assets/avatar4.jfif";
 import { BiCodeAlt } from "react-icons/bi";
 
 function NavigationBar({ onOpen, darkMode, toggleTheme, activeItem }) {
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [isScrollable, setIsScrollable] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollContainer = document.querySelector('.Child-dashboard');
+      if (scrollContainer) {
+        const scrollTop = scrollContainer.scrollTop;
+        const scrollHeight = scrollContainer.scrollHeight - scrollContainer.clientHeight;
+        const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+        setScrollProgress(progress);
+        setIsScrollable(scrollHeight > 0);
+      }
+    };
+
+    const scrollContainer = document.querySelector('.Child-dashboard');
+    if (scrollContainer) {
+      scrollContainer.addEventListener('scroll', handleScroll);
+      // Initial call
+      handleScroll();
+    }
+
+    return () => {
+      if (scrollContainer) {
+        scrollContainer.removeEventListener('scroll', handleScroll);
+      }
+    };
+  }, []);
+
   return (
     <motion.nav
       className={`Parent-nav ${darkMode ? "dark-mode" : ""}`}
@@ -18,6 +47,23 @@ function NavigationBar({ onOpen, darkMode, toggleTheme, activeItem }) {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
     >
+      {/* SCROLL PROGRESS BAR - Only show when content is scrollable */}
+      {isScrollable && (
+        <motion.div
+          className="scroll-progress-bar"
+          animate={{ width: `${scrollProgress}%` }}
+          transition={{ duration: 0.1 }}
+          style={{
+            background: 'linear-gradient(90deg, #2363C7 0%, #10b981 100%)',
+            height: '7px',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            zIndex: 1000
+          }}
+        />
+      )}
+
       {/* PORTFOLIO NAME */}
       <motion.div
         className="Portfolio-name"
