@@ -122,11 +122,11 @@
 .portfolio-stats {
     margin-top: auto;
     padding-top: 20px;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-top: 2px dotted rgba(0, 0, 0, 0.1);
 }
 
 .Parent-sidebar.dark-mode .portfolio-stats {
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 2px dotted rgba(255, 255, 255, 0.1);
 }
 
 .stats-heading {
@@ -149,12 +149,12 @@
     padding: 12px;
     background: rgba(0, 0, 0, 0.03);
     /* border-radius: var(--radius-md); */
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    border: 2px dotted rgba(0, 0, 0, 0.08);
 }
 
 .Parent-sidebar.dark-mode .stats-item {
     background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 2px dotted rgba(255, 255, 255, 0.08);
 }
 
 .stats-icon-container {
