@@ -113,12 +113,12 @@ function NavigationBar({ onOpen, darkMode, toggleTheme, activeItem }) {
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.3 }}
-        style={{ backgroundColor: "aquamarine", cursor: "pointer" }}
+        style={{ backgroundColor: "", cursor: "pointer", borderRadius: "12px" }}
         onClick={() =>
           window.open("https://oscar-oldsite.vercel.app/", "_blank")
         }
       >
-        <span className="current-section-label" style={{ color: "black" }}>
+        <span className="current-section-label" style={{ color: "green" }}>
           VIEW THE OLD SITE
         </span>
       </motion.div>
