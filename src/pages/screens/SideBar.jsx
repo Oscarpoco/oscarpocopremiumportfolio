@@ -139,6 +139,21 @@ function SideBar({ activeItem, setActiveItem, darkMode }) {
                             </div>
                         </div>
                     </div>
+
+                    <motion.div
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: 0.3 }}
+                            style={{ backgroundColor: "", cursor: "pointer", padding: 0, display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 15 }}
+                            onClick={() =>
+                              window.open("https://oscar-oldsite.vercel.app/", "_blank")
+                            }
+                          >
+                            <span className="current-section-label" style={{ color: "green" }}>
+                              VIEW THE OLD SITE
+                            </span>
+                          </motion.div>
+
                 </motion.div>
             </div>
         </motion.div>

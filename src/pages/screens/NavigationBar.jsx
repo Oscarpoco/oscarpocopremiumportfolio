@@ -79,7 +79,7 @@ function NavigationBar({ onOpen, darkMode, toggleTheme, activeItem }) {
         </motion.div>
         <div className="portfolio-text">
           <h2 className="Portfolio-h2">Portfolio</h2>
-          <span className="portfolio-subtitle">React Developer</span>
+          <span className="portfolio-subtitle">Software Developer</span>
         </div>
         <h2 className="Portfolio-h2" id="mobile-device-only">
           OSCAR
@@ -92,6 +92,7 @@ function NavigationBar({ onOpen, darkMode, toggleTheme, activeItem }) {
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.3 }}
+        style={{borderRadius: 'var(--radius-md)'}}
       >
         <span className="current-section-label">Currently viewing:</span>
         <motion.span
@@ -108,20 +109,7 @@ function NavigationBar({ onOpen, darkMode, toggleTheme, activeItem }) {
       <span className="current-section-label" style={{ color: "green", fontSize: "16px", marginTop: "4px", fontWeight: "200" }}>
         53 designs in one portfolio
       </span>
-      <motion.div
-        className="active-section-indicator"
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.3 }}
-        style={{ backgroundColor: "", cursor: "pointer", borderRadius: "12px" }}
-        onClick={() =>
-          window.open("https://oscar-oldsite.vercel.app/", "_blank")
-        }
-      >
-        <span className="current-section-label" style={{ color: "green" }}>
-          VIEW THE OLD SITE
-        </span>
-      </motion.div>
+      
 
       {/* PORTFOLIO USER */}
       <div className="Portfolio-user">
@@ -134,7 +122,7 @@ function NavigationBar({ onOpen, darkMode, toggleTheme, activeItem }) {
         >
           <p className="name">Oscar Poco</p>
           <div className="status-wrapper">
-            <p className="role">CLICK TO VIEW 1 PAGE PORFOLIO</p>
+            <p className="role">CLICK TO VIEW 1 PAGE PORTFOLIO</p>
           </div>
         </motion.div>
 

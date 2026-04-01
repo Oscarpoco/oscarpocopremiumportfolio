@@ -220,10 +220,9 @@ function About({ darkMode, toggleTheme, handleDownload, navigateToSection }) {
                                 Open For Opportunities | Hire
                             </motion.span>
                         </div>
-                        <h2 className="profile-title">React Developer</h2>
+                        <h2 className="profile-title">Software Developer | Learnership Facilitator</h2>
                         <p className="profile-description">
-                            Passionate developer with a knack for creating elegant, responsive and user-friendly
-                            web applications. Specialized in React.js ecosystem with 3+ years of professional
+                            Passionate developer with a knack for creating elegant, responsive and user-friendly <b>WEB</b> & <b>MOBILE</b> applications. Specialized in JavaScript ecosystem as a Mobile Developer with 3+ years of professional
                             experience building scalable solutions for various industries.
                         </p>
                         <div className="profile-update-row">
@@ -231,7 +230,7 @@ function About({ darkMode, toggleTheme, handleDownload, navigateToSection }) {
                                 Last updated: 28 March 2026
                             </p>
                             <div className="skills-container-1">
-                                {['React.js', 'TypeScript', 'Node.js', 'Redux', 'React Native', 'UI/UX'].map((skill, index) => (
+                                {['JavaScript', 'TypeScript', 'Node.js', '.NET', 'Python', 'UI/UX', 'Java'].map((skill, index) => (
                                     <motion.span 
                                     key={skill}
                                     className="skill-tag"
