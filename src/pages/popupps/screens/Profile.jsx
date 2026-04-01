@@ -1016,17 +1016,20 @@ const Profile = ({ onClose }) => {
             style={{
               display: 'inline-flex', alignItems: 'center', gap: 10,
               border: `1.5px solid #333`, 
-              borderRadius: 30,
+              borderRadius: 0,
               padding: '10px 22px', marginTop: 44,
               fontFamily: T.body, fontSize: 13, fontWeight: 600, color: '#999',
               background: 'rgba(255, 255, 255, 0.03)',
+              position: 'relative',
+
             }}
           >
             <span style={{
-              width: 8, height: 8, borderRadius: '50%',
+              width: 8, height: 8, borderRadius: '0',
               background: '#22c55e', display: 'inline-block',
               boxShadow: '0 0 0 3px rgba(34,197,94,0.2)',
             }} />
+            <CornerBorders/>
             Available for new opportunities
           </motion.div>
 

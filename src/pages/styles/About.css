@@ -598,9 +598,9 @@
 /* PROJECTS SECTION */
 .projects-section {
   background-color: var(--bg-secondary);
-  padding: 28px;
+  padding: 38px;
   border-radius: var(--radius-xl);
-  border: 1px solid var(--border-color);
+  border: 2px dotted var(--text-tertiary);
   box-shadow: var(--shadow-sm);
 }
 
