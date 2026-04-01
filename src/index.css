@@ -179,13 +179,17 @@ html {
     z-index: 9999 !important;
 }
 
+.theme-toggle,
+.theme-toggle-global,
+.theme-toggle {
+ 
+    z-index: 999 !important;
+}
+
 .theme-toggle-global {
     width: 50px !important;
     height: 50px !important;
-    border-radius: var(--radius-md) !important;
-    background: var(--primary) !important;
-    color: #ffffff !important;
-    border: none !important;
+    color: #000 !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;

@@ -13,34 +13,7 @@
   flex-direction: column;
 }
 
-/* THEME TOGGLE */
-.theme-toggle {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  width: 50px;
-  height: 50px;
-  border-radius: var(--radius-md);
-  background: var(--primary);
-  color: white;
-  border: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  cursor: pointer;
-  z-index: 999;
-  box-shadow: 0 8px 25px rgba(35, 99, 199, 0.35);
-  transition: all var(--transition-normal);
-}
 
-.dark-theme .theme-toggle {
-  background: var(--primary-gradient);
-}
-
-.theme-toggle:hover {
-  box-shadow: 0 12px 35px rgba(35, 99, 199, 0.45);
-}
 
 /* HEADER SECTION */
 .experience-header-1 {
