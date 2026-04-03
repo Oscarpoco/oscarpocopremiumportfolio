@@ -191,6 +191,7 @@
   flex-direction: column;
   align-items: center;
   gap: 20px;
+ 
 }
 
 .profile-image {
@@ -199,7 +200,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 2px dotted var(--border-color);
   overflow: hidden;
   position: relative;
   transition: all var(--transition-normal);
