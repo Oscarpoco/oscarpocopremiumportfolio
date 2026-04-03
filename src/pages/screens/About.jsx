@@ -274,6 +274,7 @@ function About({ darkMode, toggleTheme, handleDownload, navigateToSection }) {
                     <motion.h3 className="scan-tag">SCAN TO DOWNLOAD RESUME</motion.h3>
                 </motion.div>
             </motion.div>
+            
 
             {/* QUICK ACCESS SECTION - CLICKABLE CARDS */}
             <motion.div
