@@ -171,7 +171,16 @@ function About({ darkMode, toggleTheme, handleDownload, navigateToSection }) {
                             >
                                 <span>3+</span>
                             </motion.div>
+
                         </div>
+                            <motion.h1 
+                                className="floating-header-1"
+                                initial={{ scale: 0 }}
+                                animate={{ scale: 1 }}
+                                transition={{ delay: 0.5, type: "spring" }}
+                            >
+                                Hello There! <br/> Image Still <br/> Loading...
+                            </motion.h1>
                         <div className="social-links">
                             <motion.a
                                 href="https://github.com/Oscarpoco"

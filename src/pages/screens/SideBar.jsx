@@ -91,7 +91,7 @@ function SideBar({ activeItem, setActiveItem, darkMode }) {
                                         style={{ color: isActive ? item.color : 'inherit' }}
                                     />
                                 </motion.div>
-                                <span className="nav-label">{item.name}</span>
+                                <span className="nav-label">{item.name}<strong style={{color: isActive ? item.color : 'inherit'}}>.tsx</strong></span>
                                 
                                 <AnimatePresence>
                                     {isActive && (
@@ -118,13 +118,13 @@ function SideBar({ activeItem, setActiveItem, darkMode }) {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.8 }}
                 >
-                    <h3 className="stats-heading">PORTFOLIO STATS</h3>
+                    <h3 className="stats-heading">PERSONAL SUPAPOWERS</h3>
                     <div className="stats-item">
                         <div className="stats-icon-container">
                             <FaLaptopCode className="stats-icon" />
                         </div>
                         <div className="stats-info">
-                            <span className="stats-label">PROGRESS</span>
+                            <span className="stats-label">AVENGERS.JSX</span>
                             <div className="stats-progress-bar">
                                 <motion.div 
                                     className="stats-progress-fill"
@@ -134,8 +134,7 @@ function SideBar({ activeItem, setActiveItem, darkMode }) {
                                 />
                             </div>
                             <div className="stats-details">
-                                <span className="stats-text">3 Done Projects</span>
-                                <span className="stats-percentage">100%</span>
+                                <span className="stats-text"><strong>HULK </strong>WARE <strong>MAN</strong></span>
                             </div>
                         </div>
                     </div>
