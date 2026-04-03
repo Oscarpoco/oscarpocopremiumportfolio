@@ -177,6 +177,7 @@ html {
     bottom: 30px !important;
     right: 30px !important;
     z-index: 9999 !important;
+    
 }
 
 .theme-toggle,
@@ -184,6 +185,7 @@ html {
 .theme-toggle {
  
     z-index: 999 !important;
+    color: #000 !important;
 }
 
 .theme-toggle-global {
