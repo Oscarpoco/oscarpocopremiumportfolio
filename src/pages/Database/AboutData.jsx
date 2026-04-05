@@ -54,7 +54,7 @@ export const featuredProjects = [
             name: "Hotel Application",
             category: "Web Development",
             icon: "https://img.icons8.com/fluency/48/000000/online-store.png",
-            lastModified: "Apr 12, 2025",
+            lastModified: "July 12, 2024",
             type: "React.js", 
             link: "https://hotel-application-beta.vercel.app"
         },
@@ -63,7 +63,7 @@ export const featuredProjects = [
             name: "Restaurant Reservation CMS",
             category: "Mobile App",
             icon: "https://img.icons8.com/fluency/48/000000/todo-list.png",
-            lastModified: "Mar 28, 2025",
+            lastModified: "January 10, 2025",
             type: "React Native",
             link: "https://github.com/mLab-alscar-projects"
         },
@@ -72,7 +72,7 @@ export const featuredProjects = [
             name: "Hotel CMS Application",
             category: "Web Development",
             icon: "https://img.icons8.com/fluency/48/000000/web-design.png",
-            lastModified: "Apr 18, 2025",
+            lastModified: "July 18, 2024",
             type: "React.js",
             link: "https://hotel-management-system-iota.vercel.app/"
         }

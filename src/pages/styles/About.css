@@ -610,47 +610,16 @@
 .projects-section {
   background-color: var(--bg-secondary);
   padding: 38px;
-  border-radius: var(--radius-xl);
+  /* border-radius: var(--radius-xl); */
   border: 2px dotted var(--text-tertiary);
   box-shadow: var(--shadow-sm);
 }
 
-.projects-tabs {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 24px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.tab-button {
-  background: none;
-  border: none;
-  padding: 10px 20px;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--text-tertiary);
-  cursor: pointer;
-  border-radius: var(--radius-md);
-  transition: all var(--transition-normal);
-  position: relative;
-}
-
-.tab-button:hover {
-  color: var(--text-primary);
-  background: var(--bg-tertiary);
-}
-
-.tab-button.active {
-  color: var(--primary);
-  background: rgba(35, 99, 199, 0.1);
-  font-weight: 600;
-}
 
 .projects-table-header {
   display: flex;
   padding: 12px 16px;
-  border-radius: var(--radius-md);
+  /* border-radius: var(--radius-md); */
   background-color: var(--bg-tertiary);
   font-size: 11px;
   font-weight: 600;
@@ -681,7 +650,7 @@
 .project-row {
   display: flex;
   padding: 16px;
-  border-radius: var(--radius-md);
+  /* border-radius: var(--radius-md); */
   align-items: center;
   transition: all var(--transition-normal);
   background-color: transparent;
@@ -710,7 +679,7 @@
 .project-icon {
   width: 40px;
   height: 40px;
-  border-radius: var(--radius-sm);
+  /* border-radius: var(--radius-sm); */
   object-fit: contain;
   padding: 6px;
   background-color: var(--bg-secondary);
@@ -721,17 +690,17 @@
   background: rgba(35, 99, 199, 0.1);
   color: var(--primary);
   padding: 5px 12px;
-  border-radius: var(--radius-full);
+  /* border-radius: var(--radius-full); */
   font-size: 12px;
   font-weight: 500;
 }
 
 .view-project-btn {
   background-color: transparent;
-  border: 1px solid var(--border-color);
+  border: 2px dotted var(--border-color);
   color: var(--text-secondary);
   padding: 8px 16px;
-  border-radius: var(--radius-sm);
+  /* border-radius: var(--radius-sm); */
   font-size: 12px;
   font-weight: 500;
   cursor: pointer;
@@ -762,7 +731,7 @@
   padding: 12px 28px;
   background: var(--bg-tertiary);
   border: 1px solid var(--border-color);
-  border-radius: var(--radius-full);
+  /* border-radius: var(--radius-full); */
   color: var(--text-secondary);
   font-size: 14px;
   font-weight: 500;

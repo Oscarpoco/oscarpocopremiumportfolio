@@ -346,32 +346,15 @@ function About({ darkMode, toggleTheme, handleDownload, navigateToSection }) {
       </motion.div>
 
       {/* PROJECTS SECTION */}
+      <div className="section-header">
+        <h2>THESE PROJECTS BELOW IS WHERE MY JOURNEY BEGAN. BUILDING SMALL PROJECTS NOT KNOWING THAT 1 DAY I WILL BE THE BEST SOFTWARE DEV EVER EXISTED IN MY FAMILY. DATE: 31 JUNE 2024</h2>
+      </div>
       <motion.div
         className="projects-section"
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 0.6 }}
       >
-        <div className="projects-tabs">
-          <button
-            className={`tab-button ${activeTab === "featured" ? "active" : ""}`}
-            onClick={() => setActiveTab("featured")}
-          >
-            Featured Projects
-          </button>
-          <button
-            className={`tab-button ${activeTab === "recent" ? "active" : ""}`}
-            onClick={() => setActiveTab("recent")}
-          >
-            Recent Work
-          </button>
-          <button
-            className={`tab-button ${activeTab === "all" ? "active" : ""}`}
-            onClick={() => setActiveTab("all")}
-          >
-            All Projects
-          </button>
-        </div>
 
         <div className="projects-table">
           <div className="projects-table-header">
