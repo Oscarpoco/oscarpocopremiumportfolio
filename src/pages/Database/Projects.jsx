@@ -1,5 +1,4 @@
 //  PROJECTS
-import mobile from '../../assets/background-one.jpg'
 import matipro from '../../assets/matipro.png'
 import spanapro from '../../assets/spanapro.png'
 import findempro from '../../assets/findempro.png'

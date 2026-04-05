@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import {
   FaTimes,
@@ -15,6 +15,8 @@ import {
   FaLaptopCode,
   FaChalkboardTeacher,
   FaCode,
+  FaArrowRight,
+  FaArrowLeft,
 } from "react-icons/fa";
 import { BsBriefcase } from "react-icons/bs";
 import { HiCode } from "react-icons/hi";
@@ -31,6 +33,12 @@ import {
   FiPenTool,
   FiDatabase,
 } from "react-icons/fi";
+
+// Import your project images
+import mati from '../../../assets/mati.png';
+import spana from '../../../assets/spana.png';
+import findem from '../../../assets/findem.png';
+import stable from '../../../assets/stable.png';
 
 /* ─────────────────────────────────────────────
    GOOGLE FONTS
@@ -67,6 +75,33 @@ const T = {
 /* ─────────────────────────────────────────────
    DATA
 ───────────────────────────────────────────── */
+const projectsData = [
+  {
+    id: 1,
+    name: "Mati",
+    image: mati,
+    description: "A comprehensive project showcasing modern web development"
+  },
+  {
+    id: 2,
+    name: "Spana",
+    image: spana,
+    description: "Innovative solutions for digital experiences"
+  },
+  {
+    id: 3,
+    name: "FindEm",
+    image: findem,
+    description: "Advanced search and discovery platform"
+  },
+  {
+    id: 4,
+    name: "Stable",
+    image: stable,
+    description: "Robust and reliable web application"
+  },
+];
+
 const experienceData = [
   {
     id: 1,
@@ -288,6 +323,7 @@ const navSections = [
   { id: "hero", label: "Home" },
   { id: "about", label: "About" },
   { id: "skills", label: "Skills" },
+  { id: "projects", label: "Projects" },
   { id: "experience", label: "Experience" },
   { id: "education", label: "Education" },
   { id: "contact", label: "Contact" },
@@ -607,6 +643,183 @@ const TechGrid = () => (
     }}
   />
 );
+
+// Projects Carousel Component
+const ProjectsCarousel = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const containerRef = useRef(null);
+
+  const scrollToProject = (index) => {
+    if (containerRef.current) {
+      const container = containerRef.current;
+      const scrollWidth = container.scrollWidth / projectsData.length;
+      container.scrollTo({
+        left: scrollWidth * index,
+        behavior: "smooth",
+      });
+      setCurrentIndex(index);
+    }
+  };
+
+  const nextProject = () => {
+    const nextIndex = (currentIndex + 1) % projectsData.length;
+    scrollToProject(nextIndex);
+  };
+
+  const prevProject = () => {
+    const prevIndex = (currentIndex - 1 + projectsData.length) % projectsData.length;
+    scrollToProject(prevIndex);
+  };
+
+  return (
+    <div style={{ position: "relative" }}>
+      {/* Carousel Container */}
+      <div
+        ref={containerRef}
+        style={{
+          display: "flex",
+          overflowX: "scroll",
+          scrollSnapType: "x mandatory",
+          gap: 24,
+          marginBottom: 40,
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
+        }}
+      >
+        <style>{`
+          div::-webkit-scrollbar {
+            display: none;
+          }
+        `}</style>
+        
+        {projectsData.map((project, index) => (
+          <motion.div
+            key={project.id}
+            variants={fadeUp}
+            style={{
+              minWidth: "100%",
+              scrollSnapAlign: "start",
+              position: "relative",
+              background: "transparent",
+              padding: 0,
+              overflow: "hidden",
+              boxShadow: "0 0 20px rgba(0, 0, 0, 0.08)",
+            }}
+          >
+            {/* <CornerBorders size={30} thickness={3} /> */}
+            
+            {/* Project Image */}
+            <div
+              style={{
+                width: "100%",
+                height: "600px",
+                overflow: "hidden",
+                position: "relative",
+              }}
+            >
+              <img
+                src={project.image}
+                alt={project.name}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "contain",
+                  display: "block",
+                }}
+              />
+            </div>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Navigation Buttons */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: 20,
+        }}
+      >
+        <motion.button
+          onClick={prevProject}
+          whileHover={{
+            background: T.blue,
+            color: T.white,
+            borderColor: T.blue,
+            scale: 1.1,
+          }}
+          whileTap={{ scale: 0.9 }}
+          style={{
+            width: 56,
+            height: 56,
+            borderRadius: "50%",
+            border: `2px solid ${T.border}`,
+            background: T.white,
+            color: T.ink,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: 20,
+            cursor: "pointer",
+            transition: "all 0.3s ease",
+            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.08)",
+          }}
+        >
+          <FaArrowLeft />
+        </motion.button>
+
+        {/* Dots Indicator */}
+        <div style={{ display: "flex", gap: 10 }}>
+          {projectsData.map((_, index) => (
+            <motion.button
+              key={index}
+              onClick={() => scrollToProject(index)}
+              whileHover={{ scale: 1.2 }}
+              style={{
+                width: currentIndex === index ? 32 : 10,
+                height: 10,
+                borderRadius: 5,
+                border: "none",
+                background: currentIndex === index ? T.blue : T.border,
+                cursor: "pointer",
+                transition: "all 0.3s ease",
+              }}
+            />
+          ))}
+        </div>
+
+        <motion.button
+          onClick={nextProject}
+          whileHover={{
+            background: T.blue,
+            color: T.white,
+            borderColor: T.blue,
+            scale: 1.1,
+          }}
+          whileTap={{ scale: 0.9 }}
+          style={{
+            width: 56,
+            height: 56,
+            borderRadius: "50%",
+            border: `2px solid ${T.border}`,
+            background: T.white,
+            color: T.ink,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: 20,
+            cursor: "pointer",
+            transition: "all 0.3s ease",
+            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.08)",
+          }}
+        >
+          <FaArrowRight />
+        </motion.button>
+      </div>
+    </div>
+  );
+};
 
 /* ─────────────────────────────────────────────
    MAIN PROFILE COMPONENT
@@ -1054,10 +1267,10 @@ const Profile = ({ onClose }) => {
       </AnimatedSection>
 
       {/* ════════════════════════════════
-          04  EXPERIENCE
+          04  PROJECTS
       ════════════════════════════════ */}
       <AnimatedSection
-        id="experience"
+        id="projects"
         style={{
           padding: "200px 56px 56px 56px",
           borderBottom: `2px solid ${T.border}`,
@@ -1076,7 +1289,37 @@ const Profile = ({ onClose }) => {
             zIndex: 1,
           }}
         >
-          <EyebrowLabel>04 / Work History</EyebrowLabel>
+          <EyebrowLabel>04 / Featured Work</EyebrowLabel>
+          <BigTitle>PROJECTS</BigTitle>
+
+          <ProjectsCarousel />
+        </div>
+      </AnimatedSection>
+
+      {/* ════════════════════════════════
+          05  EXPERIENCE
+      ════════════════════════════════ */}
+      <AnimatedSection
+        id="experience"
+        style={{
+          padding: "200px 56px 56px 56px",
+          borderBottom: `2px solid ${T.border}`,
+          background: T.bg,
+          position: "relative",
+          overflow: "hidden",
+        }}
+      >
+        <TechGrid />
+
+        <div
+          style={{
+            maxWidth: 1100,
+            margin: "0 auto",
+            position: "relative",
+            zIndex: 1,
+          }}
+        >
+          <EyebrowLabel>05 / Work History</EyebrowLabel>
           <BigTitle size="clamp(46px, 10vw, 130px)">EXPERIENCE</BigTitle>
 
           <div style={{ display: "flex", flexDirection: "column" }}>
@@ -1204,14 +1447,14 @@ const Profile = ({ onClose }) => {
       </AnimatedSection>
 
       {/* ════════════════════════════════
-          05  EDUCATION + CERTS
+          06  EDUCATION + CERTS
       ════════════════════════════════ */}
       <AnimatedSection
         id="education"
         style={{
           padding: "200px 56px 56px 56px",
           borderBottom: `2px solid ${T.border}`,
-          background: T.bg,
+          background: T.bgAlt,
           position: "relative",
           overflow: "hidden",
         }}
@@ -1226,7 +1469,7 @@ const Profile = ({ onClose }) => {
             zIndex: 1,
           }}
         >
-          <EyebrowLabel>05 / Academic</EyebrowLabel>
+          <EyebrowLabel>06 / Academic</EyebrowLabel>
           <BigTitle size="clamp(50px, 11vw, 136px)">EDUCATION</BigTitle>
 
           <div
@@ -1369,7 +1612,7 @@ const Profile = ({ onClose }) => {
                     position: "relative",
                   }}
                 >
-                  <CornerBorders opacity={0.3} size={15} />
+                  <CornerBorders opacity={0.1} size={"100%"} thickness={.7} />
                   <div
                     style={{
                       width: 42,
@@ -1474,7 +1717,7 @@ const Profile = ({ onClose }) => {
       </AnimatedSection>
 
       {/* ════════════════════════════════
-          06  CONTACT
+          07  CONTACT
       ════════════════════════════════ */}
       <AnimatedSection
         id="contact"
@@ -1484,7 +1727,6 @@ const Profile = ({ onClose }) => {
           overflow: "hidden",
         }}
       >
-        <TechGrid />
 
         <div
           style={{
@@ -1495,23 +1737,6 @@ const Profile = ({ onClose }) => {
             zIndex: 1,
           }}
         >
-          <EyebrowLabel color={T.blue}>06 / Let's Connect</EyebrowLabel>
-
-          <motion.h2
-            variants={fadeUp}
-            style={{
-              fontFamily: T.body,
-              fontSize: "clamp(52px, 12vw, 148px)",
-              fontWeight: 900,
-              letterSpacing: "-2px",
-              margin: 0,
-              lineHeight: 0.88,
-              color: T.white,
-              textTransform: "uppercase",
-            }}
-          >
-            CONTACT
-          </motion.h2>
 
           <motion.p
             variants={fadeUp}
@@ -1522,9 +1747,9 @@ const Profile = ({ onClose }) => {
               lineHeight: 1.65,
               fontWeight: 500,
               color: "#aaa",
-              maxWidth: 540,
               marginTop: 40,
               marginBottom: 0,
+              textAlign: 'center'
             }}
           >
             "Great things happen when talented people choose to collaborate —
@@ -1543,7 +1768,7 @@ const Profile = ({ onClose }) => {
               paddingTop: 48,
             }}
           >
-            <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+            <div style={{ display: "flex", flexDirection: "row", gap: 18, justifyContent: 'center', alignItems: 'center' }}>
               {[
                 {
                   icon: <FaEnvelope />,
@@ -1599,12 +1824,36 @@ const Profile = ({ onClose }) => {
               ))}
             </div>
 
+            
+          </motion.div>
+
+       
+
+          <div
+            style={{
+              borderTop: `1px solid #222`,
+              marginTop: 56,
+              marginBottom: 156,
+              padding: "28px 0",
+              display: "flex",
+              justifyContent: "space-between",
+              flexWrap: "wrap",
+              gap: 12,
+              fontFamily: T.mono,
+              fontSize: 10,
+              color: "#555",
+              letterSpacing: "0.15em",
+              textTransform: "uppercase",
+              position: "relative",
+            }}
+          >
+            <span>© {new Date().getFullYear()} Oscar Kyle Poco</span>
             <div
               style={{
                 display: "flex",
                 flexDirection: "column",
                 gap: 14,
-                alignItems: "flex-end",
+                alignItems: "center",
               }}
             >
               <p
@@ -1641,58 +1890,29 @@ const Profile = ({ onClose }) => {
                 />
               </div>
             </div>
-          </motion.div>
+            <span>Built with love and passion</span>
 
-          <motion.div
+            {/* NAME */}
+            <motion.h2
             variants={fadeUp}
             style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 10,
-              border: `1.5px solid #333`,
-              borderRadius: 0,
-              padding: "10px 22px",
-              marginTop: 44,
               fontFamily: T.body,
-              fontSize: 13,
-              fontWeight: 600,
-              color: "#999",
-              background: "rgba(255, 255, 255, 0.03)",
-              position: "relative",
-            }}
-          >
-            <span
-              style={{
-                width: 8,
-                height: 8,
-                borderRadius: "0",
-                background: "#22c55e",
-                display: "inline-block",
-                boxShadow: "0 0 0 3px rgba(34,197,94,0.2)",
-              }}
-            />
-            <CornerBorders />
-            Available for new opportunities
-          </motion.div>
-
-          <div
-            style={{
-              borderTop: `1px solid #222`,
-              marginTop: 56,
-              padding: "28px 0",
-              display: "flex",
-              justifyContent: "space-between",
-              flexWrap: "wrap",
-              gap: 12,
-              fontFamily: T.mono,
-              fontSize: 10,
-              color: "#555",
-              letterSpacing: "0.15em",
+              fontSize: "clamp(52px, 12vw, 248px)",
+              fontWeight: 900,
+              letterSpacing: "-2px",
+              margin: 0,
+              lineHeight: 0.88,
+              color: T.white + "10",
               textTransform: "uppercase",
+              position: "absolute",
+              bottom: "-170%",
+              textAlign: "center",
+              // transform: "translate(-50%, -50%)",
+              pointerEvents: "none",
             }}
           >
-            <span>© 2026 Oscar Kyle Poco</span>
-            <span>Built with React & Framer Motion</span>
+            OSCAR POCO
+          </motion.h2>
           </div>
         </div>
       </AnimatedSection>
