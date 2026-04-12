@@ -561,7 +561,13 @@
 }
 
 .folder-icon {
-  font-size: 22px;
+  font-size: 100px;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  color: --var(--primary);
+  /* opacity: 0.5; */
+  color: var(--text-tertiary);
 }
 
 .folder-count {
