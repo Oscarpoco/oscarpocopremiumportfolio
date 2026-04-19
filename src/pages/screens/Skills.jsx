@@ -114,7 +114,6 @@ function AnimatedSkillCard({ skill, index, darkMode }) {
 }
 
 function Skills({ darkMode, toggleTheme, handleDownload }) {
-  const headerRef = useRef(null);
 
   return (
     <div className={`skills-container ${darkMode ? "dark-theme" : ""}`}>

@@ -17,6 +17,10 @@ import {
   FaCode,
   FaArrowRight,
   FaArrowLeft,
+  FaHome,
+  FaUser,
+  FaBriefcase,
+  FaProjectDiagram,
 } from "react-icons/fa";
 import { BsBriefcase } from "react-icons/bs";
 import { HiCode } from "react-icons/hi";
@@ -320,13 +324,13 @@ const interests = [
 ];
 
 const navSections = [
-  { id: "hero", label: "Home" },
-  { id: "about", label: "About" },
-  { id: "skills", label: "Skills" },
-  { id: "projects", label: "Projects" },
-  { id: "experience", label: "Experience" },
-  { id: "education", label: "Education" },
-  { id: "contact", label: "Contact" },
+  { id: "hero", label: "Home", icon: <FaHome /> },
+  { id: "about", label: "About", icon: <FaUser /> },
+  { id: "skills", label: "Skills", icon: <FiSettings /> },
+  { id: "projects", label: "Projects", icon: <FaProjectDiagram /> },
+  { id: "experience", label: "Experience", icon: <FaBriefcase /> },
+  { id: "education", label: "Education", icon: <FaGraduationCap /> },
+  { id: "contact", label: "Contact", icon: <FaEnvelope /> },
 ];
 
 /* ─────────────────────────────────────────────
@@ -336,6 +340,22 @@ const useScrollFadeIn = () => {
   const ref = React.useRef(null);
   const isInView = useInView(ref, { once: false, margin: "-100px" });
   return { ref, isInView };
+};
+
+const useIsMobile = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  return isMobile;
 };
 
 /* ─────────────────────────────────────────────
@@ -440,7 +460,7 @@ const CornerBorders = ({
   </>
 );
 
-// Floating Glass Navigation
+// Floating Glass Navigation (Desktop)
 const FloatingNav = ({ activeSection }) => {
   const [scrolled, setScrolled] = useState(false);
 
@@ -467,8 +487,8 @@ const FloatingNav = ({ activeSection }) => {
       style={{
         position: "fixed",
         top: 24,
-        left: "32%",
-        transform: "translate(-50%, -50%)",
+        left: "50%",
+        transform: "translateX(-50%)",
         zIndex: 1000,
         background: scrolled
           ? "rgba(255, 255, 255, 0.8)"
@@ -508,6 +528,68 @@ const FloatingNav = ({ activeSection }) => {
           }}
         >
           {section.label}
+        </motion.button>
+      ))}
+    </motion.nav>
+  );
+};
+
+// Bottom Navigation (Mobile)
+const BottomNav = ({ activeSection }) => {
+  const scrollToSection = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  return (
+    <motion.nav
+      initial={{ y: 100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      style={{
+        position: "fixed",
+        bottom: 0,
+        left: 0,
+        right: 0,
+        zIndex: 1000,
+        background: "rgba(255, 255, 255, 0.95)",
+        backdropFilter: "blur(20px)",
+        padding: "12px 8px",
+        display: "grid",
+        gridTemplateColumns: "repeat(7, 1fr)",
+        gap: 4,
+        borderTop: `2px solid ${T.border}`,
+        boxShadow: "0 -4px 20px rgba(0, 0, 0, 0.08)",
+      }}
+    >
+      {navSections.map((section) => (
+        <motion.button
+          key={section.id}
+          onClick={() => scrollToSection(section.id)}
+          whileTap={{ scale: 0.9 }}
+          style={{
+            background: "transparent",
+            color: activeSection === section.id ? T.blue : T.muted,
+            border: "none",
+            padding: "8px 4px",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 4,
+            cursor: "pointer",
+            transition: "all 0.3s ease",
+            fontFamily: T.mono,
+            fontSize: 9,
+            fontWeight: 600,
+            textTransform: "uppercase",
+            letterSpacing: "0.05em",
+          }}
+        >
+          <span style={{ fontSize: 16 }}>{section.icon}</span>
+          <span>{section.label}</span>
         </motion.button>
       ))}
     </motion.nav>
@@ -706,8 +788,6 @@ const ProjectsCarousel = () => {
               boxShadow: "0 0 20px rgba(0, 0, 0, 0.08)",
             }}
           >
-            {/* <CornerBorders size={30} thickness={3} /> */}
-            
             {/* Project Image */}
             <div
               style={{
@@ -826,6 +906,7 @@ const ProjectsCarousel = () => {
 ───────────────────────────────────────────── */
 const Profile = ({ onClose }) => {
   const [activeSection, setActiveSection] = useState("hero");
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -860,9 +941,15 @@ const Profile = ({ onClose }) => {
         zIndex: 1000,
         fontFamily: T.body,
         color: T.ink,
+        paddingBottom: isMobile ? "80px" : "0",
       }}
     >
-      <FloatingNav activeSection={activeSection} />
+      {/* Conditional Navigation */}
+      {isMobile ? (
+        <BottomNav activeSection={activeSection} />
+      ) : (
+        <FloatingNav activeSection={activeSection} />
+      )}
 
       {/* ── CLOSE BUTTON ── */}
       <motion.button
@@ -876,20 +963,20 @@ const Profile = ({ onClose }) => {
         whileTap={{ scale: 0.9 }}
         style={{
           position: "fixed",
-          top: 24,
-          right: 24,
+          top: isMobile ? 16 : 24,
+          right: isMobile ? 16 : 24,
           zIndex: 1001,
           background: T.white,
           color: T.ink,
           border: `2px solid ${T.border}`,
-          width: 60,
-          height: 60,
+          width: isMobile ? 50 : 60,
+          height: isMobile ? 50 : 60,
           borderRadius: "50%",
           cursor: "pointer",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          fontSize: 28,
+          fontSize: isMobile ? 22 : 28,
           transition: "all 0.3s ease",
           boxShadow: "0 4px 16px rgba(0, 0, 0, 0.04)",
         }}
@@ -905,8 +992,8 @@ const Profile = ({ onClose }) => {
         whileTap={{ scale: 0.95 }}
         style={{
           position: "fixed",
-          top: 24,
-          left: 24,
+          top: isMobile ? 16 : 24,
+          left: isMobile ? 16 : 24,
           zIndex: 1001,
           color: T.ink,
           padding: "6px 8px",
@@ -922,7 +1009,7 @@ const Profile = ({ onClose }) => {
         <span
           style={{
             fontWeight: "300",
-            fontSize: "28px",
+            fontSize: isMobile ? "16px" : "28px",
           }}
         >
           {"{"} PRO ? 'OSCAR' : NULL {" }"}
@@ -939,7 +1026,7 @@ const Profile = ({ onClose }) => {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          padding: "120px 56px 64px",
+          padding: isMobile ? "80px 24px 40px" : "120px 56px 64px",
           borderBottom: `2px solid ${T.border}`,
           position: "relative",
           overflow: "hidden",
@@ -958,15 +1045,14 @@ const Profile = ({ onClose }) => {
           }}
         >
           <EyebrowLabel>
-            Intermediate Software Developer | Facilitator · Johannesburg, South
-            Africa
+            {isMobile ? "Software Developer • JHB, SA" : "Intermediate Software Developer | Facilitator · Johannesburg, South Africa"}
           </EyebrowLabel>
 
           <motion.h1
             variants={fadeUp}
             style={{
               fontFamily: T.body,
-              fontSize: "clamp(76px, 17vw, 200px)",
+              fontSize: isMobile ? "clamp(48px, 15vw, 120px)" : "clamp(76px, 17vw, 200px)",
               fontWeight: 900,
               letterSpacing: "-3px",
               color: T.ink,
@@ -983,8 +1069,9 @@ const Profile = ({ onClose }) => {
             variants={fadeUp}
             style={{
               display: "flex",
+              flexDirection: isMobile ? "column" : "row",
               flexWrap: "wrap",
-              alignItems: "flex-end",
+              alignItems: isMobile ? "center" : "flex-end",
               justifyContent: "space-between",
               gap: 24,
               borderTop: `2px solid ${T.border}`,
@@ -992,7 +1079,7 @@ const Profile = ({ onClose }) => {
               paddingTop: 32,
             }}
           >
-            <div>
+            <div style={{ textAlign: isMobile ? "center" : "left" }}>
               <p
                 style={{
                   fontFamily: T.mono,
@@ -1009,7 +1096,7 @@ const Profile = ({ onClose }) => {
               <h2
                 style={{
                   fontFamily: T.body,
-                  fontSize: "clamp(26px, 4vw, 70px)",
+                  fontSize: isMobile ? "clamp(24px, 8vw, 48px)" : "clamp(26px, 4vw, 70px)",
                   fontWeight: 900,
                   margin: 0,
                   letterSpacing: "-1px",
@@ -1022,6 +1109,7 @@ const Profile = ({ onClose }) => {
                 style={{
                   display: "flex",
                   alignItems: "center",
+                  justifyContent: isMobile ? "center" : "flex-start",
                   gap: 8,
                   marginTop: 12,
                   fontSize: 14,
@@ -1065,12 +1153,12 @@ const Profile = ({ onClose }) => {
       <AnimatedSection
         id="about"
         style={{
-          padding: "200px 56px 56px 56px",
+          padding: isMobile ? "80px 24px 40px" : "200px 56px 56px 56px",
           borderBottom: `2px solid ${T.border}`,
           background: T.bgAlt,
           position: "relative",
           overflow: "hidden",
-          minHeight: "100vh",
+          minHeight: isMobile ? "auto" : "100vh",
         }}
       >
         <TechGrid />
@@ -1089,15 +1177,15 @@ const Profile = ({ onClose }) => {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: "0 72px",
+              gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
+              gap: isMobile ? "32px" : "0 72px",
               alignItems: "start",
             }}
           >
             <motion.div variants={fadeUp}>
               <p
                 style={{
-                  fontSize: 18,
+                  fontSize: isMobile ? 16 : 18,
                   lineHeight: 1.85,
                   color: "#333",
                   marginBottom: 24,
@@ -1113,7 +1201,7 @@ const Profile = ({ onClose }) => {
               </p>
               <p
                 style={{
-                  fontSize: 18,
+                  fontSize: isMobile ? 16 : 18,
                   lineHeight: 1.85,
                   color: "#333",
                   fontWeight: 500,
@@ -1178,7 +1266,7 @@ const Profile = ({ onClose }) => {
       <AnimatedSection
         id="skills"
         style={{
-          padding: "200px 56px 56px 56px",
+          padding: isMobile ? "80px 24px 40px" : "200px 56px 56px 56px",
           borderBottom: `2px solid ${T.border}`,
           background: T.bg,
           position: "relative",
@@ -1201,7 +1289,7 @@ const Profile = ({ onClose }) => {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(236px, 1fr))",
+              gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fill, minmax(236px, 1fr))",
               gap: 16,
             }}
           >
@@ -1272,7 +1360,7 @@ const Profile = ({ onClose }) => {
       <AnimatedSection
         id="projects"
         style={{
-          padding: "200px 56px 56px 56px",
+          padding: isMobile ? "80px 24px 40px" : "200px 56px 56px 56px",
           borderBottom: `2px solid ${T.border}`,
           background: T.bgAlt,
           position: "relative",
@@ -1302,7 +1390,7 @@ const Profile = ({ onClose }) => {
       <AnimatedSection
         id="experience"
         style={{
-          padding: "200px 56px 56px 56px",
+          padding: isMobile ? "80px 24px 40px" : "200px 56px 56px 56px",
           borderBottom: `2px solid ${T.border}`,
           background: T.bg,
           position: "relative",
@@ -1327,20 +1415,20 @@ const Profile = ({ onClose }) => {
               <motion.div
                 key={exp.id}
                 variants={fadeUp}
-                whileHover={{ x: 8 }}
+                whileHover={{ x: isMobile ? 0 : 8 }}
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "220px 1fr",
-                  gap: "0 52px",
+                  gridTemplateColumns: isMobile ? "1fr" : "220px 1fr",
+                  gap: isMobile ? "20px" : "0 52px",
                   borderTop: `2px solid ${T.border}`,
-                  padding: "44px 0",
+                  padding: isMobile ? "32px 0" : "44px 0",
                   alignItems: "start",
                   position: "relative",
                   transition: "all 0.3s ease",
                 }}
               >
                 <div
-                  style={{ display: "flex", flexDirection: "column", gap: 14 }}
+                  style={{ display: "flex", flexDirection: isMobile ? "row" : "column", gap: 14, alignItems: isMobile ? "center" : "flex-start" }}
                 >
                   <div
                     style={{
@@ -1353,38 +1441,40 @@ const Profile = ({ onClose }) => {
                       justifyContent: "center",
                       fontSize: 20,
                       borderRadius: "50%",
+                      flexShrink: 0,
                     }}
                   >
                     {exp.icon}
                   </div>
-                  <div
-                    style={{
-                      display: "inline-block",
-
-                      borderRadius: 0,
-                      fontFamily: T.mono,
-                      fontSize: 14,
-                      fontWeight: 700,
-                      letterSpacing: "0.14em",
-                      textTransform: "uppercase",
-                      color: T.blue,
-                      background: "transparent",
-                    }}
-                  >
-                    <CornerBorders />
-                    {exp.period}
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 6,
-                      fontSize: 12,
-                      color: T.muted,
-                    }}
-                  >
-                    <FaMapMarkerAlt size={11} />
-                    <span>{exp.location}</span>
+                  <div style={{ display: "flex", flexDirection: isMobile ? "column" : "column", gap: isMobile ? 8 : 14 }}>
+                    <div
+                      style={{
+                        display: "inline-block",
+                        borderRadius: 0,
+                        fontFamily: T.mono,
+                        fontSize: isMobile ? 12 : 14,
+                        fontWeight: 700,
+                        letterSpacing: "0.14em",
+                        textTransform: "uppercase",
+                        color: T.blue,
+                        background: "transparent",
+                      }}
+                    >
+                      <CornerBorders />
+                      {exp.period}
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 6,
+                        fontSize: 12,
+                        color: T.muted,
+                      }}
+                    >
+                      <FaMapMarkerAlt size={11} />
+                      <span>{exp.location}</span>
+                    </div>
                   </div>
                 </div>
 
@@ -1392,7 +1482,7 @@ const Profile = ({ onClose }) => {
                   <h3
                     style={{
                       fontFamily: T.body,
-                      fontSize: 26,
+                      fontSize: isMobile ? 22 : 26,
                       fontWeight: 800,
                       margin: "0 0 6px",
                       letterSpacing: "-0.5px",
@@ -1417,7 +1507,7 @@ const Profile = ({ onClose }) => {
                   <p
                     style={{
                       fontFamily: T.body,
-                      fontSize: 16,
+                      fontSize: isMobile ? 15 : 16,
                       lineHeight: 1.75,
                       color: "#444",
                       marginBottom: exp.technologies.length ? 20 : 0,
@@ -1452,7 +1542,7 @@ const Profile = ({ onClose }) => {
       <AnimatedSection
         id="education"
         style={{
-          padding: "200px 56px 56px 56px",
+          padding: isMobile ? "80px 24px 40px" : "200px 56px 56px 56px",
           borderBottom: `2px solid ${T.border}`,
           background: T.bgAlt,
           position: "relative",
@@ -1475,7 +1565,7 @@ const Profile = ({ onClose }) => {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "1fr 1fr",
+              gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
               gap: 16,
               marginBottom: 64,
             }}
@@ -1589,7 +1679,7 @@ const Profile = ({ onClose }) => {
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(auto-fill, minmax(218px, 1fr))",
+                gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fill, minmax(218px, 1fr))",
                 gap: 16,
               }}
             >
@@ -1727,23 +1817,21 @@ const Profile = ({ onClose }) => {
           overflow: "hidden",
         }}
       >
-
         <div
           style={{
             maxWidth: 1100,
             margin: "0 auto",
-            padding: "88px 56px 0",
+            padding: isMobile ? "60px 24px 0" : "88px 56px 0",
             position: "relative",
             zIndex: 1,
           }}
         >
-
           <motion.p
             variants={fadeUp}
             style={{
               fontFamily: T.body,
               fontStyle: "italic",
-              fontSize: "clamp(16px, 2vw, 21px)",
+              fontSize: isMobile ? "clamp(14px, 4vw, 18px)" : "clamp(16px, 2vw, 21px)",
               lineHeight: 1.65,
               fontWeight: 500,
               color: "#aaa",
@@ -1760,7 +1848,7 @@ const Profile = ({ onClose }) => {
             variants={fadeUp}
             style={{
               display: "grid",
-              gridTemplateColumns: "1fr auto",
+              gridTemplateColumns: "1fr",
               gap: "48px 64px",
               alignItems: "end",
               borderTop: `1px solid #333`,
@@ -1768,7 +1856,7 @@ const Profile = ({ onClose }) => {
               paddingTop: 48,
             }}
           >
-            <div style={{ display: "flex", flexDirection: "row", gap: 18, justifyContent: 'center', alignItems: 'center' }}>
+            <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: 18, justifyContent: 'center', alignItems: 'center' }}>
               {[
                 {
                   icon: <FaEnvelope />,
@@ -1789,7 +1877,7 @@ const Profile = ({ onClose }) => {
                 <motion.a
                   key={c.text}
                   href={c.href}
-                  whileHover={{ x: 8, color: T.blue }}
+                  whileHover={{ x: isMobile ? 0 : 8, color: T.blue }}
                   style={{
                     display: "flex",
                     alignItems: "center",
@@ -1797,7 +1885,7 @@ const Profile = ({ onClose }) => {
                     color: "#888",
                     textDecoration: "none",
                     fontFamily: T.body,
-                    fontSize: 17,
+                    fontSize: isMobile ? 15 : 17,
                     fontWeight: 500,
                     transition: "all 0.3s ease",
                   }}
@@ -1823,22 +1911,20 @@ const Profile = ({ onClose }) => {
                 </motion.a>
               ))}
             </div>
-
-            
           </motion.div>
-
-       
 
           <div
             style={{
               borderTop: `1px solid #222`,
               marginTop: 56,
-              marginBottom: 156,
+              marginBottom: isMobile ? 80 : 156,
               padding: "28px 0",
               display: "flex",
+              flexDirection: isMobile ? "column" : "row",
               justifyContent: "space-between",
+              alignItems: "center",
               flexWrap: "wrap",
-              gap: 12,
+              gap: 20,
               fontFamily: T.mono,
               fontSize: 10,
               color: "#555",
@@ -1893,26 +1979,27 @@ const Profile = ({ onClose }) => {
             <span>Built with love and passion</span>
 
             {/* NAME */}
-            <motion.h2
-            variants={fadeUp}
-            style={{
-              fontFamily: T.body,
-              fontSize: "clamp(52px, 12vw, 248px)",
-              fontWeight: 900,
-              letterSpacing: "-2px",
-              margin: 0,
-              lineHeight: 0.88,
-              color: T.white + "10",
-              textTransform: "uppercase",
-              position: "absolute",
-              bottom: "-170%",
-              textAlign: "center",
-              // transform: "translate(-50%, -50%)",
-              pointerEvents: "none",
-            }}
-          >
-            OSCAR POCO
-          </motion.h2>
+            {!isMobile && (
+              <motion.h2
+                variants={fadeUp}
+                style={{
+                  fontFamily: T.body,
+                  fontSize: "clamp(52px, 12vw, 248px)",
+                  fontWeight: 900,
+                  letterSpacing: "-2px",
+                  margin: 0,
+                  lineHeight: 0.88,
+                  color: T.white + "10",
+                  textTransform: "uppercase",
+                  position: "absolute",
+                  bottom: "-170%",
+                  textAlign: "center",
+                  pointerEvents: "none",
+                }}
+              >
+                OSCAR POCO
+              </motion.h2>
+            )}
           </div>
         </div>
       </AnimatedSection>
