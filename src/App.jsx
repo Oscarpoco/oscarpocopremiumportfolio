@@ -74,27 +74,27 @@ function App() {
     localStorage.setItem('theme', JSON.stringify(darkMode));
   }, [darkMode]);
 
-  useEffect(() => {
-    const checkMobile = () => {
-      const mobile = window.innerWidth <= 768;
-      setIsMobileView(mobile);
-    };
+  // useEffect(() => {
+  //   const checkMobile = () => {
+  //     const mobile = window.innerWidth <= 768;
+  //     setIsMobileView(mobile);
+  //   };
 
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
+  //   checkMobile();
+  //   window.addEventListener('resize', checkMobile);
 
-    let redirectTimer;
-    if (window.innerWidth <= 768) {
-      redirectTimer = setTimeout(() => {
-        window.location.href = 'https://oscar-oldsite.vercel.app/';
-      }, 5000);
-    }
+  //   let redirectTimer;
+  //   if (window.innerWidth <= 768) {
+  //     redirectTimer = setTimeout(() => {
+  //       window.location.href = 'https://oscar-oldsite.vercel.app/';
+  //     }, 5000);
+  //   }
 
-    return () => {
-      window.removeEventListener('resize', checkMobile);
-      if (redirectTimer) clearTimeout(redirectTimer);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener('resize', checkMobile);
+  //     if (redirectTimer) clearTimeout(redirectTimer);
+  //   };
+  // }, []);
 
   const resolveRoute = (pathname) => {
     const normalized = normalizePath(pathname);
@@ -160,34 +160,34 @@ function App() {
     return <IntroAnimation onComplete={handleIntroComplete} />;
   }
 
-  if (isMobileView) {
-    return (
-      <div className="mobile-blocker" style={{
-          width: '100vw',
-          minHeight: '100vh',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          textAlign: 'center',
-          padding: '24px',
-          background: '#0f172a',
-          color: '#f8fafc'
-      }}>
-        <div>
-          <h1>Mobile view is not supported</h1>
-          <p style={{margin: '1rem 0'}}>Click here to view the compatible site for mobile, or wait to auto-redirect.</p>
-          <a href="https://oscar-oldsite.vercel.app/" style={{
-            color: '#ffffff',
-            background: '#2563eb',
-            borderRadius: '10px',
-            padding: '12px 18px',
-            textDecoration: 'none',
-            fontWeight: 600
-          }}>Go to mobile-friendly site</a>
-        </div>
-      </div>
-    );
-  }
+  // if (isMobileView) {
+  //   return (
+  //     <div className="mobile-blocker" style={{
+  //         width: '100vw',
+  //         minHeight: '100vh',
+  //         display: 'flex',
+  //         justifyContent: 'center',
+  //         alignItems: 'center',
+  //         textAlign: 'center',
+  //         padding: '24px',
+  //         background: '#0f172a',
+  //         color: '#f8fafc'
+  //     }}>
+  //       <div>
+  //         <h1>Mobile view is not supported</h1>
+  //         <p style={{margin: '1rem 0'}}>Click here to view the compatible site for mobile, or wait to auto-redirect.</p>
+  //         <a href="https://oscar-oldsite.vercel.app/" style={{
+  //           color: '#ffffff',
+  //           background: '#2563eb',
+  //           borderRadius: '10px',
+  //           padding: '12px 18px',
+  //           textDecoration: 'none',
+  //           fontWeight: 600
+  //         }}>Go to mobile-friendly site</a>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   if (routeNotFound) {
     return <Error404 />;
