@@ -82,7 +82,7 @@ function NavigationBar({ onOpen, darkMode, toggleTheme, activeItem }) {
           <span className="portfolio-subtitle">Software Developer</span>
         </div>
         <h2 className="Portfolio-h2" id="mobile-device-only">
-          OSCAR
+          OSCAR POCO
         </h2>
       </motion.div>
 
@@ -106,7 +106,7 @@ function NavigationBar({ onOpen, darkMode, toggleTheme, activeItem }) {
         </motion.span>
       </motion.div>
 
-      <span className="current-section-label" style={{ color: "green", fontSize: "16px", marginTop: "4px", fontWeight: "200" }}>
+      <span className="current-section-label label-tab" style={{ color: "green", fontSize: "16px", marginTop: "4px", fontWeight: "200" }}>
         53 designs in one portfolio
       </span>
       

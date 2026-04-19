@@ -147,7 +147,7 @@ function About({ darkMode, toggleTheme, handleDownload, navigateToSection }) {
             whileTap={{ scale: 0.98 }}
           >
             <MdDownload className="action-icon" />
-            <span className="mobileSideBar">Download CV</span>
+            <span className="mobileSideBar button-action">Download CV</span>
           </motion.button>
         </motion.div>
       </div>

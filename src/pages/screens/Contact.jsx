@@ -123,7 +123,7 @@ function Contacts({darkMode, toggleTheme, handleDownload}) {
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ duration: 0.5 }}
                 >
-                    <h1>My Portfolio</h1>
+                    <h1>Contacts</h1>
                     <div className="breadcrumb">
                         <span>Dashboard</span>
                         <IoIosArrowForward className="breadcrumb-icon" />

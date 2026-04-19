@@ -190,21 +190,20 @@ function Experience({ darkMode, toggleTheme, handleDownload }) {
       </motion.button>
 
       {/* HEADER SECTION */}
-      <motion.div
-        ref={headerRef}
-        className="skills-header"
-        initial={{ y: -30, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5 }}
-      >
-        <div className="header-left">
-          <h1 className="page-title">Work Experience</h1>
+      <div className="about-header">
+        <motion.div
+          className="header-left"
+          initial={{ x: -50, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <h1>Work Experience</h1>
           <div className="breadcrumb">
             <span>Portfolio</span>
             <IoIosArrowForward className="breadcrumb-icon" />
             <span className="current-page">Experience</span>
           </div>
-        </div>
+        </motion.div>
 
         <motion.div
           className="header-actions"
@@ -213,16 +212,16 @@ function Experience({ darkMode, toggleTheme, handleDownload }) {
           transition={{ duration: 0.5, delay: 0.2 }}
         >
           <motion.button
-            className="download-btn"
+            className="action-button download-btn primary"
             onClick={handleDownload}
             whileHover={{ scale: 1.02, x: 3 }}
             whileTap={{ scale: 0.98 }}
           >
-            <MdDownload className="btn-icon" />
-            <span className="btn-text">Download CV</span>
+            <MdDownload className="action-icon" />
+            <span className="mobileSideBar button-action">Download CV</span>
           </motion.button>
         </motion.div>
-      </motion.div>
+      </div>
 
       {/* SECTION HEADER */}
       <motion.div

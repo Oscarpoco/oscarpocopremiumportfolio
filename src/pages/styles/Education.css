@@ -248,7 +248,7 @@
     width: 4px;
     height: 100%;
     background: var(--primary);
-    border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+    /* border-radius: var(--radius-lg) 0 0 var(--radius-lg); */
 }
 
 .dark-theme .edu-card-accent {
@@ -497,7 +497,7 @@
 
 @media (max-width: 768px) {
     .education-container {
-        padding: 0 16px 16px;
+        padding: 100px 16px 16px;
     }
 
     .education-header {

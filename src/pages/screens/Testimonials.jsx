@@ -121,7 +121,7 @@ function Testimonials({darkMode, toggleTheme, handleDownload}) {
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ duration: 0.5 }}
                 >
-                    <h1>My Portfolio</h1>
+                    <h1>Testimonials</h1>
                     <div className="breadcrumb">
                         <span>Portfolio</span>
                         <IoIosArrowForward className="breadcrumb-icon" />

@@ -387,7 +387,7 @@
 /* RESPONSIVE STYLES */
 @media (max-width: 768px) {
   .experience-container {
-    padding: 0 16px 16px;
+    padding: 100px 16px 16px;
   }
 
   .experience-header {
@@ -397,7 +397,7 @@
   }
 
   .page-title {
-    font-size: 24px;
+    font-size: 14px;
   }
 
   .experience-stats-banner {
