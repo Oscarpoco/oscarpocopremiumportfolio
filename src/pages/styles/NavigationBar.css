@@ -276,12 +276,12 @@
     }
 
     .logo-container {
-        width: 35px;
-        height: 35px;
-    }
+        width: 40px;
+        height: 40px;
+}
 
     .logo-icon {
-        font-size: 24px;
+        font-size: 28px;
     }
 
     .label-tab
@@ -304,7 +304,7 @@
     }
 
     #mobile-device-only {
-        font-size: 16px;
+        font-size: 22px;
         display: block;
         font-weight: 700;
         color: var(--primary);

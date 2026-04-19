@@ -31,7 +31,7 @@ import "../styles/Featured.css";
 function Featured({ darkMode, toggleTheme }) {
   const [activeTab, setActiveTab] = useState("featured");
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [viewMode, setViewMode] = useState("carousel"); // carousel, grid
+  const [viewMode, setViewMode] = useState("grid"); // carousel, grid
   const [filterOpen, setFilterOpen] = useState(false);
   const [selectedTech, setSelectedTech] = useState([]);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);

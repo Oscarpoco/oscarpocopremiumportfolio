@@ -124,6 +124,7 @@ html {
     .featured-header {
         left: var(--sidebar-width-sm) !important;
         width: calc(100% - var(--sidebar-width-sm)) !important;
+        top: 70px !important;
     }
 }
 
@@ -135,6 +136,7 @@ html {
     .featured-header {
         left: 60px !important;
         width: calc(100% - 60px) !important;
+        top: 70px !important;
     }
 }
 

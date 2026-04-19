@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 // STYLING
 import "../styles/About.css";
@@ -17,8 +17,6 @@ import {
 } from "react-icons/md";
 import { IoIosArrowForward } from "react-icons/io";
 import { AiFillStar } from "react-icons/ai";
-import { BsAward } from "react-icons/bs";
-import { BiSolidMessageDetail } from "react-icons/bi";
 import { motion } from "framer-motion";
 
 // DATABASE
@@ -71,7 +69,6 @@ const portfolioStats = [
 ];
 
 function About({ darkMode, toggleTheme, handleDownload, navigateToSection }) {
-  const [activeTab, setActiveTab] = useState("featured");
   const [hoveredCard, setHoveredCard] = useState(null);
 
   // Handle card click - navigate to section
@@ -265,7 +262,8 @@ function About({ darkMode, toggleTheme, handleDownload, navigateToSection }) {
               ].map((stat, index) => (
                 <motion.div
                   key={stat.label}
-                  className="Stat-item"
+                  className="Stat-item "
+                  id="about-item"
                   whileHover={{ y: -5, scale: 1.05 }}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}

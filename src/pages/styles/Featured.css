@@ -933,18 +933,7 @@
   }
 
   .view-btn {
-    width: 30px;
-    height: 30px;
-    border: none;
-    background: transparent;
-    color: var(--text-tertiary);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 16px;
-    cursor: pointer;
-    transition: all var(--transition-normal);
-    padding: 8px;
+     display: none;
   }
 
   .filter-btn {
