@@ -8,8 +8,8 @@ export const portfolioStats = [
             title: "PROJECTS",
             icon: <FaFolderOpen className="folder-icon" />,
             count: "3+",
-            color: "#2363C7", // Blue
-            gradient: "linear-gradient(135deg, #2363C7, #4285F4)",
+            color: "#0d9488",
+            gradient: "#0d9488",
             users: [
                 "https://i.pravatar.cc/150?img=1",
                 "https://i.pravatar.cc/150?img=2",
@@ -23,8 +23,8 @@ export const portfolioStats = [
             icon: <FaCalendarAlt className="folder-icon" />,
             count: "3+",
             subtitle: "Years",
-            color: "#1FA463", 
-            gradient: "linear-gradient(135deg, #1FA463, #27AE60)",
+            color: "#1FA463",
+            gradient: "#1FA463",
             users: [
                 "https://i.pravatar.cc/150?img=5",
                 "https://i.pravatar.cc/150?img=6",
@@ -36,8 +36,8 @@ export const portfolioStats = [
             title: "HAPPY CLIENTS",
             icon: <FaSmile className="folder-icon" />,
             count: "10+",
-            color: "#E74C3C", // Red
-            gradient: "linear-gradient(135deg, #E74C3C, #FF7675)",
+            color: "#E74C3C",
+            gradient: "#E74C3C",
             users: [
                 "https://i.pravatar.cc/150?img=8",
                 "https://i.pravatar.cc/150?img=9",

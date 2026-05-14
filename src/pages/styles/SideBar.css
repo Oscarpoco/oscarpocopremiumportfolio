@@ -94,8 +94,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    /* border-radius: var(--radius-sm); */
-    /* border: 1px solid transparent; */
     transition: all var(--transition-normal);
 }
 
@@ -107,6 +105,7 @@
 .nav-label {
     flex: 1;
     letter-spacing: 0.3px;
+    font-family: "Indie Flower", "Comic Sans MS", "Caveat", cursive, sans-serif;
 }
 
 .active-indicator {
@@ -136,6 +135,7 @@
     color: rgba(31, 41, 55, 0.5);
     letter-spacing: 1.5px;
     text-transform: uppercase;
+    font-family: "Indie Flower", "Comic Sans MS", "Caveat", cursive, sans-serif;
 }
 
 .Parent-sidebar.dark-mode .stats-heading {
@@ -148,7 +148,6 @@
     gap: 12px;
     padding: 12px;
     background: rgba(0, 0, 0, 0.03);
-    /* border-radius: var(--radius-md); */
     border: 2px dotted rgba(0, 0, 0, 0.08);
 }
 
@@ -189,6 +188,7 @@
     color: rgba(31, 41, 55, 0.5);
     display: block;
     margin-bottom: 8px;
+    font-family: "Indie Flower", "Comic Sans MS", "Caveat", cursive, sans-serif;
 }
 
 .Parent-sidebar.dark-mode .stats-label {
@@ -209,14 +209,14 @@
 
 .stats-progress-fill {
     height: 100%;
-    background: #4285F4;
+    background: #18adec;
     /* border-radius: 3px; */
     box-shadow: 0 0 6px rgba(35, 99, 199, 0.3);
 }
 
 .Parent-sidebar.dark-mode .stats-progress-fill {
-    background: linear-gradient(90deg, #2363C7, #4285F4);
-    box-shadow: 0 0 10px rgba(35, 99, 199, 0.5);
+    background: linear-gradient(90deg, #0effff, #07f0f0);
+    box-shadow: 0 0 10px rgba(111, 226, 244, 0.5);
 }
 
 .stats-details {
@@ -228,6 +228,7 @@
 .stats-text {
     font-size: 12px;
     color: rgba(31, 41, 55, 0.7);
+    font-family: "Indie Flower", "Comic Sans MS", "Caveat", cursive, sans-serif;
 }
 
 .Parent-sidebar.dark-mode .stats-text {

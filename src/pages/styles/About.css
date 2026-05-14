@@ -28,15 +28,15 @@
   width: 50px;
   height: 50px;
   border-radius: 38px;
-  color: #037df8 !important;
+  color: var(--primary) !important;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 24px;
   cursor: pointer;
   z-index: 999;
-  box-shadow: 0 8px 25px rgba(35, 99, 199, 0.35);
-  border: 2px dotted rgba(35, 99, 199, 0.35);
+  box-shadow: 0 8px 25px var(--primary-shadow-25);
+  border: 2px dotted var(--primary-ring);
   transition: all var(--transition-normal);
   -webkit-border-radius: 38px;
   -moz-border-radius: 38px;
@@ -45,7 +45,7 @@
 }
 
 .theme-toggle:hover {
-  box-shadow: 0 12px 35px rgba(35, 99, 199, 0.45);
+  box-shadow: 0 12px 35px var(--primary-shadow-35);
 }
 
 /* HEADER SECTION */
@@ -123,12 +123,23 @@
   gap: 8px;
   padding: 12px 20px;
   border: 1px solid var(--border-color);
-  background: linear-gradient(135deg, var(--primary-color) 50%, var(--secondary-color) 50%);
+  background: var(--bg-secondary);
   color: var(--text-secondary);
   font-weight: 500;
   font-size: 14px;
   cursor: pointer;
   transition: all var(--transition-normal);
+}
+
+.dark-theme .action-button {
+  border: none;
+  background: linear-gradient(135deg, var(--primary-color) 50%, var(--secondary-color) 50%);
+  color: var(--text-secondary);
+}
+
+.dark-theme .action-button:hover {
+  border-color: var(--primary);
+  color: var(--primary);
 }
 
 .action-button:hover {
@@ -137,14 +148,19 @@
 }
 
 .action-button.primary {
-  background: var(--primary-gradient);
+  background: var(--primary);
   color: white;
   border: none;
-  box-shadow: 0 4px 15px rgba(35, 99, 199, 0.25);
+  box-shadow: 0 4px 15px var(--primary-shadow-25);
+}
+
+.dark-theme .action-button.primary {
+  background: var(--primary-gradient);
+  box-shadow: 0 4px 15px var(--primary-shadow-25);
 }
 
 .action-button.primary:hover {
-  box-shadow: 0 6px 20px rgba(35, 99, 199, 0.35);
+  box-shadow: 0 6px 20px var(--primary-shadow-35);
 }
 
 .action-icon {
@@ -209,7 +225,7 @@
 
 .profile-image:hover {
   transform: translateY(-8px) rotate(2deg);
-  box-shadow: 0 20px 40px rgba(35, 99, 199, 0.2);
+  box-shadow: 0 20px 40px var(--primary-shadow-15);
 }
 
 .avatar-image {
@@ -230,15 +246,19 @@
   width: 55px;
   height: 55px;
   /* border-radius: 50%; */
-  background: var(--primary-gradient);
+  background: var(--primary);
   color: white;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 24px;
   font-weight: 700;
-  box-shadow: 0 4px 15px rgba(35, 99, 199, 0.4);
+  box-shadow: 0 4px 15px var(--primary-shadow-35);
   border: 3px dotted var(--bg-secondary);
+}
+
+.dark-theme .profile-badge {
+  background: var(--primary-gradient);
 }
 
 .floating-header-1 {
@@ -273,10 +293,14 @@
 }
 
 .social-link:hover {
-  background: var(--primary-gradient);
+  background: var(--primary);
   color: white;
   border-color: transparent;
-  box-shadow: 0 4px 15px rgba(35, 99, 199, 0.3);
+  box-shadow: 0 4px 15px var(--primary-shadow-25);
+}
+
+.dark-theme .social-link:hover {
+  background: var(--primary-gradient);
 }
 
 .profile-info {
@@ -296,7 +320,7 @@
 }
 
 .profile-name {
-  font-family: var(--font-display);
+  font-family: "Indie Flower", "Comic Sans MS", "Caveat", cursive, sans-serif;
   font-size: 36px;
   font-weight: 700;
   color: var(--text-primary);
@@ -305,11 +329,7 @@
 }
 
 .status-badge {
-  background: linear-gradient(
-    135deg,
-    rgba(16, 185, 129, 0.15),
-    rgba(16, 185, 129, 0.1)
-  );
+  background: rgba(16, 185, 129, 0.12);
   color: var(--accent-success);
   padding: 6px 14px;
   border-radius: var(--radius-full);
@@ -330,7 +350,8 @@
   font-size: 15px;
   color: var(--text-secondary);
   line-height: 1.7;
-  max-width: 600px;
+  max-width: 750px;
+  font-family: "Indie Flower", "Comic Sans MS", "Caveat", cursive, sans-serif;
 }
 
 .portfolio-update-date {
@@ -340,9 +361,9 @@
   margin-top: 0;
   padding: 6px 12px;
   background: var(--bg-tertiary);
-  /* border-radius: var(--radius-sm); */
   display: inline-block;
   border-left: 3px solid var(--primary);
+  font-family: "Indie Flower", "Comic Sans MS", "Caveat", cursive, sans-serif;
 }
 
 .profile-update-row {
@@ -371,6 +392,7 @@
   border: 1px solid var(--border-color);
   cursor: default;
   margin-left: 10;
+  font-family: "Indie Flower", "Comic Sans MS", "Caveat", cursive, sans-serif;
 }
 
 .skill-tag:hover {
@@ -400,7 +422,7 @@
 
 .Stat-item:hover {
   border-color: var(--primary);
-  box-shadow: 0 4px 15px rgba(35, 99, 199, 0.1);
+  box-shadow: 0 4px 15px var(--primary-shadow-10);
 }
 
 .stat-value {
@@ -695,7 +717,7 @@
 }
 
 .project-type {
-  background: rgba(35, 99, 199, 0.1);
+  background: var(--primary-soft);
   color: var(--primary);
   padding: 5px 12px;
   /* border-radius: var(--radius-full); */
@@ -751,7 +773,7 @@
   background: var(--primary);
   color: white;
   border-color: transparent;
-  box-shadow: 0 4px 15px rgba(35, 99, 199, 0.25);
+  box-shadow: 0 4px 15px var(--primary-shadow-25);
 }
 
 /* RESPONSIVE STYLES */

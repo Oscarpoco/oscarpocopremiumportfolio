@@ -368,7 +368,7 @@ function IntroAnimation({ onComplete }) {
                     ease: EASE_OUT_EXPO,
                   }}
                 >
-                  53
+                  153
                 </motion.div>
 
                 <motion.div

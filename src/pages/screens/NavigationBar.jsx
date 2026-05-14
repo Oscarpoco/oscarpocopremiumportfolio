@@ -54,7 +54,9 @@ function NavigationBar({ onOpen, darkMode, toggleTheme, activeItem }) {
           animate={{ width: `${scrollProgress}%` }}
           transition={{ duration: 0.1 }}
           style={{
-            background: 'linear-gradient(90deg, #2363C7 0%, #10b981 100%)',
+            background: darkMode
+              ? 'linear-gradient(90deg, #06d1ff 0%, #10b981 100%)'
+              : '#0d9488',
             height: '7px',
             position: 'absolute',
             top: 0,
@@ -86,13 +88,13 @@ function NavigationBar({ onOpen, darkMode, toggleTheme, activeItem }) {
         </h2>
       </motion.div>
 
+
       {/* ACTIVE SECTION INDICATOR - Desktop Only */}
       <motion.div
         className="active-section-indicator"
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.3 }}
-        style={{borderRadius: 'var(--radius-md)'}}
+        transition={{ delay: 0.3 }}        
       >
         <span className="current-section-label">Currently viewing:</span>
         <motion.span
@@ -107,7 +109,7 @@ function NavigationBar({ onOpen, darkMode, toggleTheme, activeItem }) {
       </motion.div>
 
       <span className="current-section-label label-tab" style={{ color: "green", fontSize: "16px", marginTop: "4px", fontWeight: "200" }}>
-        53 designs in one portfolio
+        153 designs in one portfolio
       </span>
       
 

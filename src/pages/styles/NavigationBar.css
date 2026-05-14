@@ -51,7 +51,7 @@
     align-items: center;
     /* background: var(--primary-gradient); */
     /* border-radius: var(--radius-md); */
-    box-shadow: 0 4px 15px rgba(35, 99, 199, 0.3);
+    box-shadow: 0 4px 15px var(--primary-shadow-35);
 }
 
 .logo-icon {
@@ -103,6 +103,10 @@
     font-weight: 500;
     letter-spacing: 0.5px;
     text-transform: uppercase;
+}
+
+.label-tab {
+    font-family: "Indie Flower", "Comic Sans MS", "Caveat", cursive, sans-serif;
 }
 
 .current-section-name {

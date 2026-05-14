@@ -108,7 +108,7 @@ export const certificateData = [
         {
             id: 9,
             title: "ISO 27001:2022",
-            issuer: "ISO",
+            issuer: "World Wide Industrial Systems & Engineers",
             date: "2025",
             icon: <FaCertificate  />,
             color: "#0078D4"
