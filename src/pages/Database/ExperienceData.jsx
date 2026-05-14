@@ -6,6 +6,17 @@ import { IoMdTrophy } from 'react-icons/io';
 
 export const experienceData = [
         {
+            id: 0,
+            company: "World Wide Industrial Systems & Engineers",
+            position: "Software Development Facilitator & Software Developer",
+            period: "Jun 2025 - Current",
+            location: "Upington, Northern Cape, South Africa",
+            description: "Facilitated an NQF5 Software Development Learnership by delivering comprehensive instruction in software fundamentals, workplace readiness, and project-based learning. Guided learners through coding, debugging, teamwork practices, and assessment preparations. Responsible for classroom management, curriculum delivery, learner mentorship, and progress tracking in accordance with SAQA standards.",
+            technologies: ["Curriculum Delivery", "Mentoring", "Assessment Preparation", "NQF5 SD Learnership", "Facilitation", "Software Fundamentals", "Workplace Readiness", "Project-based Learning"],
+            icon: <HiCode />
+        },
+   
+        {
             id: 1,
             company: "Mlab CodeTribe Academy",
             position: "Junior React Developer",

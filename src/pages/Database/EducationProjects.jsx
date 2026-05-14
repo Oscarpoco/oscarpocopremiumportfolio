@@ -1,23 +1,25 @@
 
-import { FaGraduationCap, FaUniversity, FaMedal, FaCertificate, FaCar, FaLaptopCode, FaChalkboardTeacher, FaCode  } from 'react-icons/fa';
+import { FaGraduationCap, FaUniversity, FaMedal, FaCertificate, FaCar, FaLaptopCode, FaChalkboardTeacher, FaCode, FaCloud  } from 'react-icons/fa';
 
 
 
 export const educationData = [
     {
         id: 1,
-        degree: "Diploma in Accounting Science",
-        institution: "University of South Africa (UNISA)",
-        period: "2024 - Current",
+        degree: "Diploma in Information Technology in Application Development",
+        institution: "Rosebank International University College",
+        period: "2026 - Current",
         location: "South Africa",
-        description: "Focused on financial accounting, auditing, taxation, and business law. This program prepares students for a professional career in accounting with strong analytical and ethical foundations.",
+        description: "Comprehensive program focusing on software development, programming, systems analysis, and database management. Prepares students to design, develop, and implement IT applications and solutions for real-world problems.",
         courses: [
-            "Financial Accounting Principles",
-            "Management Accounting",
-            "Auditing Theory and Practice",
-            "South African Tax Law",
-            "Corporate Governance"
+            "Software Development Fundamentals",
+            "Application Programming",
+            "Systems Analysis and Design",
+            "Database Management Systems",
+            "Web Development",
+            "Information Systems Security"
         ],
+   
         icon: <FaGraduationCap />
     },
     {
@@ -41,7 +43,7 @@ export const educationData = [
 export const certificateData = [
         {
             id: 1,
-            title: "React Course NQF 5",
+            title: "React Course",
             issuer: "CodeTribe",
             date: "April 2025",
             icon: <FaLaptopCode  />,
@@ -94,5 +96,29 @@ export const certificateData = [
             date: "April 2024",
             icon: <FaCar />,
             color: "#4CAF50"
+        },
+        {
+            id: 8,
+            title: "Oracle Cloud Infrastructure",
+            issuer: "Oracle",
+            date: "2025",
+            icon: <FaCloud  />,
+            color: "#2A73CC"
+        },
+        {
+            id: 9,
+            title: "ISO 27001:2022",
+            issuer: "ISO",
+            date: "2025",
+            icon: <FaCertificate  />,
+            color: "#0078D4"
+        },
+        {
+            id: 10,
+            title: "SDP Assessor",
+            issuer: "Thuso Training",
+            date: "October 2025",
+            icon: <FaChalkboardTeacher  />,
+            color: "#01B3E3"
         }
     ];
