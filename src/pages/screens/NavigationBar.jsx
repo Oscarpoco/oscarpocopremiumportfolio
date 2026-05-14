@@ -13,6 +13,19 @@ import { BiCodeAlt } from "react-icons/bi";
 function NavigationBar({ onOpen, darkMode, toggleTheme, activeItem }) {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isScrollable, setIsScrollable] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(() =>
+    typeof window !== "undefined"
+      ? window.matchMedia("(min-width: 769px)").matches
+      : true
+  );
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 769px)");
+    const sync = () => setIsDesktop(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -140,9 +153,9 @@ function NavigationBar({ onOpen, darkMode, toggleTheme, activeItem }) {
 
         <motion.div
           className="abbreviation"
-          onClick={onOpen}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          onClick={isDesktop ? onOpen : undefined}
+          whileHover={isDesktop ? { scale: 1.05 } : undefined}
+          whileTap={isDesktop ? { scale: 0.95 } : undefined}
           initial={{ opacity: 0, scale: 0 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.5, type: "spring" }}

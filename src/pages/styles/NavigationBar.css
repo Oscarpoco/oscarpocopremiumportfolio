@@ -292,6 +292,11 @@
     {
         display: none;
     }
+
+    .abbreviation {
+        cursor: default;
+        pointer-events: none;
+    }
 }
 
 @media (max-width: 576px) {
