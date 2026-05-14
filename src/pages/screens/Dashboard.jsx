@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 // STYLING
@@ -16,6 +16,19 @@ import Error404 from "./Error404";
 
 
 function Dashboard({ activeItem, isAuthenticated, darkMode, toggleTheme, handleDownload, navigateToSection }) {
+
+    const scrollContainerRef = useRef(null);
+
+    useEffect(() => {
+        const el = scrollContainerRef.current;
+        if (!el) return;
+        el.scrollTop = 0;
+        requestAnimationFrame(() => {
+            if (scrollContainerRef.current) {
+                scrollContainerRef.current.scrollTop = 0;
+            }
+        });
+    }, [activeItem]);
 
     const pageVariants = {
         initial: { opacity: 0 },
@@ -60,7 +73,7 @@ function Dashboard({ activeItem, isAuthenticated, darkMode, toggleTheme, handleD
 
     return (
         <div className={`Parent-dashboard ${darkMode ? 'dark-mode' : ''}`}>
-            <div className="Child-dashboard">
+            <div className="Child-dashboard" ref={scrollContainerRef}>
                 <AnimatePresence mode="wait">
                     <motion.div
                         key={activeItem}

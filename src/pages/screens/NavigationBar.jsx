@@ -40,6 +40,16 @@ function NavigationBar({ onOpen, darkMode, toggleTheme, activeItem }) {
     };
   }, []);
 
+  useEffect(() => {
+    setScrollProgress(0);
+    const scrollContainer = document.querySelector(".Child-dashboard");
+    if (scrollContainer) {
+      const scrollHeight =
+        scrollContainer.scrollHeight - scrollContainer.clientHeight;
+      setIsScrollable(scrollHeight > 0);
+    }
+  }, [activeItem]);
+
   return (
     <motion.nav
       className={`Parent-nav ${darkMode ? "dark-mode" : ""}`}
