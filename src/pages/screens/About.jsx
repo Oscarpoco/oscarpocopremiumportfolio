@@ -304,10 +304,12 @@ function About({darkMode, toggleTheme, handleDownload, navigateToSection}) {
                             <p className="portfolio-update-date">
                                 Last updated:{" "}
                                 {
-                                commitDate ? new Date(commitDate).toLocaleDateString(undefined, {
+                                commitDate ? new Date(commitDate).toLocaleString(undefined, {
                                     year: "numeric",
                                     month: "short",
-                                    day: "numeric"
+                                    day: "numeric",
+                                    hour: "2-digit",
+                                    minute: "2-digit"
                                 }) : "Loading..."
                             } </p>
 
@@ -320,7 +322,6 @@ function About({darkMode, toggleTheme, handleDownload, navigateToSection}) {
                                     "Node.js",
                                     ".NET",
                                     "Python",
-                                    "UI/UX",
                                     "Java",
                                 ].map((skill, index) => (
                                     <motion.span key={skill}
