@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion as Motion, useInView } from "framer-motion";
 import {
   FaTimes,
   FaEnvelope,
@@ -8,13 +8,6 @@ import {
   FaLinkedin,
   FaMapMarkerAlt,
   FaGraduationCap,
-  FaUniversity,
-  FaMedal,
-  FaCertificate,
-  FaCar,
-  FaLaptopCode,
-  FaChalkboardTeacher,
-  FaCode,
   FaArrowRight,
   FaArrowLeft,
   FaHome,
@@ -22,21 +15,11 @@ import {
   FaBriefcase,
   FaProjectDiagram,
 } from "react-icons/fa";
-import { BsBriefcase } from "react-icons/bs";
-import { HiCode } from "react-icons/hi";
-import { RiTeamLine } from "react-icons/ri";
-import { IoMdTrophy } from "react-icons/io";
-import {
-  FiMonitor,
-  FiSmartphone,
-  FiGrid,
-  FiEdit2,
-  FiSettings,
-  FiLayers,
-  FiCoffee,
-  FiPenTool,
-  FiDatabase,
-} from "react-icons/fi";
+import { FiSettings } from "react-icons/fi";
+
+import { experienceData } from "../../Database/ExperienceData";
+import { educationData, certificateData } from "../../Database/EducationProjects";
+import { skillsData } from "../../Database/SkillsData";
 
 // Import your project images
 import mati from '../../../assets/mati.png';
@@ -106,212 +89,6 @@ const projectsData = [
   },
 ];
 
-const experienceData = [
-  {
-    id: 1,
-    company: "Mlab CodeTribe Academy",
-    position: "Junior React Developer",
-    period: "Jul 2024 – Mar 2025",
-    location: "Soweto, JHB",
-    description:
-      "Developed responsive web applications with React, Node.js, Express, MongoDB & Firebase, as well as mobile applications using React Native and Expo.",
-    technologies: [
-      "React",
-      "TypeScript",
-      "Redux",
-      "React Native",
-      "Node.js",
-      "Express",
-      "MongoDB",
-      "Firebase",
-    ],
-    icon: <HiCode />,
-  },
-  {
-    id: 2,
-    company: "City of Joburg – EPWP",
-    position: "Jozi Ihlomile Educator",
-    period: "Jan 2023 – Jun 2024",
-    location: "Lawley 2, JHB",
-    description:
-      "Door-to-door community educator covering HIV/AIDS, TB, STDs, substance abuse, and social support referrals in priority wards across Johannesburg.",
-    technologies: [],
-    icon: <BsBriefcase />,
-  },
-  {
-    id: 3,
-    company: "Power Learn Project Academy",
-    position: "Data Collector",
-    period: "Apr 2024 – May 2024",
-    location: "Remote",
-    description:
-      "Reached out to South African PLP alumni to gather qualitative feedback on their learning experience and programme outcomes.",
-    technologies: [],
-    icon: <RiTeamLine />,
-  },
-  {
-    id: 4,
-    company: "Power Learn Project Academy",
-    position: "Web Developer – Scholarship",
-    period: "Jan 2023 – May 2023",
-    location: "Virtually",
-    description:
-      "Built a functional and visually appealing website using HTML, CSS & JavaScript as part of a fully funded scholarship programme.",
-    technologies: ["HTML/CSS", "JavaScript", "React"],
-    icon: <IoMdTrophy />,
-  },
-];
-
-const skillsData = [
-  {
-    id: 1,
-    title: "UI/UX Design",
-    icon: <FiMonitor />,
-    desc: "User-centered interfaces & exceptional experiences.",
-  },
-  {
-    id: 2,
-    title: "App Design",
-    icon: <FiSmartphone />,
-    desc: "Beautiful application interfaces that boost engagement.",
-  },
-  {
-    id: 3,
-    title: "Website Design",
-    icon: <FiGrid />,
-    desc: "Responsive layouts that work across all screen sizes.",
-  },
-  {
-    id: 4,
-    title: "UI Design",
-    icon: <FiEdit2 />,
-    desc: "Aesthetic, functional UI components & systems.",
-  },
-  {
-    id: 5,
-    title: "Design System",
-    icon: <FiSettings />,
-    desc: "Cohesive component libraries for product consistency.",
-  },
-  {
-    id: 6,
-    title: "Wireframing",
-    icon: <FiLayers />,
-    desc: "Structural blueprints before a single line of code.",
-  },
-  {
-    id: 7,
-    title: "Brand Identity",
-    icon: <FiCoffee />,
-    desc: "Visual identity systems that resonate with audiences.",
-  },
-  {
-    id: 8,
-    title: "Poster Design",
-    icon: <FiPenTool />,
-    desc: "Visually compelling communication assets.",
-  },
-  {
-    id: 9,
-    title: "Web App Design",
-    icon: <FiDatabase />,
-    desc: "Dynamic, interactive responsive web applications.",
-  },
-  {
-    id: 10,
-    title: "Scrum Master",
-    icon: <FiMonitor />,
-    desc: "Agile facilitation & team impediment removal.",
-  },
-  {
-    id: 11,
-    title: "Entrepreneurship",
-    icon: <FiCoffee />,
-    desc: "Identifying opportunities & building new ventures.",
-  },
-];
-
-const educationData = [
-  {
-    id: 1,
-    degree: "Diploma in Accounting Science",
-    institution: "University of South Africa (UNISA)",
-    period: "2024 – Current",
-    description:
-      "Financial accounting, auditing, taxation & business law — building analytical and ethical foundations for a professional accounting career.",
-    courses: [
-      "Financial Accounting",
-      "Management Accounting",
-      "Auditing Theory",
-      "SA Tax Law",
-      "Corporate Governance",
-    ],
-    icon: <FaGraduationCap />,
-  },
-  {
-    id: 2,
-    degree: "National Senior Certificate",
-    institution: "N'wanati High School",
-    period: "2014 – 2018",
-    description:
-      "Strong emphasis on Mathematics & Physical Science. Led peer tutoring groups and participated in science fairs.",
-    courses: ["Mathematics", "Physical Science", "English FAL", "Geography"],
-    icon: <FaUniversity />,
-  },
-];
-
-const certificateData = [
-  {
-    id: 1,
-    title: "React Course NQF 5",
-    issuer: "CodeTribe",
-    date: "April 2025",
-    icon: <FaLaptopCode />,
-  },
-  {
-    id: 2,
-    title: "Web Development",
-    issuer: "PLP Academy",
-    date: "December 2023",
-    icon: <FaCode />,
-  },
-  {
-    id: 3,
-    title: "National Senior Certificate",
-    issuer: "Umalusi",
-    date: "December 2018",
-    icon: <FaMedal />,
-  },
-  {
-    id: 4,
-    title: "Digital Literacy Productivity",
-    issuer: "Microsoft",
-    date: "June 2022",
-    icon: <FaCertificate />,
-  },
-  {
-    id: 5,
-    title: "Basic HAST Training",
-    issuer: "ANOVA Health Institute",
-    date: "January 2022",
-    icon: <FaChalkboardTeacher />,
-  },
-  {
-    id: 6,
-    title: "Software Development",
-    issuer: "Microsoft & LinkedIn",
-    date: "December 2022",
-    icon: <FaLaptopCode />,
-  },
-  {
-    id: 7,
-    title: "Code 10 C1 Driving Licence",
-    issuer: "SA Licensing Department",
-    date: "April 2024",
-    icon: <FaCar />,
-  },
-];
-
 const interests = [
   "#webdesign",
   "#frontend",
@@ -342,22 +119,6 @@ const useScrollFadeIn = () => {
   return { ref, isInView };
 };
 
-const useIsMobile = () => {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
-
-  return isMobile;
-};
-
 /* ─────────────────────────────────────────────
    ANIMATION VARIANTS
 ───────────────────────────────────────────── */
@@ -384,7 +145,7 @@ const AnimatedSection = ({ children, id, style = {} }) => {
   const { ref, isInView } = useScrollFadeIn();
 
   return (
-    <motion.section
+    <Motion.section
       ref={ref}
       id={id}
       initial="hidden"
@@ -393,7 +154,7 @@ const AnimatedSection = ({ children, id, style = {} }) => {
       style={style}
     >
       {children}
-    </motion.section>
+    </Motion.section>
   );
 };
 
@@ -461,16 +222,17 @@ const CornerBorders = ({
 );
 
 // Floating Glass Navigation (Desktop)
-const FloatingNav = ({ activeSection }) => {
+const FloatingNav = ({ activeSection, scrollContainerRef }) => {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 100);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    const el = scrollContainerRef?.current;
+    if (!el) return;
+    const handleNavScroll = () => setScrolled(el.scrollTop > 100);
+    handleNavScroll();
+    el.addEventListener("scroll", handleNavScroll, { passive: true });
+    return () => el.removeEventListener("scroll", handleNavScroll);
+  }, [scrollContainerRef]);
 
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
@@ -480,7 +242,7 @@ const FloatingNav = ({ activeSection }) => {
   };
 
   return (
-    <motion.nav
+    <Motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
@@ -506,7 +268,7 @@ const FloatingNav = ({ activeSection }) => {
     >
       <CornerBorders />
       {navSections.map((section) => (
-        <motion.button
+        <Motion.button
           key={section.id}
           onClick={() => scrollToSection(section.id)}
           whileHover={{ scale: 1.05 }}
@@ -528,76 +290,14 @@ const FloatingNav = ({ activeSection }) => {
           }}
         >
           {section.label}
-        </motion.button>
+        </Motion.button>
       ))}
-    </motion.nav>
-  );
-};
-
-// Bottom Navigation (Mobile)
-const BottomNav = ({ activeSection }) => {
-  const scrollToSection = (id) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
-  return (
-    <motion.nav
-      initial={{ y: 100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      style={{
-        position: "fixed",
-        bottom: 0,
-        left: 0,
-        right: 0,
-        zIndex: 1000,
-        background: "rgba(255, 255, 255, 0.95)",
-        backdropFilter: "blur(20px)",
-        padding: "12px 8px",
-        display: "grid",
-        gridTemplateColumns: "repeat(7, 1fr)",
-        gap: 4,
-        borderTop: `2px solid ${T.border}`,
-        boxShadow: "0 -4px 20px rgba(0, 0, 0, 0.08)",
-      }}
-    >
-      {navSections.map((section) => (
-        <motion.button
-          key={section.id}
-          onClick={() => scrollToSection(section.id)}
-          whileTap={{ scale: 0.9 }}
-          style={{
-            background: "transparent",
-            color: activeSection === section.id ? T.blue : T.muted,
-            border: "none",
-            padding: "8px 4px",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 4,
-            cursor: "pointer",
-            transition: "all 0.3s ease",
-            fontFamily: T.mono,
-            fontSize: 9,
-            fontWeight: 600,
-            textTransform: "uppercase",
-            letterSpacing: "0.05em",
-          }}
-        >
-          <span style={{ fontSize: 16 }}>{section.icon}</span>
-          <span>{section.label}</span>
-        </motion.button>
-      ))}
-    </motion.nav>
+    </Motion.nav>
   );
 };
 
 const EyebrowLabel = ({ children, color = T.blue }) => (
-  <motion.p
+  <Motion.p
     variants={fadeUp}
     style={{
       fontFamily: T.mono,
@@ -613,11 +313,11 @@ const EyebrowLabel = ({ children, color = T.blue }) => (
   >
     {"> "}
     {children}
-  </motion.p>
+  </Motion.p>
 );
 
 const BigTitle = ({ children, size = "clamp(64px, 13vw, 148px)" }) => (
-  <motion.h2
+  <Motion.h2
     variants={fadeUp}
     style={{
       fontFamily: T.body,
@@ -644,11 +344,11 @@ const BigTitle = ({ children, size = "clamp(64px, 13vw, 148px)" }) => (
       }}
     />
     {children}
-  </motion.h2>
+  </Motion.h2>
 );
 
 const IconBtn = ({ href, icon, label, light = false }) => (
-  <motion.a
+  <Motion.a
     href={href}
     target={href.startsWith("http") ? "_blank" : undefined}
     rel="noopener noreferrer"
@@ -679,11 +379,11 @@ const IconBtn = ({ href, icon, label, light = false }) => (
     }}
   >
     {icon}
-  </motion.a>
+  </Motion.a>
 );
 
 const Pill = ({ children }) => (
-  <motion.span
+  <Motion.span
     whileHover={{
       background: T.blue,
       color: T.white,
@@ -707,7 +407,7 @@ const Pill = ({ children }) => (
   >
     <CornerBorders thickness={0.7} size={7} />
     {children}
-  </motion.span>
+  </Motion.span>
 );
 
 // Tech grid background
@@ -774,8 +474,8 @@ const ProjectsCarousel = () => {
           }
         `}</style>
         
-        {projectsData.map((project, index) => (
-          <motion.div
+        {projectsData.map((project) => (
+          <Motion.div
             key={project.id}
             variants={fadeUp}
             style={{
@@ -808,7 +508,7 @@ const ProjectsCarousel = () => {
                 }}
               />
             </div>
-          </motion.div>
+          </Motion.div>
         ))}
       </div>
 
@@ -821,7 +521,7 @@ const ProjectsCarousel = () => {
           gap: 20,
         }}
       >
-        <motion.button
+        <Motion.button
           onClick={prevProject}
           whileHover={{
             background: T.blue,
@@ -847,12 +547,12 @@ const ProjectsCarousel = () => {
           }}
         >
           <FaArrowLeft />
-        </motion.button>
+        </Motion.button>
 
         {/* Dots Indicator */}
         <div style={{ display: "flex", gap: 10 }}>
           {projectsData.map((_, index) => (
-            <motion.button
+            <Motion.button
               key={index}
               onClick={() => scrollToProject(index)}
               whileHover={{ scale: 1.2 }}
@@ -869,7 +569,7 @@ const ProjectsCarousel = () => {
           ))}
         </div>
 
-        <motion.button
+        <Motion.button
           onClick={nextProject}
           whileHover={{
             background: T.blue,
@@ -895,43 +595,63 @@ const ProjectsCarousel = () => {
           }}
         >
           <FaArrowRight />
-        </motion.button>
+        </Motion.button>
       </div>
     </div>
   );
 };
 
 /* ─────────────────────────────────────────────
+   Scroll helpers (overlay scrolls this div, not window)
+───────────────────────────────────────────── */
+function getOffsetTopWithin(el, container) {
+  if (!el || !container || !container.contains(el)) return 0;
+  let top = 0;
+  let n = el;
+  while (n && n !== container) {
+    top += n.offsetTop;
+    n = n.offsetParent;
+  }
+  if (n === container) return top;
+  const cr = container.getBoundingClientRect();
+  const er = el.getBoundingClientRect();
+  return er.top - cr.top + container.scrollTop;
+}
+
+/* ─────────────────────────────────────────────
    MAIN PROFILE COMPONENT
 ───────────────────────────────────────────── */
 const Profile = ({ onClose }) => {
   const [activeSection, setActiveSection] = useState("hero");
-  const isMobile = useIsMobile();
+  const scrollContainerRef = useRef(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const sections = navSections.map((s) => s.id);
-      const scrollPosition = window.scrollY + window.innerHeight / 2;
+    const container = scrollContainerRef.current;
+    if (!container) return;
 
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const element = document.getElementById(sections[i]);
-        if (element) {
-          const { offsetTop } = element;
-          if (scrollPosition >= offsetTop) {
-            setActiveSection(sections[i]);
-            break;
-          }
+    const handleScroll = () => {
+      const mid =
+        container.scrollTop + Math.min(container.clientHeight * 0.35, 200);
+      const sectionIds = navSections.map((s) => s.id);
+      for (let i = sectionIds.length - 1; i >= 0; i--) {
+        const el = document.getElementById(sectionIds[i]);
+        if (!el) continue;
+        const sectionTop = getOffsetTopWithin(el, container);
+        if (mid >= sectionTop) {
+          setActiveSection(sectionIds[i]);
+          break;
         }
       }
     };
 
     handleScroll();
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    container.addEventListener("scroll", handleScroll, { passive: true });
+    return () => container.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <div
+      ref={scrollContainerRef}
       style={{
         position: "fixed",
         inset: 0,
@@ -941,18 +661,13 @@ const Profile = ({ onClose }) => {
         zIndex: 1000,
         fontFamily: T.body,
         color: T.ink,
-        paddingBottom: isMobile ? "80px" : "0",
+        paddingBottom: "0",
       }}
     >
-      {/* Conditional Navigation */}
-      {isMobile ? (
-        <BottomNav activeSection={activeSection} />
-      ) : (
-        <FloatingNav activeSection={activeSection} />
-      )}
+      <FloatingNav activeSection={activeSection} scrollContainerRef={scrollContainerRef} />
 
       {/* ── CLOSE BUTTON ── */}
-      <motion.button
+      <Motion.button
         onClick={onClose}
         whileHover={{
           background: T.blue,
@@ -963,37 +678,37 @@ const Profile = ({ onClose }) => {
         whileTap={{ scale: 0.9 }}
         style={{
           position: "fixed",
-          top: isMobile ? 16 : 24,
-          right: isMobile ? 16 : 24,
+          top: 24,
+          right: 24,
           zIndex: 1001,
           background: T.white,
           color: T.ink,
           border: `2px solid ${T.border}`,
-          width: isMobile ? 50 : 60,
-          height: isMobile ? 50 : 60,
+          width: 60,
+          height: 60,
           borderRadius: "50%",
           cursor: "pointer",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          fontSize: isMobile ? 22 : 28,
+          fontSize: 28,
           transition: "all 0.3s ease",
           boxShadow: "0 4px 16px rgba(0, 0, 0, 0.04)",
         }}
       >
         <FaTimes />
-      </motion.button>
+      </Motion.button>
 
       {/* ── OSCAR SIGNATURE ── */}
-      <motion.div
+      <Motion.div
         whileHover={{
           letterSpacing: "0.3em",
         }}
         whileTap={{ scale: 0.95 }}
         style={{
           position: "fixed",
-          top: isMobile ? 16 : 24,
-          left: isMobile ? 16 : 24,
+          top: 24,
+          left: 24,
           zIndex: 1001,
           color: T.ink,
           padding: "6px 8px",
@@ -1002,19 +717,18 @@ const Profile = ({ onClose }) => {
           justifyContent: "center",
           letterSpacing: "0.2em",
           transition: "all 0.3s ease",
-          background: "rgba(255, 255, 255, 0.8)",
-          backdropFilter: "blur(20px)",
+          background: "transparent",
         }}
       >
         <span
           style={{
             fontWeight: "300",
-            fontSize: isMobile ? "16px" : "28px",
+            fontSize: "28px",
           }}
         >
-          {"{"} PRO ? 'OSCAR' : NULL {" }"}
+          OSCAR POCO
         </span>
-      </motion.div>
+      </Motion.div>
 
       {/* ════════════════════════════════
           01  HERO
@@ -1026,7 +740,7 @@ const Profile = ({ onClose }) => {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          padding: isMobile ? "80px 24px 40px" : "120px 56px 64px",
+          padding: "120px 56px 64px",
           borderBottom: `2px solid ${T.border}`,
           position: "relative",
           overflow: "hidden",
@@ -1045,14 +759,14 @@ const Profile = ({ onClose }) => {
           }}
         >
           <EyebrowLabel>
-            {isMobile ? "Software Developer • JHB, SA" : "Intermediate Software Developer | Facilitator · Johannesburg, South Africa"}
+            Intermediate Software Developer | Facilitator · Johannesburg, South Africa
           </EyebrowLabel>
 
-          <motion.h1
+          <Motion.h1
             variants={fadeUp}
             style={{
               fontFamily: T.body,
-              fontSize: isMobile ? "clamp(48px, 15vw, 120px)" : "clamp(76px, 17vw, 200px)",
+              fontSize: "clamp(76px, 17vw, 200px)",
               fontWeight: 900,
               letterSpacing: "-3px",
               color: T.ink,
@@ -1063,15 +777,15 @@ const Profile = ({ onClose }) => {
             }}
           >
             PORT<span style={{ color: T.blue }}></span>FOLIO
-          </motion.h1>
+          </Motion.h1>
 
-          <motion.div
+          <Motion.div
             variants={fadeUp}
             style={{
               display: "flex",
-              flexDirection: isMobile ? "column" : "row",
+              flexDirection: "row",
               flexWrap: "wrap",
-              alignItems: isMobile ? "center" : "flex-end",
+              alignItems: "flex-end",
               justifyContent: "space-between",
               gap: 24,
               borderTop: `2px solid ${T.border}`,
@@ -1079,7 +793,7 @@ const Profile = ({ onClose }) => {
               paddingTop: 32,
             }}
           >
-            <div style={{ textAlign: isMobile ? "center" : "left" }}>
+            <div style={{ textAlign: "left" }}>
               <p
                 style={{
                   fontFamily: T.mono,
@@ -1096,7 +810,7 @@ const Profile = ({ onClose }) => {
               <h2
                 style={{
                   fontFamily: T.body,
-                  fontSize: isMobile ? "clamp(24px, 8vw, 48px)" : "clamp(26px, 4vw, 70px)",
+                  fontSize: "clamp(26px, 4vw, 70px)",
                   fontWeight: 900,
                   margin: 0,
                   letterSpacing: "-1px",
@@ -1109,7 +823,7 @@ const Profile = ({ onClose }) => {
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  justifyContent: isMobile ? "center" : "flex-start",
+                  justifyContent: "flex-start",
                   gap: 8,
                   marginTop: 12,
                   fontSize: 14,
@@ -1143,7 +857,7 @@ const Profile = ({ onClose }) => {
                 label="LinkedIn"
               />
             </div>
-          </motion.div>
+          </Motion.div>
         </div>
       </AnimatedSection>
 
@@ -1153,12 +867,12 @@ const Profile = ({ onClose }) => {
       <AnimatedSection
         id="about"
         style={{
-          padding: isMobile ? "80px 24px 40px" : "200px 56px 56px 56px",
+          padding: "200px 56px 56px 56px",
           borderBottom: `2px solid ${T.border}`,
           background: T.bgAlt,
           position: "relative",
           overflow: "hidden",
-          minHeight: isMobile ? "auto" : "100vh",
+          minHeight: "100vh",
         }}
       >
         <TechGrid />
@@ -1177,15 +891,15 @@ const Profile = ({ onClose }) => {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
-              gap: isMobile ? "32px" : "0 72px",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "0 72px",
               alignItems: "start",
             }}
           >
-            <motion.div variants={fadeUp}>
+            <Motion.div variants={fadeUp}>
               <p
                 style={{
-                  fontSize: isMobile ? 16 : 18,
+                  fontSize: 18,
                   lineHeight: 1.85,
                   color: "#333",
                   marginBottom: 24,
@@ -1201,7 +915,7 @@ const Profile = ({ onClose }) => {
               </p>
               <p
                 style={{
-                  fontSize: isMobile ? 16 : 18,
+                  fontSize: 18,
                   lineHeight: 1.85,
                   color: "#333",
                   fontWeight: 500,
@@ -1214,9 +928,9 @@ const Profile = ({ onClose }) => {
                 <em style={{ color: T.blue, fontStyle: "normal" }}>and</em>{" "}
                 business.
               </p>
-            </motion.div>
+            </Motion.div>
 
-            <motion.div
+            <Motion.div
               variants={fadeUp}
               style={{ display: "flex", flexDirection: "column", gap: 28 }}
             >
@@ -1255,7 +969,7 @@ const Profile = ({ onClose }) => {
                   {"// Design mantra"}
                 </span>
               </div>
-            </motion.div>
+            </Motion.div>
           </div>
         </div>
       </AnimatedSection>
@@ -1266,7 +980,7 @@ const Profile = ({ onClose }) => {
       <AnimatedSection
         id="skills"
         style={{
-          padding: isMobile ? "80px 24px 40px" : "200px 56px 56px 56px",
+          padding: "200px 56px 56px 56px",
           borderBottom: `2px solid ${T.border}`,
           background: T.bg,
           position: "relative",
@@ -1289,12 +1003,12 @@ const Profile = ({ onClose }) => {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fill, minmax(236px, 1fr))",
+              gridTemplateColumns: "repeat(auto-fill, minmax(236px, 1fr))",
               gap: 16,
             }}
           >
             {skillsData.map((skill) => (
-              <motion.div
+              <Motion.div
                 key={skill.id}
                 variants={fadeUp}
                 whileHover={{
@@ -1346,9 +1060,9 @@ const Profile = ({ onClose }) => {
                     margin: 0,
                   }}
                 >
-                  {skill.desc}
+                  {skill.description}
                 </p>
-              </motion.div>
+              </Motion.div>
             ))}
           </div>
         </div>
@@ -1360,7 +1074,7 @@ const Profile = ({ onClose }) => {
       <AnimatedSection
         id="projects"
         style={{
-          padding: isMobile ? "80px 24px 40px" : "200px 56px 56px 56px",
+          padding: "200px 56px 56px 56px",
           borderBottom: `2px solid ${T.border}`,
           background: T.bgAlt,
           position: "relative",
@@ -1390,7 +1104,7 @@ const Profile = ({ onClose }) => {
       <AnimatedSection
         id="experience"
         style={{
-          padding: isMobile ? "80px 24px 40px" : "200px 56px 56px 56px",
+          padding: "200px 56px 56px 56px",
           borderBottom: `2px solid ${T.border}`,
           background: T.bg,
           position: "relative",
@@ -1412,23 +1126,23 @@ const Profile = ({ onClose }) => {
 
           <div style={{ display: "flex", flexDirection: "column" }}>
             {experienceData.map((exp) => (
-              <motion.div
+              <Motion.div
                 key={exp.id}
                 variants={fadeUp}
-                whileHover={{ x: isMobile ? 0 : 8 }}
+                whileHover={{ x: 8 }}
                 style={{
                   display: "grid",
-                  gridTemplateColumns: isMobile ? "1fr" : "220px 1fr",
-                  gap: isMobile ? "20px" : "0 52px",
+                  gridTemplateColumns: "220px 1fr",
+                  gap: "0 52px",
                   borderTop: `2px solid ${T.border}`,
-                  padding: isMobile ? "32px 0" : "44px 0",
+                  padding: "44px 0",
                   alignItems: "start",
                   position: "relative",
                   transition: "all 0.3s ease",
                 }}
               >
                 <div
-                  style={{ display: "flex", flexDirection: isMobile ? "row" : "column", gap: 14, alignItems: isMobile ? "center" : "flex-start" }}
+                  style={{ display: "flex", flexDirection: "column", gap: 14, alignItems: "flex-start" }}
                 >
                   <div
                     style={{
@@ -1446,13 +1160,13 @@ const Profile = ({ onClose }) => {
                   >
                     {exp.icon}
                   </div>
-                  <div style={{ display: "flex", flexDirection: isMobile ? "column" : "column", gap: isMobile ? 8 : 14 }}>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
                     <div
                       style={{
                         display: "inline-block",
                         borderRadius: 0,
                         fontFamily: T.mono,
-                        fontSize: isMobile ? 12 : 14,
+                        fontSize: 14,
                         fontWeight: 700,
                         letterSpacing: "0.14em",
                         textTransform: "uppercase",
@@ -1482,7 +1196,7 @@ const Profile = ({ onClose }) => {
                   <h3
                     style={{
                       fontFamily: T.body,
-                      fontSize: isMobile ? 22 : 26,
+                      fontSize: 26,
                       fontWeight: 800,
                       margin: "0 0 6px",
                       letterSpacing: "-0.5px",
@@ -1507,15 +1221,15 @@ const Profile = ({ onClose }) => {
                   <p
                     style={{
                       fontFamily: T.body,
-                      fontSize: isMobile ? 15 : 16,
+                      fontSize: 16,
                       lineHeight: 1.75,
                       color: "#444",
-                      marginBottom: exp.technologies.length ? 20 : 0,
+                      marginBottom: (exp.technologies?.length ?? 0) ? 20 : 0,
                     }}
                   >
                     {exp.description}
                   </p>
-                  {exp.technologies.length > 0 && (
+                  {(exp.technologies?.length ?? 0) > 0 && (
                     <div
                       style={{
                         display: "flex",
@@ -1525,12 +1239,12 @@ const Profile = ({ onClose }) => {
                       }}
                     >
                       {exp.technologies.map((t) => (
-                        <Pill key={t}>{t}</Pill>
+                        <Pill key={`${exp.id}-${t}`}>{t}</Pill>
                       ))}
                     </div>
                   )}
                 </div>
-              </motion.div>
+              </Motion.div>
             ))}
           </div>
         </div>
@@ -1542,7 +1256,7 @@ const Profile = ({ onClose }) => {
       <AnimatedSection
         id="education"
         style={{
-          padding: isMobile ? "80px 24px 40px" : "200px 56px 56px 56px",
+          padding: "200px 56px 56px 56px",
           borderBottom: `2px solid ${T.border}`,
           background: T.bgAlt,
           position: "relative",
@@ -1565,13 +1279,13 @@ const Profile = ({ onClose }) => {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
+              gridTemplateColumns: "1fr 1fr",
               gap: 16,
               marginBottom: 64,
             }}
           >
             {educationData.map((edu) => (
-              <motion.div
+              <Motion.div
                 key={edu.id}
                 variants={fadeUp}
                 whileHover={{
@@ -1635,11 +1349,27 @@ const Profile = ({ onClose }) => {
                     fontWeight: 700,
                     color: T.blue,
                     letterSpacing: "0.12em",
-                    marginBottom: 18,
+                    marginBottom: edu.location ? 8 : 18,
                   }}
                 >
                   {edu.period}
                 </p>
+                {edu.location && (
+                  <p
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 8,
+                      fontFamily: T.body,
+                      fontSize: 13,
+                      color: T.muted,
+                      margin: "0 0 18px",
+                    }}
+                  >
+                    <FaMapMarkerAlt size={12} style={{ color: T.blue, flexShrink: 0 }} />
+                    {edu.location}
+                  </p>
+                )}
                 <p
                   style={{
                     fontFamily: T.body,
@@ -1656,11 +1386,11 @@ const Profile = ({ onClose }) => {
                     <Pill key={c}>{c}</Pill>
                   ))}
                 </div>
-              </motion.div>
+              </Motion.div>
             ))}
           </div>
 
-          <motion.div variants={fadeUp}>
+          <Motion.div variants={fadeUp}>
             <p
               style={{
                 fontFamily: T.mono,
@@ -1679,12 +1409,12 @@ const Profile = ({ onClose }) => {
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fill, minmax(218px, 1fr))",
+                gridTemplateColumns: "repeat(auto-fill, minmax(218px, 1fr))",
                 gap: 16,
               }}
             >
               {certificateData.map((cert) => (
-                <motion.div
+                <Motion.div
                   key={cert.id}
                   variants={fadeUp}
                   whileHover={{
@@ -1754,12 +1484,12 @@ const Profile = ({ onClose }) => {
                       {cert.date}
                     </p>
                   </div>
-                </motion.div>
+                </Motion.div>
               ))}
             </div>
-          </motion.div>
+          </Motion.div>
 
-          <motion.div variants={fadeUp} style={{ marginTop: 64 }}>
+          <Motion.div variants={fadeUp} style={{ marginTop: 64 }}>
             <p
               style={{
                 fontFamily: T.mono,
@@ -1777,7 +1507,7 @@ const Profile = ({ onClose }) => {
             </p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
               {interests.map((tag) => (
-                <motion.span
+                <Motion.span
                   key={tag}
                   whileHover={{
                     background: T.blue,
@@ -1799,10 +1529,10 @@ const Profile = ({ onClose }) => {
                   }}
                 >
                   {tag}
-                </motion.span>
+                </Motion.span>
               ))}
             </div>
-          </motion.div>
+          </Motion.div>
         </div>
       </AnimatedSection>
 
@@ -1821,17 +1551,17 @@ const Profile = ({ onClose }) => {
           style={{
             maxWidth: 1100,
             margin: "0 auto",
-            padding: isMobile ? "60px 24px 0" : "88px 56px 0",
+            padding: "88px 56px 0",
             position: "relative",
             zIndex: 1,
           }}
         >
-          <motion.p
+          <Motion.p
             variants={fadeUp}
             style={{
               fontFamily: T.body,
               fontStyle: "italic",
-              fontSize: isMobile ? "clamp(14px, 4vw, 18px)" : "clamp(16px, 2vw, 21px)",
+              fontSize: "clamp(16px, 2vw, 21px)",
               lineHeight: 1.65,
               fontWeight: 500,
               color: "#aaa",
@@ -1842,9 +1572,9 @@ const Profile = ({ onClose }) => {
           >
             "Great things happen when talented people choose to collaborate —
             let's build something worth remembering."
-          </motion.p>
+          </Motion.p>
 
-          <motion.div
+          <Motion.div
             variants={fadeUp}
             style={{
               display: "grid",
@@ -1856,7 +1586,7 @@ const Profile = ({ onClose }) => {
               paddingTop: 48,
             }}
           >
-            <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: 18, justifyContent: 'center', alignItems: 'center' }}>
+            <div style={{ display: "flex", flexDirection: "row", gap: 18, justifyContent: 'center', alignItems: 'center' }}>
               {[
                 {
                   icon: <FaEnvelope />,
@@ -1874,10 +1604,10 @@ const Profile = ({ onClose }) => {
                   href: "#",
                 },
               ].map((c) => (
-                <motion.a
+                <Motion.a
                   key={c.text}
                   href={c.href}
-                  whileHover={{ x: isMobile ? 0 : 8, color: T.blue }}
+                  whileHover={{ x: 8, color: T.blue }}
                   style={{
                     display: "flex",
                     alignItems: "center",
@@ -1885,7 +1615,7 @@ const Profile = ({ onClose }) => {
                     color: "#888",
                     textDecoration: "none",
                     fontFamily: T.body,
-                    fontSize: isMobile ? 15 : 17,
+                    fontSize: 17,
                     fontWeight: 500,
                     transition: "all 0.3s ease",
                   }}
@@ -1908,19 +1638,19 @@ const Profile = ({ onClose }) => {
                     {c.icon}
                   </span>
                   {c.text}
-                </motion.a>
+                </Motion.a>
               ))}
             </div>
-          </motion.div>
+          </Motion.div>
 
           <div
             style={{
               borderTop: `1px solid #222`,
               marginTop: 56,
-              marginBottom: isMobile ? 80 : 156,
+              marginBottom: 156,
               padding: "28px 0",
               display: "flex",
-              flexDirection: isMobile ? "column" : "row",
+              flexDirection: "row",
               justifyContent: "space-between",
               alignItems: "center",
               flexWrap: "wrap",
@@ -1979,27 +1709,25 @@ const Profile = ({ onClose }) => {
             <span>Built with love and passion</span>
 
             {/* NAME */}
-            {!isMobile && (
-              <motion.h2
-                variants={fadeUp}
-                style={{
-                  fontFamily: T.body,
-                  fontSize: "clamp(52px, 12vw, 248px)",
-                  fontWeight: 900,
-                  letterSpacing: "-2px",
-                  margin: 0,
-                  lineHeight: 0.88,
-                  color: T.white + "10",
-                  textTransform: "uppercase",
-                  position: "absolute",
-                  bottom: "-170%",
-                  textAlign: "center",
-                  pointerEvents: "none",
-                }}
-              >
-                OSCAR POCO
-              </motion.h2>
-            )}
+            <Motion.h2
+              variants={fadeUp}
+              style={{
+                fontFamily: T.body,
+                fontSize: "clamp(52px, 12vw, 248px)",
+                fontWeight: 900,
+                letterSpacing: "-2px",
+                margin: 0,
+                lineHeight: 0.88,
+                color: T.white + "10",
+                textTransform: "uppercase",
+                position: "absolute",
+                bottom: "-170%",
+                textAlign: "center",
+                pointerEvents: "none",
+              }}
+            >
+              OSCAR POCO
+            </Motion.h2>
           </div>
         </div>
       </AnimatedSection>
