@@ -1,4 +1,4 @@
-.contacts-page.dark-mode {
+.contacts-page.dark-theme {
   background: linear-gradient(to bottom, #121212, #1a1a2e);
   color: #f0f0f0;
 }
@@ -17,54 +17,47 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0;
-  background: var(--background);
-  border-radius: 24px;
+  border-radius: 0;
   overflow: hidden;
-  box-shadow: 0 15px 35px rgba(35, 99, 199, 0.08);
-  transition: all 0.5s ease;
+  box-shadow: 0 10px 36px rgba(15, 23, 42, 0.08);
+  transition: box-shadow 0.3s ease;
+  border: 2px dotted var(--border-color);
 }
 
-.dark-mode .contact-container {
+.dark-theme .contact-container {
   background: #222234;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
 }
 
-.contact-info,
 .contact-form-container {
   flex: 1;
   min-width: 500px;
   padding: 30px 50px;
   position: relative;
+  background-color: var(--bg-secondary);
+}
+
+@media (min-width: 769px) {
+  .contact-form-container {
+    border-left: 2px dotted var(--border-color);
+  }
 }
 
 .contact-info {
-  background: linear-gradient(135deg, #2363C7 0%, #3b7de4 100%);
-  color: white;
+  flex: 1;
+  min-width: 500px;
+  padding: 30px 50px;
   position: relative;
+  background: #1e293b;
+  color: #f8fafc;
   overflow: hidden;
   display: flex;
   flex-direction: column;
 }
 
-.contact-info::before {
-  content: '';
-  position: absolute;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 70%);
-  top: -50%;
-  left: -50%;
-  animation: rotateGradient 20s infinite linear;
-}
-
-@keyframes rotateGradient {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
+.dark-theme .contact-info {
+  background: #0f172a;
+  color: #f1f5f9;
 }
 
 .contact-info h2,
@@ -84,22 +77,22 @@
   width: 70px;
   height: 4px;
   background: rgba(255, 255, 255, 0.5);
-  border-radius: 2px;
+  border-radius: 0;
 }
 
-.contact-form-container h2::after {
+.contact-form-container h2.send-message-text::after {
   content: '';
   position: absolute;
   bottom: -12px;
   left: 0;
-  width: 70px;
-  height: 4px;
-  background: #2363C7;
-  border-radius: 2px;
+  width: 56px;
+  height: 3px;
+  background-color: var(--text-primary);
+  border-radius: 0;
 }
 
-.dark-mode .contact-form-container h2::after {
-  background: #5193ff;
+.dark-theme .contact-form-container h2.send-message-text::after {
+  background-color: #e2e8f0;
 }
 
 .contact-info p {
@@ -187,138 +180,156 @@
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 }
 
-/* Form styles */
+/* Form styles — zero radius, dotted borders, Md outline icons aligned with contact panel */
 .contact-form {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  gap: 10px;
+  align-items: stretch;
+  gap: 14px;
   padding: 0;
-}
-
-.send-message-text {
-  color: var(--text-light);
-}
-
-.form-group {
-  position: relative;
-  margin-top: 10px;
   width: 100%;
+  font-family: var(--font-primary);
 }
 
-.contact-form input,
-.contact-form textarea {
+.contact-form-container h2.send-message-text {
+  color: var(--text-primary);
+  font-family: var(--font-display);
+}
+
+.form-group-with-icon {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
   width: 100%;
-  padding: 14px 18px;
-  background: var(--background);
-  border: 1px solid var(--text-light);
-  border-radius: 12px;
-  font-size: 12px;
-  transition: all 0.3s ease;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  color: var(--text-light);
+  margin: 0;
+  padding: 0;
+  border: 2px dotted var(--border-color);
+  border-radius: 0;
+  background-color: var(--bg-tertiary);
+  transition:
+    border-color var(--transition-normal),
+    box-shadow var(--transition-normal);
+  box-sizing: border-box;
 }
 
-.dark-mode .contact-form input,
-.dark-mode .contact-form textarea {
-  background: #2d2d3a;
-  border-color: #444;
-  color: #f0f0f0;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+.dark-theme .form-group-with-icon {
+  background-color: var(--bg-tertiary);
+  border-color: var(--border-color);
 }
 
-.contact-form input:focus,
-.contact-form textarea:focus {
+.form-group-with-icon:focus-within,
+.form-group-with-icon.is-focused {
+  border-color: var(--text-secondary);
+}
+
+.dark-theme .form-group-with-icon:focus-within,
+.dark-theme .form-group-with-icon.is-focused {
+  border-color: #94a3b8;
+}
+
+.form-field-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 50px;
+  color: var(--text-tertiary);
+  font-size: 24px;
+  border-right: 2px dotted var(--border-color);
+}
+
+.form-group-message .form-field-icon {
+  align-self: flex-start;
+  padding-top: 14px;
+}
+
+.form-group-with-icon input,
+.form-group-with-icon textarea {
+  flex: 1;
+  width: auto;
+  min-width: 0;
+  padding: 14px 16px;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  font-size: 14px;
+  transition: color var(--transition-fast);
+  box-shadow: none;
+  color: var(--text-primary);
+  font-family: var(--font-primary);
   outline: none;
-  border-color: #2363C7;
-  box-shadow: 0 0 0 3px rgba(35, 99, 199, 0.15);
-  transform: translateY(-2px);
 }
 
-.dark-mode .contact-form input:focus,
-.dark-mode .contact-form textarea:focus {
-  border-color: #5193ff;
-  box-shadow: 0 0 0 3px rgba(35, 99, 199, 0.25);
-}
-
-.contact-form textarea {
-  min-height: 70px;
+.form-group-with-icon textarea {
+  min-height: 120px;
   resize: vertical;
 }
 
-.input-focus-effect {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 3px;
-  background-color: #2363C7;
-  transition: width 0.3s ease;
-  border-radius: 0 0 8px 8px;
+.contact-form textarea {
+  resize: vertical;
 }
 
-.dark-mode .input-focus-effect {
-  background-color: #5193ff;
+.form-group-with-icon input::placeholder,
+.form-group-with-icon textarea::placeholder {
+  color: var(--text-tertiary);
 }
 
-.contact-form input:focus~.input-focus-effect,
-.contact-form textarea:focus~.input-focus-effect {
-  width: 100%;
-}
-
-/* Submit button styles */
+/* Submit — solid fill + dotted frame to match fields */
 .submit-button {
-  background-color: #2363C7;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  padding: 16px 25px;
-  font-size: 16px;
+  margin-top: 6px;
+  border-radius: 0;
+  background-color: var(--text-primary);
+  color: var(--bg-secondary);
+  border: 2px dotted var(--text-primary);
+  padding: 16px 24px;
+  font-size: 15px;
   font-weight: 600;
+  font-family: var(--font-display);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition:
+    background-color var(--transition-normal),
+    transform var(--transition-fast),
+    border-color var(--transition-normal),
+    box-shadow var(--transition-normal);
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  position: relative;
-  overflow: hidden;
-  margin-top: 0;
-  box-shadow: 0 8px 15px rgba(35, 99, 199, 0.2);
   width: 100%;
+  box-shadow: none;
 }
 
-.submit-button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: left 0.7s ease;
+.dark-theme .submit-button {
+  background-color: #f1f5f9;
+  color: #0f172a;
+  border-color: #cbd5e1;
 }
 
 .submit-button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 20px rgba(35, 99, 199, 0.3);
-  background-color: #1d52a8;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
+  background-color: #334155;
+  border-color: #475569;
+  color: #fff;
 }
 
-.submit-button:hover::before {
-  left: 100%;
+.dark-theme .submit-button:hover {
+  background-color: #e2e8f0;
+  color: #0f172a;
+  border-color: #94a3b8;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
 }
 
 .submit-button.submitting {
-  opacity: 0.8;
+  opacity: 0.75;
   pointer-events: none;
-  background-color: #5193ff;
+  cursor: wait;
 }
 
 .send-icon {
   transition: transform 0.3s ease;
-  font-size: 24px;
+  font-size: 22px;
 }
 
 .span-icon {
@@ -334,12 +345,10 @@
 /* Success message */
 .success-message {
   text-align: center;
-  padding: 50px 20px;
+  padding: 48px 24px 32px;
   animation: fadeIn 0.5s ease;
-  height: 100%;
   width: 100%;
-  margin-left: -300px;
-  margin-top: 50px;
+  margin: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -359,30 +368,31 @@
 }
 
 .success-icon {
-  font-size: 70px;
-  color: #2363C7;
-  margin-bottom: 25px;
-}
-
-.dark-mode .success-icon {
-  color: #5193ff;
+  font-size: 96px;
+  width: 1em;
+  height: 1em;
+  color: var(--accent-success);
+  margin-bottom: 20px;
+  animation: float 3s ease-in-out infinite;
 }
 
 .success-message h3 {
-  margin-bottom: 15px;
-  color: #2363C7;
-  font-size: 24px;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+  font-size: 22px;
   font-weight: 700;
+  font-family: var(--font-display);
 }
 
-.dark-mode .success-message h3 {
-  color: #5193ff;
+.dark-theme .success-message h3 {
+  color: var(--text-primary);
 }
 
 .success-message p {
-  opacity: 0.7;
-  font-size: 16px;
-  max-width: 80%;
+  color: var(--text-secondary);
+  opacity: 0.9;
+  font-size: 15px;
+  max-width: 28rem;
   margin: 0 auto;
 }
 
@@ -403,7 +413,7 @@
   .contact-info,
   .contact-form-container {
     width: 100%;
-    border-radius: 15px;
+    border-radius: 0;
   }
 
   .contact-info,
@@ -430,17 +440,7 @@
   }
 
   .success-message {
-    text-align: center;
-    padding: 50px 20px;
-    animation: fadeIn 0.5s ease;
-    height: 100%;
-    width: 100%;
-    margin-left: -135px;
-    margin-top: 50px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    padding: 40px 16px 28px;
   }
 
 }
@@ -459,8 +459,10 @@
   }
 
   .contact-form input,
-  .contact-form textarea {
-    padding: 14px 16px;
+  .contact-form textarea,
+  .form-group-with-icon input,
+  .form-group-with-icon textarea {
+    padding: 14px 14px;
     font-size: 15px;
   }
 
@@ -523,11 +525,6 @@
   }
 }
 
-/* Special hover effects for form elements */
-.form-group:hover .input-focus-effect {
-  width: 10%;
-}
-
 /* Floating animation for the success message icon */
 @keyframes float {
   0% {
@@ -541,8 +538,4 @@
   100% {
     transform: translateY(0px);
   }
-}
-
-.success-icon {
-  animation: float 3s ease-in-out infinite;
 }

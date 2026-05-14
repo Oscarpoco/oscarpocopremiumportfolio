@@ -122,9 +122,8 @@
   align-items: center;
   gap: 8px;
   padding: 12px 20px;
-  /* border-radius: var(--radius-md); */
   border: 1px solid var(--border-color);
-  background-color: var(--bg-secondary);
+  background: linear-gradient(135deg, var(--primary-color) 50%, var(--secondary-color) 50%);
   color: var(--text-secondary);
   font-weight: 500;
   font-size: 14px;

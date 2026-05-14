@@ -13,10 +13,10 @@
     --sidebar-width-xs: 60px;
 
     /* Primary Colors */
-    --primary: #2363C7;
-    --primary-light: #4285F4;
-    --primary-dark: #1a4d9e;
-    --primary-gradient: linear-gradient(135deg, #2363C7, #4285F4);
+    --primary: #06d1ff;
+    --primary-light: #35daff;
+    --primary-dark: #0ed8d1;
+    --primary-gradient: linear-gradient(135deg, #06d1ff, #0ecadf);
     
     /* Accent Colors */
     --accent-success: #10b981;
@@ -104,6 +104,7 @@ html {
     width: calc(100% - var(--sidebar-width)) !important;
     z-index: 1000 !important;
 }
+
 
 @media (max-width: 992px) {
     .about-header,

@@ -1,13 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import '../styles/About.css';
 import '../styles/Contacts.css';
 
 // ICONS
-import { FaSmile, FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
-import { MdDownload, MdInfo, MdOutlineLightMode, MdOutlineDarkMode } from 'react-icons/md';
+import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
+import {
+    MdDownload,
+    MdOutlineLightMode,
+    MdOutlineDarkMode,
+    MdOutlineEmail,
+    MdOutlinePhone,
+    MdOutlineLocationOn,
+    MdSend,
+    MdOutlinePerson,
+    MdOutlineSubject,
+    MdOutlineChatBubbleOutline,
+    MdOutlineCheckCircle,
+    MdOutlineSend,
+} from 'react-icons/md';
 import { IoIosArrowForward } from 'react-icons/io';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MdEmail, MdPhone, MdLocationOn, MdSend } from 'react-icons/md';
 
 function Contacts({darkMode, toggleTheme, handleDownload}) {
     const [formData, setFormData] = useState({
@@ -103,11 +115,6 @@ function Contacts({darkMode, toggleTheme, handleDownload}) {
         })
     };
 
-    const pulseAnimation = {
-        scale: [1, 1.05, 1],
-        transition: { duration: 2, repeat: Infinity }
-    };
-
     return (
         <div className={`about-container ${darkMode ? 'dark-theme' : ''}`} id="contact-wrapper">
             {/* Floating Theme Toggle */}
@@ -162,18 +169,11 @@ function Contacts({darkMode, toggleTheme, handleDownload}) {
                         stiffness: 50,
                         damping: 20
                     }}
-                    whileHover={{ boxShadow: "0 15px 40px rgba(35, 99, 199, 0.15)" }}
+                    whileHover={{ boxShadow: "0 12px 32px rgba(15, 23, 42, 0.1)" }}
                 >
                     <motion.div
                         className="contact-info"
                         variants={itemVariants}
-                        initial={{ background: "#2363C7" }}
-                        animate={{
-                            background: darkMode ?
-                                "linear-gradient(135deg, #2363C7 0%, #1d52a8 100%)" :
-                                "linear-gradient(135deg, #2363C7 0%, #3b7de4 100%)"
-                        }}
-                        transition={{ duration: 0.5 }}
                     >
                         <motion.h2
                             variants={itemVariants}
@@ -197,7 +197,7 @@ function Contacts({darkMode, toggleTheme, handleDownload}) {
                                     whileHover={{ scale: 1.2, backgroundColor: "rgba(255, 255, 255, 0.25)" }}
                                     transition={{ type: "spring", stiffness: 300, damping: 10 }}
                                 >
-                                    <MdEmail />
+                                    <MdOutlineEmail />
                                 </motion.div>
                                 <div>
                                     <h3>Email</h3>
@@ -216,7 +216,7 @@ function Contacts({darkMode, toggleTheme, handleDownload}) {
                                     whileHover={{ scale: 1.2, backgroundColor: "rgba(255, 255, 255, 0.25)" }}
                                     transition={{ type: "spring", stiffness: 300, damping: 10 }}
                                 >
-                                    <MdPhone />
+                                    <MdOutlinePhone />
                                 </motion.div>
                                 <div>
                                     <h3>Phone</h3>
@@ -235,7 +235,7 @@ function Contacts({darkMode, toggleTheme, handleDownload}) {
                                     whileHover={{ scale: 1.2, backgroundColor: "rgba(255, 255, 255, 0.25)" }}
                                     transition={{ type: "spring", stiffness: 300, damping: 10 }}
                                 >
-                                    <MdLocationOn />
+                                    <MdOutlineLocationOn />
                                 </motion.div>
                                 <div>
                                     <h3>Location</h3>
@@ -281,7 +281,7 @@ function Contacts({darkMode, toggleTheme, handleDownload}) {
                     >
                         <motion.h2
                             variants={itemVariants}
-                            whileHover={{ scale: 1.05, originX: 0, color: "#2363C7" }}
+                            whileHover={{ scale: 1.03, originX: 0 }}
                             className="send-message-text"
                         >
                             Send a Message
@@ -297,19 +297,7 @@ function Contacts({darkMode, toggleTheme, handleDownload}) {
                                     exit={{ opacity: 0, scale: 0.8 }}
                                     transition={{ duration: 0.5 }}
                                 >
-                                    <motion.div
-                                        animate={{
-                                            scale: [1, 1.2, 1],
-                                            rotate: [0, 10, -10, 0]
-                                        }}
-                                        transition={{
-                                            duration: 1.5,
-                                            repeat: Infinity,
-                                            repeatType: "loop"
-                                        }}
-                                    >
-                                        <FaSmile className="success-icon" />
-                                    </motion.div>
+                                    <MdOutlineCheckCircle className="success-icon" />
                                     <motion.h3
                                         initial={{ y: 20, opacity: 0 }}
                                         animate={{ y: 0, opacity: 1 }}
@@ -335,12 +323,15 @@ function Contacts({darkMode, toggleTheme, handleDownload}) {
                                     exit={{ opacity: 0 }}
                                 >
                                     <motion.div
-                                        className="form-group"
+                                        className={`form-group form-group-with-icon ${activeField === "name" ? "is-focused" : ""}`}
                                         custom={0}
                                         variants={formFieldVariants}
                                         initial="hidden"
                                         animate="visible"
                                     >
+                                        <span className="form-field-icon" aria-hidden="true">
+                                            <MdOutlinePerson />
+                                        </span>
                                         <motion.input
                                             type="text"
                                             name="name"
@@ -348,26 +339,21 @@ function Contacts({darkMode, toggleTheme, handleDownload}) {
                                             value={formData.name}
                                             onChange={handleChange}
                                             required
-                                            onFocus={() => setActiveField('name')}
+                                            onFocus={() => setActiveField("name")}
                                             onBlur={() => setActiveField(null)}
-                                            whileFocus={{ scale: 1.01 }}
                                         />
-                                        <motion.span
-                                            className="input-focus-effect"
-                                            animate={{
-                                                width: activeField === 'name' ? '100%' : '0%',
-                                                backgroundColor: "#2363C7"
-                                            }}
-                                        ></motion.span>
                                     </motion.div>
 
                                     <motion.div
-                                        className="form-group"
+                                        className={`form-group form-group-with-icon ${activeField === "email" ? "is-focused" : ""}`}
                                         custom={1}
                                         variants={formFieldVariants}
                                         initial="hidden"
                                         animate="visible"
                                     >
+                                        <span className="form-field-icon" aria-hidden="true">
+                                            <MdOutlineEmail />
+                                        </span>
                                         <motion.input
                                             type="email"
                                             name="email"
@@ -375,26 +361,21 @@ function Contacts({darkMode, toggleTheme, handleDownload}) {
                                             value={formData.email}
                                             onChange={handleChange}
                                             required
-                                            onFocus={() => setActiveField('email')}
+                                            onFocus={() => setActiveField("email")}
                                             onBlur={() => setActiveField(null)}
-                                            whileFocus={{ scale: 1.01 }}
                                         />
-                                        <motion.span
-                                            className="input-focus-effect"
-                                            animate={{
-                                                width: activeField === 'email' ? '100%' : '0%',
-                                                backgroundColor: "#2363C7"
-                                            }}
-                                        ></motion.span>
                                     </motion.div>
 
                                     <motion.div
-                                        className="form-group"
+                                        className={`form-group form-group-with-icon ${activeField === "subject" ? "is-focused" : ""}`}
                                         custom={2}
                                         variants={formFieldVariants}
                                         initial="hidden"
                                         animate="visible"
                                     >
+                                        <span className="form-field-icon" aria-hidden="true">
+                                            <MdOutlineSubject />
+                                        </span>
                                         <motion.input
                                             type="text"
                                             name="subject"
@@ -402,43 +383,30 @@ function Contacts({darkMode, toggleTheme, handleDownload}) {
                                             value={formData.subject}
                                             onChange={handleChange}
                                             required
-                                            onFocus={() => setActiveField('subject')}
+                                            onFocus={() => setActiveField("subject")}
                                             onBlur={() => setActiveField(null)}
-                                            whileFocus={{ scale: 1.01 }}
                                         />
-                                        <motion.span
-                                            className="input-focus-effect"
-                                            animate={{
-                                                width: activeField === 'subject' ? '100%' : '0%',
-                                                backgroundColor: "#2363C7"
-                                            }}
-                                        ></motion.span>
                                     </motion.div>
 
                                     <motion.div
-                                        className="form-group"
+                                        className={`form-group form-group-with-icon form-group-message ${activeField === "message" ? "is-focused" : ""}`}
                                         custom={3}
                                         variants={formFieldVariants}
                                         initial="hidden"
                                         animate="visible"
                                     >
+                                        <span className="form-field-icon" aria-hidden="true">
+                                            <MdOutlineChatBubbleOutline />
+                                        </span>
                                         <motion.textarea
                                             name="message"
                                             placeholder="Your Message"
                                             value={formData.message}
                                             onChange={handleChange}
                                             required
-                                            onFocus={() => setActiveField('message')}
+                                            onFocus={() => setActiveField("message")}
                                             onBlur={() => setActiveField(null)}
-                                            whileFocus={{ scale: 1.01 }}
-                                        ></motion.textarea>
-                                        <motion.span
-                                            className="input-focus-effect"
-                                            animate={{
-                                                width: activeField === 'message' ? '100%' : '0%',
-                                                backgroundColor: "#2363C7"
-                                            }}
-                                        ></motion.span>
+                                        />
                                     </motion.div>
 
                                     <motion.button
@@ -449,11 +417,7 @@ function Contacts({darkMode, toggleTheme, handleDownload}) {
                                         variants={formFieldVariants}
                                         initial="hidden"
                                         animate="visible"
-                                        whileHover={{
-                                            scale: 1.05,
-                                            backgroundColor: "#1d52a8",
-                                            boxShadow: "0 8px 20px rgba(35, 99, 199, 0.3)"
-                                        }}
+                                        whileHover={{ scale: 1.02 }}
                                         whileTap={{ scale: 0.95 }}
                                     >
                                         {isSubmitting ? (
@@ -465,14 +429,8 @@ function Contacts({darkMode, toggleTheme, handleDownload}) {
                                             </motion.span>
                                         ) : (
                                             <>
-                                                Send Message
-                                                <motion.span
-                                                    initial={{ x: 0 }}
-                                                    whileHover={{ x: 5 }}
-                                                    className="span-icon"
-                                                >
-                                                    <MdSend className="send-icon" />
-                                                </motion.span>
+                                                SEND MESSAGE
+                                            
                                             </>
                                         )}
                                     </motion.button>
