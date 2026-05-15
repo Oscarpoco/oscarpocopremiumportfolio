@@ -14,6 +14,7 @@ import Profile from './pages/popupps/screens/Profile.jsx';
 
 // COMPONENTS
 import IntroAnimation from './components/IntroAnimation.jsx';
+import IdleSessionPrompt from './components/IdleSessionPrompt.jsx';
 
 // STYLINGS
 import './App.css';
@@ -236,6 +237,8 @@ function App() {
             darkMode={darkMode}
           />
         )}
+
+      <IdleSessionPrompt darkMode={darkMode} />
 
       {/* FLOATING GLOBAL THEME BUTTON */}
       <button
