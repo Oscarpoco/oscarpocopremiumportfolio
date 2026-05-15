@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { motion, useInView, useAnimation } from "framer-motion";
+import { motion, useInView, useAnimation, AnimatePresence } from "framer-motion";
 
 // STYLING
 import "../styles/Experience.css";
@@ -11,8 +11,8 @@ import {
   MdOutlineDarkMode,
   MdLocationOn,
 } from "react-icons/md";
-import { IoIosArrowForward } from "react-icons/io";
-import { FaCalendarAlt, FaArrowRight } from "react-icons/fa";
+import { IoIosArrowForward, IoIosArrowDown } from "react-icons/io";
+import { FaCalendarAlt } from "react-icons/fa";
 import { BsArrowRight } from "react-icons/bs";
 
 // DATABASE
@@ -175,10 +175,49 @@ function ExperienceCard({ exp, index, isActive, onHover }) {
 
 function Experience({ darkMode, toggleTheme, handleDownload }) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const headerRef = useRef(null);
+  const containerRef = useRef(null);
+  const [showScrollHint, setShowScrollHint] = useState(false);
+  const [hintCenterX, setHintCenterX] = useState(0);
+
+  useEffect(() => {
+    const scrollRoot = containerRef.current?.closest(".Child-dashboard");
+    if (!scrollRoot) return;
+
+    const epsilon = 12;
+    const bottomSlack = 72;
+
+    const updateHint = () => {
+      const r = scrollRoot.getBoundingClientRect();
+      setHintCenterX(r.left + r.width / 2);
+
+      const { scrollTop, scrollHeight, clientHeight } = scrollRoot;
+      const scrollable = scrollHeight > clientHeight + epsilon;
+      const atBottom = scrollTop + clientHeight >= scrollHeight - bottomSlack;
+      setShowScrollHint(scrollable && !atBottom);
+    };
+
+    updateHint();
+    scrollRoot.addEventListener("scroll", updateHint, { passive: true });
+    window.addEventListener("resize", updateHint);
+
+    const ro = new ResizeObserver(updateHint);
+    ro.observe(scrollRoot);
+    if (containerRef.current) {
+      ro.observe(containerRef.current);
+    }
+
+    return () => {
+      scrollRoot.removeEventListener("scroll", updateHint);
+      window.removeEventListener("resize", updateHint);
+      ro.disconnect();
+    };
+  }, []);
 
   return (
-    <div className={`experience-container ${darkMode ? "dark-theme" : ""}`}>
+    <div
+      ref={containerRef}
+      className={`experience-container ${darkMode ? "dark-theme" : ""}`}
+    >
       {/* Floating Theme Toggle */}
       <motion.button
         className="theme-toggle"
@@ -254,6 +293,24 @@ function Experience({ darkMode, toggleTheme, handleDownload }) {
             />
           ))}
       </div>
+
+      <AnimatePresence>
+        {showScrollHint && (
+          <motion.div
+            key="experience-scroll-hint"
+            className="experience-scroll-hint"
+            style={{ left: hintCenterX }}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 4 }}
+            transition={{ duration: 0.28 }}
+            aria-hidden
+          >
+            <IoIosArrowDown className="experience-scroll-hint-icon" />
+            Scroll Down
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

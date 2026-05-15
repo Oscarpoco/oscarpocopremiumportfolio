@@ -401,6 +401,57 @@
   background: var(--primary-gradient);
 }
 
+/* Floating “more below” chevron — tracks dashboard scroll pane */
+.experience-scroll-hint {
+  position: fixed;
+  bottom: 10px;
+  z-index: 40;
+  transform: translateX(-50%);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 52px;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text-tertiary);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-family: var(--font-display);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.experience-scroll-hint-icon {
+  font-size: 26px;
+  color: var(--primary);
+  line-height: 1;
+  animation: experience-scroll-hint-bounce 1.15s ease-in-out infinite;
+}
+
+.dark-theme .experience-scroll-hint {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-color: var(--border-color);
+}
+
+@keyframes experience-scroll-hint-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  45% {
+    transform: translateY(9px);
+    opacity: 0.85;
+  }
+  70% {
+    transform: translateY(3px);
+    opacity: 1;
+  }
+}
+
 /* RESPONSIVE STYLES */
 @media (max-width: 768px) {
   .experience-container {
