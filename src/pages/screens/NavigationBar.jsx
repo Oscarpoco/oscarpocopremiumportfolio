@@ -3,8 +3,7 @@ import { motion } from "framer-motion";
 import "../styles/NavigationBar.css";
 
 // ICONS
-import { FaBriefcase } from "react-icons/fa";
-import { MdDarkMode, MdLightMode } from "react-icons/md";
+import { MdDarkMode, MdLightMode, MdTouchApp } from "react-icons/md";
 
 // IMAGE
 import oscar from "./../../assets/avatar4.jfif";
@@ -136,34 +135,49 @@ function NavigationBar({ onOpen, darkMode, toggleTheme, activeItem }) {
       </span>
       
 
-      {/* PORTFOLIO USER */}
+      {/* PORTFOLIO USER — whole block opens one-page portfolio (desktop) */}
       <div className="Portfolio-user">
-        {/* USER INFO */}
         <motion.div
-          className="user-info"
+          className={`portfolio-onepage-cta ${isDesktop ? "portfolio-onepage-cta--active" : ""}`}
+          onClick={isDesktop ? onOpen : undefined}
+          onKeyDown={(e) => {
+            if (!isDesktop || !onOpen) return;
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              onOpen();
+            }
+          }}
+          role={isDesktop ? "button" : undefined}
+          tabIndex={isDesktop ? 0 : undefined}
+          aria-label="Open one-page portfolio view"
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.4 }}
         >
-          <p className="name">Oscar Poco</p>
-          <div className="status-wrapper">
-            <p className="role">CLICK TO VIEW 1 PAGE PORTFOLIO</p>
+          <div className="user-info">
+         
+            <div className="portfolio-cta-bubble">
+              <span className="portfolio-cta-dot" aria-hidden />
+              <MdTouchApp className="portfolio-cta-icon" aria-hidden />
+              <p className="portfolio-cta-label">
+                CLICK TO VIEW 1-PAGE PORTFOLIO
+              </p>
+            </div>
           </div>
-        </motion.div>
 
-        <motion.div
-          className="abbreviation"
-          onClick={isDesktop ? onOpen : undefined}
-          whileHover={isDesktop ? { scale: 1.05 } : undefined}
-          whileTap={isDesktop ? { scale: 0.95 } : undefined}
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.5, type: "spring" }}
-        >
-          <div className="nav-avatar">
-            <img src={oscar} alt="Oscar Poco" className="nav-image" />
-          </div>
-          <div className="avatar-ring"></div>
+          <motion.div
+            className="abbreviation"
+            whileHover={isDesktop ? { scale: 1.05 } : undefined}
+            whileTap={isDesktop ? { scale: 0.95 } : undefined}
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.5, type: "spring" }}
+          >
+            <div className="nav-avatar">
+              <img src={oscar} alt="Oscar Poco" className="nav-image" />
+            </div>
+            <div className="avatar-ring"></div>
+          </motion.div>
         </motion.div>
 
         {/* DARK MODE TOGGLE */}
