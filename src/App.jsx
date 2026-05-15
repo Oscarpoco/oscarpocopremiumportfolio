@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from 'react'
 import { MdOutlineDarkMode, MdOutlineLightMode } from 'react-icons/md'
 import { SpeedInsights } from '@vercel/speed-insights/react'
+import { Analytics } from '@vercel/analytics/react'
 
 // SCREENS
 import NavigationBar from './pages/screens/NavigationBar.jsx';
@@ -247,6 +248,8 @@ function App() {
 
       {/* VERCEL SPEED INSIGHTS */}
       <SpeedInsights />
+      {/* VERCEL WEB ANALYTICS */}
+      <Analytics />
 
       {/* ENDS */}
 
