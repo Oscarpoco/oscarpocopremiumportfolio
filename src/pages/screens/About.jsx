@@ -21,6 +21,7 @@ import {motion} from "framer-motion";
 
 // DATABASE
 import {featuredProjects} from "../Database/AboutData";
+import {experienceData} from "../Database/ExperienceData";
 
 
 const portfolioStats = [
@@ -295,7 +296,7 @@ function About({darkMode, toggleTheme, handleDownload, navigateToSection}) {
                             Software Developer | Learnership Facilitator
                         </h2>
                         <p className="profile-description">
-                            I am a Software Developer and Learnership Facilitator with 3+ years of experience in Full Stack Development. I currently work at WWISE as a Software Development Facilitator. My background combines hands-on development of web and mobile apps with a passion for teaching and upskilling others.
+                            I am a Software Developer and Learnership Facilitator with 3+ years of experience across {experienceData.length} professional roles in Full Stack Development. I currently work at WWISE as a Software Development Facilitator. My background combines hands-on development of web and mobile apps with a passion for teaching and upskilling others.
                         </p>
 
                         <div className="profile-update-row">

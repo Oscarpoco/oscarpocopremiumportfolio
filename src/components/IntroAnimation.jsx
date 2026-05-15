@@ -401,7 +401,7 @@ function IntroAnimation({ onComplete }) {
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.85, duration: 0.5 }}
                 >
-                  React · UI/UX · Full-Stack
+                  React · Full-Stack
                 </motion.div>
               </motion.div>
             )}

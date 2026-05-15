@@ -242,57 +242,70 @@ const FloatingNav = ({ activeSection, scrollContainerRef }) => {
   };
 
   return (
-    <Motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+    <div
       style={{
         position: "fixed",
-        top: 24,
-        left: "50%",
-        transform: "translateX(-50%)",
-        zIndex: 1000,
-        background: scrolled
-          ? "rgba(255, 255, 255, 0.8)"
-          : "rgba(255, 255, 255, 0.7)",
-        backdropFilter: "blur(20px)",
-        padding: "12px 24px",
+        top: 50,
+        left: 0,
+        right: 0,
         display: "flex",
-        gap: 8,
-        alignItems: "center",
-        boxShadow: scrolled
-          ? "0 8px 32px rgba(0, 102, 255, 0.08)"
-          : "0 4px 16px rgba(0, 0, 0, 0.04)",
-        transition: "all 0.3s ease",
+        justifyContent: "center",
+        alignItems: "flex-start",
+        pointerEvents: "none",
+        zIndex: 1000,
       }}
     >
-      <CornerBorders />
-      {navSections.map((section) => (
-        <Motion.button
-          key={section.id}
-          onClick={() => scrollToSection(section.id)}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          style={{
-            background:
-              activeSection === section.id ? "transparent" : "transparent",
-            color: activeSection === section.id ? T.ink : T.ink,
-            border: "none",
-            borderRadius: 30,
-            padding: "10px 20px",
-            fontFamily: T.mono,
-            fontSize: 11,
-            fontWeight: 600,
-            letterSpacing: "0.1em",
-            textTransform: "uppercase",
-            cursor: "pointer",
-            transition: "all 0.3s ease",
-          }}
-        >
-          {section.label}
-        </Motion.button>
-      ))}
-    </Motion.nav>
+      <Motion.nav
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        style={{
+          pointerEvents: "auto",
+          background: scrolled
+            ? "rgba(255, 255, 255, 0.8)"
+            : "rgba(255, 255, 255, 0.7)",
+          backdropFilter: "blur(20px)",
+          padding: "12px 24px",
+          display: "flex",
+          gap: 8,
+          alignItems: "center",
+          maxWidth: "calc(100vw - 200px)",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          boxShadow: scrolled
+            ? "0 8px 32px rgba(0, 102, 255, 0.08)"
+            : "0 4px 16px rgba(0, 0, 0, 0.04)",
+          transition: "all 0.3s ease",
+        }}
+      >
+        <CornerBorders />
+        {navSections.map((section) => (
+          <Motion.button
+            key={section.id}
+            onClick={() => scrollToSection(section.id)}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            style={{
+              background:
+                activeSection === section.id ? "transparent" : "transparent",
+              color: activeSection === section.id ? T.ink : T.ink,
+              border: "none",
+              borderRadius: 30,
+              padding: "10px 20px",
+              fontFamily: T.mono,
+              fontSize: 11,
+              fontWeight: 600,
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              cursor: "pointer",
+              transition: "all 0.3s ease",
+            }}
+          >
+            {section.label}
+          </Motion.button>
+        ))}
+      </Motion.nav>
+    </div>
   );
 };
 
@@ -678,7 +691,7 @@ const Profile = ({ onClose }) => {
         whileTap={{ scale: 0.9 }}
         style={{
           position: "fixed",
-          top: 24,
+          top: 50,
           right: 24,
           zIndex: 1001,
           background: T.white,
@@ -707,7 +720,7 @@ const Profile = ({ onClose }) => {
         whileTap={{ scale: 0.95 }}
         style={{
           position: "fixed",
-          top: 24,
+          top: 50,
           left: 24,
           zIndex: 1001,
           color: T.ink,
@@ -906,12 +919,11 @@ const Profile = ({ onClose }) => {
                   fontWeight: 500,
                 }}
               >
-                I'm a self-driven Software Developer and UI/UX designer from
-                Johannesburg, passionate about building digital products that
-                look good{" "}
+                I'm a self-driven Software Developer from Johannesburg,
+                passionate about building digital products that look good{" "}
                 <em style={{ color: T.blue, fontStyle: "normal" }}>and</em> work
-                beautifully. I turn complex problems into clean, accessible
-                interfaces.
+                beautifully. Across {experienceData.length} professional roles, I turn
+                complex problems into clean, accessible interfaces.
               </p>
               <p
                 style={{
@@ -923,10 +935,11 @@ const Profile = ({ onClose }) => {
               >
                 Currently sharpening my skills at World Wide Industrial Systems
                 & Engineers as a Skills Facilitator (SDP) and Software Developer
-                while studying Accounting Science at UNISA — because I believe
-                great developers understand both code{" "}
+                while studying Information Technology at Rosebank International
+                University College — because I believe great developers understand
+                both code{" "}
                 <em style={{ color: T.blue, fontStyle: "normal" }}>and</em>{" "}
-                business.
+                the systems it supports.
               </p>
             </Motion.div>
 
