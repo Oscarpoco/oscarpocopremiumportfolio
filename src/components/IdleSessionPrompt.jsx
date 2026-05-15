@@ -24,8 +24,9 @@ const ACTIVITY_EVENTS = [
 const MOUSEMOVE_THROTTLE_MS = 400;
 
 /**
- * Global idle watcher: opens a modal after `idleMs` without interaction.
- * Pauses while the browser tab is hidden; reload via primary action.
+ * Global idle watcher: opens a modal after `idleMs` without interaction on
+ * this page. Timer keeps running while the tab is in the background — time in
+ * other tabs/apps counts as inactive here. Reload via primary action.
  */
 export default function IdleSessionPrompt({
   idleMs = IDLE_SESSION_MS,
@@ -52,7 +53,6 @@ export default function IdleSessionPrompt({
   const bump = useCallback(
     (e) => {
       if (open) return;
-      if (document.visibilityState !== 'visible') return;
       if (e?.type === 'mousemove') {
         const now = Date.now();
         if (now - lastMouseMoveRef.current < MOUSEMOVE_THROTTLE_MS) return;
@@ -69,23 +69,13 @@ export default function IdleSessionPrompt({
       window.addEventListener(evt, bump, { passive: true, capture: true });
     });
 
-    const onVisibility = () => {
-      if (document.hidden) {
-        clearTimer();
-      } else if (!open) {
-        armTimer();
-      }
-    };
-    document.addEventListener('visibilitychange', onVisibility);
-
     return () => {
       clearTimer();
       ACTIVITY_EVENTS.forEach((evt) => {
         window.removeEventListener(evt, bump, { capture: true });
       });
-      document.removeEventListener('visibilitychange', onVisibility);
     };
-  }, [bump, clearTimer, armTimer, open]);
+  }, [bump, clearTimer, open]);
 
   useEffect(() => {
     if (open) {
