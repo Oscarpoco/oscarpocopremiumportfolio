@@ -207,7 +207,83 @@
   flex-direction: column;
   align-items: center;
   gap: 20px;
- 
+}
+
+/* Avatar + rain tunnel + social row */
+.profile-image-stack {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  --profile-avatar-size: 200px;
+}
+
+/* Continuous rain between bottom of photo and social icons */
+.profile-rain {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: var(--profile-avatar-size);
+  bottom: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: visible;
+}
+
+.profile-rain-drop {
+  position: absolute;
+  top: 0;
+  width: 2px;
+  height: 13px;
+  border-radius: 2px;
+  margin-left: -1px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.55),
+    var(--primary) 42%,
+    color-mix(in srgb, var(--primary) 25%, transparent)
+  );
+  box-shadow: 0 0 8px color-mix(in srgb, var(--primary) 35%, transparent);
+  opacity: 0.85;
+  transform: rotate(12deg);
+  animation-name: about-profile-rain-fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform, top, opacity;
+}
+
+@keyframes about-profile-rain-fall {
+  0% {
+    top: -8px;
+    transform: translateX(0) rotate(12deg);
+    opacity: 0;
+  }
+  8% {
+    opacity: 0.95;
+  }
+  100% {
+    top: calc(100% - 6px);
+    transform: translateX(6px) rotate(12deg);
+    opacity: 0.12;
+  }
+}
+
+.dark-theme .profile-rain-drop {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.4),
+    var(--primary-light) 40%,
+    transparent
+  );
+  box-shadow: 0 0 10px color-mix(in srgb, var(--primary-light) 30%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .profile-rain-drop {
+    animation: none !important;
+    visibility: hidden;
+  }
 }
 
 .profile-image {
@@ -220,7 +296,7 @@
   position: relative;
   transition: all var(--transition-normal);
   box-shadow: var(--shadow-lg);
-  z-index: 2;
+  z-index: 6;
 }
 
 .profile-image:hover {
@@ -233,6 +309,7 @@
   height: 100%;
   object-fit: cover;
   transition: transform var(--transition-slow);
+  z-index: 6;
 }
 
 .profile-image:hover .avatar-image {
@@ -264,17 +341,19 @@
 .floating-header-1 {
   position: absolute;
   top: 25px;
-  color: --var(--primary);
+  color: var(--primary);
   font-size: 28px;
   font-weight: 200;
   width: 100%;
   text-align: center;
-  z-index: 1;
+  z-index: 5;
 }
 
 .social-links {
   display: flex;
   gap: 12px;
+  position: relative;
+  z-index: 4;
 }
 
 .social-link {
@@ -835,8 +914,19 @@
     height: 150px;
   }
 
+  .profile-image-stack {
+    --profile-avatar-size: 150px;
+  }
+
   .profile-name {
     font-size: 28px;
+    font-family: var(--font-primary);
+  }
+
+  .profile-description,
+  .portfolio-update-date,
+  .skill-tag {
+    font-family: var(--font-primary);
   }
 
   .profile-title {
@@ -916,6 +1006,10 @@
   .profile-image {
     width: 250px;
     height: 250px;
+  }
+
+  .profile-image-stack {
+    --profile-avatar-size: 250px;
   }
 
   .profile-badge {

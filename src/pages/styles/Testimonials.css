@@ -41,6 +41,10 @@
     margin: 0 auto;
     width: 100%;
   }
+
+  .testimonials-section .section-header .section-title{
+    font-size: 22px;
+  }
   
   
   /* Testimonials Slider Container */

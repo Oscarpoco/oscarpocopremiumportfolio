@@ -114,6 +114,8 @@ function About({darkMode, toggleTheme, handleDownload, navigateToSection}) {
         }
     };
 
+    const profileRainDropCount = 36;
+
     return (
         <div className={
             `about-container ${
@@ -206,31 +208,45 @@ function About({darkMode, toggleTheme, handleDownload, navigateToSection}) {
                 <div className="profile-content">
                     <motion.div className="profile-image-container"
                         variants={itemVariants}>
-                        <div className="profile-image">
-                            <img src={oscar}
-                                alt="Oscar Kyle Poco"
-                                className="avatar-image"/>
-                        </div>
-                        <motion.h1 className="floating-header-1"
-                            initial={
-                                {scale: 0}
-                            }
-                            animate={
-                                {scale: 1}
-                            }
-                            transition={
-                                {
-                                    delay: 0.5,
-                                    type: "spring"
+                        <div className="profile-image-stack">
+                            <div className="profile-image">
+                                <img src={oscar}
+                                    alt="Oscar Kyle Poco"
+                                    className="avatar-image"/>
+                            </div>
+                            <div className="profile-rain" aria-hidden>
+                                {Array.from({length: profileRainDropCount}, (_, i) => (
+                                    <span
+                                        key={i}
+                                        className="profile-rain-drop"
+                                        style={{
+                                            left: `${4 + (i * 92) / profileRainDropCount}%`,
+                                            animationDelay: `${(i % 12) * 0.12}s`,
+                                            animationDuration: `${1.1 + (i % 5) * 0.14}s`,
+                                        }}
+                                    />
+                                ))}
+                            </div>
+                            <motion.h1 className="floating-header-1"
+                                initial={
+                                    {scale: 0}
                                 }
-                        }>
-                            Hello There!
-                            <br/>
-                            Image Still
-                            <br/>
-                            Loading...
-                        </motion.h1>
-                        <div className="social-links">
+                                animate={
+                                    {scale: 1}
+                                }
+                                transition={
+                                    {
+                                        delay: 0.5,
+                                        type: "spring"
+                                    }
+                            }>
+                                Hello There!
+                                <br/>
+                                Image Still
+                                <br/>
+                                Loading...
+                            </motion.h1>
+                            <div className="social-links">
                             <motion.a href="https://github.com/Oscarpoco" className="social-link" target="_blank" rel="noopener noreferrer"
                                 whileHover={
                                     {
@@ -267,6 +283,7 @@ function About({darkMode, toggleTheme, handleDownload, navigateToSection}) {
                             }>
                                 <FaTwitter/>
                             </motion.a>
+                        </div>
                         </div>
                     </motion.div>
                     <motion.div className="profile-info"
