@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect } from 'react'
 import { MdOutlineDarkMode, MdOutlineLightMode } from 'react-icons/md'
+import { SpeedInsights } from '@vercel/speed-insights/react'
 
 // SCREENS
 import NavigationBar from './pages/screens/NavigationBar.jsx';
@@ -243,6 +244,9 @@ function App() {
       >
         {darkMode ? <MdOutlineLightMode size={24} /> : <MdOutlineDarkMode size={24} />}
       </button>
+
+      {/* VERCEL SPEED INSIGHTS */}
+      <SpeedInsights />
 
       {/* ENDS */}
 
