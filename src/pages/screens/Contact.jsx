@@ -132,7 +132,7 @@ function Contacts({darkMode, toggleTheme, handleDownload}) {
                 >
                     <h1>Contacts</h1>
                     <div className="breadcrumb">
-                        <span>Dashboard</span>
+                        <span>Portfolio</span>
                         <IoIosArrowForward className="breadcrumb-icon" />
                         <span className="current-page">Find Me</span>
                     </div>

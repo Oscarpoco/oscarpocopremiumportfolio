@@ -128,7 +128,8 @@ html {
 .skills-header,
 .experience-header,
 .education-header,
-.featured-header {
+.featured-header,
+.journey-container .about-header {
     position: fixed !important;
     top: 80px !important;
     left: var(--sidebar-width) !important;
@@ -143,7 +144,8 @@ html {
     .skills-header,
     .experience-header,
     .education-header,
-    .featured-header {
+    .featured-header,
+    .journey-container .about-header {
         left: var(--sidebar-width-md) !important;
         width: calc(100% - var(--sidebar-width-md)) !important;
     }
@@ -154,7 +156,8 @@ html {
     .skills-header,
     .experience-header,
     .education-header,
-    .featured-header {
+    .featured-header,
+    .journey-container .about-header {
         left: var(--sidebar-width-sm) !important;
         width: calc(100% - var(--sidebar-width-sm)) !important;
         top: 70px !important;
@@ -166,7 +169,8 @@ html {
     .skills-header,
     .experience-header,
     .education-header,
-    .featured-header {
+    .featured-header,
+    .journey-container .about-header {
         left: 60px !important;
         width: calc(100% - 60px) !important;
         top: 70px !important;
@@ -201,7 +205,8 @@ html {
 .education-container,
 .featured-container,
 .contacts-container,
-.testimonials-container {
+.testimonials-container,
+.journey-container {
     box-shadow: none !important;
 }
 

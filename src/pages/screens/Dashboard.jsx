@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, lazy, Suspense } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 // STYLING
@@ -13,6 +13,8 @@ import Featured from "./Featured";
 import Testimonials from "./Testimonials";
 import Contacts from "./Contact";
 import Error404 from "./Error404";
+
+const Journey = lazy(() => import("./Journey"));
 
 
 function Dashboard({ activeItem, isAuthenticated, darkMode, toggleTheme, handleDownload, navigateToSection }) {
@@ -64,6 +66,12 @@ function Dashboard({ activeItem, isAuthenticated, darkMode, toggleTheme, handleD
                 return <Featured key="featured" {...props} />;
             case "Testimonials":
                 return <Testimonials key="testimonials" {...props} />;
+            case "Journey":
+                return (
+                    <Suspense key="journey" fallback={<div className="journey-loading" aria-busy="true" />}>
+                        <Journey {...props} />
+                    </Suspense>
+                );
             case "Contact":
                 return <Contacts key="contact" {...props} />;
             default:

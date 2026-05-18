@@ -9,6 +9,7 @@ import { AiFillStar } from "react-icons/ai";
 import { BiSolidMessageDetail } from "react-icons/bi";
 import { FaLaptopCode } from "react-icons/fa";
 import { BsAward } from "react-icons/bs";
+import { GiPathDistance } from "react-icons/gi";
 
 const navigationItems = [
     { name: "Dashboard", icon: MdDashboard, color: "#2363C7" },
@@ -17,6 +18,7 @@ const navigationItems = [
     { name: "Education", icon: MdSchool, color: "#f59e0b" },
     { name: "Featured", icon: AiFillStar, color: "#ef4444" },
     { name: "Testimonials", icon: BsAward, color: "#06b6d4" },
+    { name: "Journey", icon: GiPathDistance, color: "#f97316", desktopOnly: true },
     { name: "Contact", icon: BiSolidMessageDetail, color: "#ec4899" },
 ];
 
@@ -66,7 +68,7 @@ function SideBar({ activeItem, setActiveItem, darkMode }) {
                         return (
                             <motion.div
                                 key={item.name}
-                                className={`navigation-item ${isActive ? "active" : ""}`}
+                                className={`navigation-item ${isActive ? "active" : ""} ${item.desktopOnly ? "navigation-item--journey-desktop" : ""}`}
                                 onClick={() => handleNavClick(item.name)}
                                 variants={itemVariants}
                                 whileHover={{ 
@@ -139,19 +141,7 @@ function SideBar({ activeItem, setActiveItem, darkMode }) {
                         </div>
                     </div>
 
-                    <motion.div
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ delay: 0.3 }}
-                            style={{ backgroundColor: "", cursor: "pointer", padding: 0, display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 15 }}
-                            onClick={() =>
-                              window.open("https://oscar-oldsite.vercel.app/", "_blank")
-                            }
-                          >
-                            <span className="current-section-label" style={{ color: "green" }}>
-                              VIEW THE OLD SITE
-                            </span>
-                          </motion.div>
+                
 
                 </motion.div>
             </div>

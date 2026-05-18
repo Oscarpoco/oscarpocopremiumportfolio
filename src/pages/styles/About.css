@@ -114,7 +114,83 @@
 .header-actions {
   display: flex;
   gap: 12px;
- 
+  align-items: center;
+}
+
+/* Center slot (e.g. Journey progress in header) */
+.about-header--with-center {
+  display: grid;
+  grid-template-columns: 1fr minmax(240px, 360px) 1fr;
+  align-items: center;
+  gap: 20px;
+}
+
+.about-header--with-center .header-left {
+  justify-self: start;
+}
+
+.about-header--with-center .header-center {
+  justify-self: center;
+  width: 100%;
+  max-width: 360px;
+}
+
+.about-header--with-center .header-actions {
+  justify-self: end;
+}
+
+.header-progress {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 8px 16px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 0;
+  box-shadow: var(--shadow-sm);
+}
+
+.header-progress-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.header-progress-label svg {
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.header-progress-track {
+  flex: 1;
+  height: 6px;
+  min-width: 60px;
+  background: var(--bg-tertiary);
+  border-radius: 0;
+  overflow: hidden;
+}
+
+.header-progress-fill {
+  height: 100%;
+  background: var(--primary);
+  border-radius: 0;
+  transition: width 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.header-progress-pct {
+  flex-shrink: 0;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: var(--font-display);
+  color: var(--primary);
+  min-width: 36px;
+  text-align: right;
 }
 
 .action-button {

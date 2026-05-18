@@ -31,6 +31,7 @@ function App() {
     '/education': 'Education',
     '/featured': 'Featured',
     '/testimonials': 'Testimonials',
+    '/journey': 'Journey',
     '/contact': 'Contact'
   };
 
