@@ -15,6 +15,7 @@ import Profile from './pages/popupps/screens/Profile.jsx';
 // COMPONENTS
 import IntroAnimation from './components/IntroAnimation.jsx';
 import IdleSessionPrompt from './components/IdleSessionPrompt.jsx';
+import Osbot from './components/Osbot.jsx';
 
 // STYLINGS
 import './App.css';
@@ -240,6 +241,8 @@ function App() {
         )}
 
       <IdleSessionPrompt darkMode={darkMode} />
+
+      <Osbot />
 
       {/* FLOATING GLOBAL THEME BUTTON */}
       <button

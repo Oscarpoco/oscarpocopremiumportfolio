@@ -387,6 +387,7 @@
   width: 100%;
   max-width: 420px;
   position: relative;
+  align-self: center;
 }
 
 .journey-intro::before {
