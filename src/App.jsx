@@ -16,6 +16,13 @@ import Profile from './pages/popupps/screens/Profile.jsx';
 import IntroAnimation from './components/IntroAnimation.jsx';
 import IdleSessionPrompt from './components/IdleSessionPrompt.jsx';
 import Osbot from './components/Osbot.jsx';
+import FallingParticles from './components/FallingParticles.jsx';
+import SettingsPanel from './components/SettingsPanel.jsx';
+import {
+  loadPreferences,
+  savePreferences,
+  applyPreferences,
+} from './config/themePreferences';
 
 // STYLINGS
 import './App.css';
@@ -49,57 +56,27 @@ function App() {
 
   const initialRoute = getRouteFromPath(window.location.pathname);
 
-  // INTRO ANIMATION STATE (only dashboard)
   const [showIntro, setShowIntro] = useState(initialRoute === 'Dashboard');
-
-  // SIDEBAR NAVIGATION STATE
   const [activeItem, setActiveItem] = useState(initialRoute || 'Dashboard');
   const [routeNotFound, setRouteNotFound] = useState(!initialRoute);
-
-  // PROFILE STATE
   const [isProfile, setIsProfile] = useState(false);
-  
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [preferences, setPreferences] = useState(() => loadPreferences());
+  const [reducedMotion, setReducedMotion] = useState(false);
 
-  // DARK MODE - Default to dark theme
-  const [darkMode, setDarkMode] = useState(() => {
-    const savedTheme = localStorage.getItem('theme');
-    return savedTheme ? JSON.parse(savedTheme) : false;
-  });
+  const darkMode = preferences.darkMode;
 
-  // MOBILE VIEW unsupported overlay
-  const [isMobileView, setIsMobileView] = useState(false);
-
-  // Apply theme on mount and when darkMode changes
   useEffect(() => {
-    if (darkMode) {
-      document.body.classList.add('dark-theme');
-    } else {
-      document.body.classList.remove('dark-theme');
-    }
-    localStorage.setItem('theme', JSON.stringify(darkMode));
-  }, [darkMode]);
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => setReducedMotion(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
 
-  // useEffect(() => {
-  //   const checkMobile = () => {
-  //     const mobile = window.innerWidth <= 768;
-  //     setIsMobileView(mobile);
-  //   };
-
-  //   checkMobile();
-  //   window.addEventListener('resize', checkMobile);
-
-  //   let redirectTimer;
-  //   if (window.innerWidth <= 768) {
-  //     redirectTimer = setTimeout(() => {
-  //       window.location.href = 'https://oscar-oldsite.vercel.app/';
-  //     }, 5000);
-  //   }
-
-  //   return () => {
-  //     window.removeEventListener('resize', checkMobile);
-  //     if (redirectTimer) clearTimeout(redirectTimer);
-  //   };
-  // }, []);
+  useEffect(() => {
+    applyPreferences(preferences);
+  }, [preferences]);
 
   const resolveRoute = (pathname) => {
     const normalized = normalizePath(pathname);
@@ -134,14 +111,21 @@ function App() {
     }
   }, [activeItem, routeNotFound]);
 
-  const toggleTheme = () => {
-    setDarkMode(!darkMode);
-  };
+  const toggleTheme = useCallback(() => {
+    setPreferences((prev) => {
+      const next = { ...prev, darkMode: !prev.darkMode };
+      savePreferences(next);
+      return next;
+    });
+  }, []);
 
-  // DOWNLOAD RESUME
+  const handleSavePreferences = useCallback((next) => {
+    setPreferences(next);
+    savePreferences(next);
+  }, []);
+
   const handleDownload = () => {
     const cvUrl = resume;
-
     const link = document.createElement('a');
     link.href = cvUrl;
     link.download = 'oscarkylpoco.pdf';
@@ -150,13 +134,11 @@ function App() {
     document.body.removeChild(link);
   };
 
-  // NAVIGATE TO SECTION - passed to About component for card clicks
   const navigateToSection = useCallback((section) => {
     setActiveItem(section);
     setRouteNotFound(false);
   }, []);
 
-  // HANDLE INTRO COMPLETE
   const handleIntroComplete = useCallback(() => {
     setShowIntro(false);
   }, []);
@@ -165,44 +147,23 @@ function App() {
     return <IntroAnimation onComplete={handleIntroComplete} />;
   }
 
-  // if (isMobileView) {
-  //   return (
-  //     <div className="mobile-blocker" style={{
-  //         width: '100vw',
-  //         minHeight: '100vh',
-  //         display: 'flex',
-  //         justifyContent: 'center',
-  //         alignItems: 'center',
-  //         textAlign: 'center',
-  //         padding: '24px',
-  //         background: '#0f172a',
-  //         color: '#f8fafc'
-  //     }}>
-  //       <div>
-  //         <h1>Mobile view is not supported</h1>
-  //         <p style={{margin: '1rem 0'}}>Click here to view the compatible site for mobile, or wait to auto-redirect.</p>
-  //         <a href="https://oscar-oldsite.vercel.app/" style={{
-  //           color: '#ffffff',
-  //           background: '#2563eb',
-  //           borderRadius: '10px',
-  //           padding: '12px 18px',
-  //           textDecoration: 'none',
-  //           fontWeight: 600
-  //         }}>Go to mobile-friendly site</a>
-  //       </div>
-  //     </div>
-  //   );
-  // }
-
   if (routeNotFound) {
     return <Error404 />;
   }
 
+  const particleEffect =
+    reducedMotion || preferences.particles === "none"
+      ? "none"
+      : preferences.particles;
+
   return (
     <div className={`Parent ${darkMode ? 'dark-theme' : ''}`}>
+      <FallingParticles effect={particleEffect} />
+
       <div className='top'>
         <NavigationBar
           onOpen={() => setIsProfile(true)}
+          onOpenSettings={() => setSettingsOpen(true)}
           toggleTheme={toggleTheme}
           darkMode={darkMode}
           activeItem={activeItem}
@@ -210,15 +171,11 @@ function App() {
       </div>
 
       <div className='bottom'>
-
-        {/* SIDEBAR */}
         <SideBar
           activeItem={activeItem}
           setActiveItem={setActiveItem}
-          darkMode={darkMode}
         />
 
-        {/* DASHBOARD */}
         <Dashboard
           activeItem={activeItem}
           toggleTheme={toggleTheme}
@@ -226,25 +183,26 @@ function App() {
           handleDownload={handleDownload}
           navigateToSection={navigateToSection}
         />
-
       </div>
 
-      {/* POPUPPS */}
-
-      {isProfile &&
-        (
-          <Profile
-            onClose={() => setIsProfile(false)}
-            handleDownload={handleDownload}
-            darkMode={darkMode}
-          />
-        )}
+      {isProfile && (
+        <Profile
+          onClose={() => setIsProfile(false)}
+          handleDownload={handleDownload}
+          darkMode={darkMode}
+        />
+      )}
 
       <IdleSessionPrompt darkMode={darkMode} />
-
       <Osbot />
 
-      {/* FLOATING GLOBAL THEME BUTTON */}
+      <SettingsPanel
+        open={settingsOpen}
+        onClose={() => setSettingsOpen(false)}
+        preferences={preferences}
+        onSave={handleSavePreferences}
+      />
+
       <button
         className="theme-toggle theme-toggle-global"
         onClick={toggleTheme}
@@ -253,13 +211,8 @@ function App() {
         {darkMode ? <MdOutlineLightMode size={24} /> : <MdOutlineDarkMode size={24} />}
       </button>
 
-      {/* VERCEL SPEED INSIGHTS */}
       <SpeedInsights />
-      {/* VERCEL WEB ANALYTICS */}
       <Analytics />
-
-      {/* ENDS */}
-
     </div>
   );
 }

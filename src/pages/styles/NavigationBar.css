@@ -308,6 +308,43 @@
     transform: scale(1.1);
 }
 
+/* SETTINGS */
+.nav-settings-btn {
+  height: 44px;
+  width: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  background: var(--bg-tertiary);
+  border: 2px dotted var(--border-color);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: all var(--transition-normal);
+}
+
+.nav-settings-btn:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #000;
+}
+
+.nav-settings-icon {
+  transition: color var(--transition-normal);
+}
+
+.dark-mode .nav-settings-btn {
+  border-color: var(--border-color);
+  color: var(--primary-light);
+}
+
+.dark-mode .nav-settings-btn:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #000;
+}
+
 /* MODE TOGGLE */
 .Dark-Mode {
     height: 44px;
@@ -398,6 +435,10 @@
     .abbreviation {
         cursor: default;
         pointer-events: none;
+    }
+
+    .nav-settings-btn {
+        display: none !important;
     }
 }
 

@@ -3,13 +3,13 @@ import { motion } from "framer-motion";
 import "../styles/NavigationBar.css";
 
 // ICONS
-import { MdDarkMode, MdLightMode, MdTouchApp } from "react-icons/md";
+import { MdDarkMode, MdLightMode, MdTouchApp, MdSettings } from "react-icons/md";
 
 // IMAGE
 import oscar from "./../../assets/avatar4.jfif";
 import { BiCodeAlt } from "react-icons/bi";
 
-function NavigationBar({ onOpen, darkMode, toggleTheme, activeItem }) {
+function NavigationBar({ onOpen, onOpenSettings, darkMode, toggleTheme, activeItem }) {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isScrollable, setIsScrollable] = useState(false);
   const [isDesktop, setIsDesktop] = useState(() =>
@@ -77,8 +77,8 @@ function NavigationBar({ onOpen, darkMode, toggleTheme, activeItem }) {
           transition={{ duration: 0.1 }}
           style={{
             background: darkMode
-              ? 'linear-gradient(90deg, #06d1ff 0%, #10b981 100%)'
-              : '#0d9488',
+              ? 'linear-gradient(90deg, var(--primary) 0%, var(--accent-success) 100%)'
+              : 'var(--primary)',
             height: '7px',
             position: 'absolute',
             top: 0,
@@ -180,7 +180,20 @@ function NavigationBar({ onOpen, darkMode, toggleTheme, activeItem }) {
           </motion.div>
         </motion.div>
 
-        {/* DARK MODE TOGGLE */}
+        <motion.button
+          type="button"
+          className="nav-settings-btn"
+          onClick={onOpenSettings}
+          aria-label="Open portfolio settings"
+          whileHover={{ scale: 1.08 }}
+          whileTap={{ scale: 0.92 }}
+          initial={{ opacity: 0, rotate: -90 }}
+          animate={{ opacity: 1, rotate: 0 }}
+          transition={{ delay: 0.55, type: "spring", stiffness: 200 }}
+        >
+          <MdSettings className="nav-settings-icon" size={20} />
+        </motion.button>
+
         <motion.div
           className="Dark-Mode"
           onClick={toggleTheme}

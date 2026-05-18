@@ -29,7 +29,7 @@ import { projects } from "../Database/Projects";
 import "../styles/Featured.css";
 
 function Featured({ darkMode, toggleTheme }) {
-  const [activeTab, setActiveTab] = useState("featured");
+  const [activeTab, setActiveTab] = useState("current");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [viewMode, setViewMode] = useState("grid"); // carousel, grid
   const [filterOpen, setFilterOpen] = useState(false);

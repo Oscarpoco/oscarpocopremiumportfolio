@@ -334,11 +334,11 @@ function Testimonials({darkMode, toggleTheme, handleDownload}) {
             >
                 <h3>Ready to work together?</h3>
                 <p>Let's create something amazing</p>
-                <motion.a 
+                <motion.a
                     href="mailto:oscarkylepoco@gmail.com"
                     className="cta-button"
-                    whileHover={{ y: -8, boxShadow: "0px 8px 15px rgba(0, 0, 0, 0.3)" }}
-                    whileTap={{ y: 0, boxShadow: "0px 0px 0px rgba(0, 0, 0, 0)" }}
+                    whileHover={{ y: -8 }}
+                    whileTap={{ y: 0 }}
                 >
                     Get In Touch
                 </motion.a>

@@ -12,17 +12,17 @@ import { BsAward } from "react-icons/bs";
 import { GiPathDistance } from "react-icons/gi";
 
 const navigationItems = [
-    { name: "Dashboard", icon: MdDashboard, color: "#2363C7" },
-    { name: "Skills", icon: MdCode, color: "#10b981" },
-    { name: "Experience", icon: MdWork, color: "#8b5cf6" },
-    { name: "Education", icon: MdSchool, color: "#f59e0b" },
-    { name: "Featured", icon: AiFillStar, color: "#ef4444" },
-    { name: "Testimonials", icon: BsAward, color: "#06b6d4" },
-    { name: "Journey", icon: GiPathDistance, color: "#f97316", desktopOnly: true },
-    { name: "Contact", icon: BiSolidMessageDetail, color: "#ec4899" },
+    { name: "Dashboard", icon: MdDashboard },
+    { name: "Skills", icon: MdCode },
+    { name: "Experience", icon: MdWork },
+    { name: "Education", icon: MdSchool },
+    { name: "Featured", icon: AiFillStar },
+    { name: "Testimonials", icon: BsAward },
+    { name: "Journey", icon: GiPathDistance, desktopOnly: true },
+    { name: "Contact", icon: BiSolidMessageDetail },
 ];
 
-function SideBar({ activeItem, setActiveItem, darkMode }) {
+function SideBar({ activeItem, setActiveItem }) {
 
     const handleNavClick = (itemName) => {
         setActiveItem(itemName);
@@ -51,8 +51,8 @@ function SideBar({ activeItem, setActiveItem, darkMode }) {
     };
 
     return (
-        <motion.div 
-            className={`Parent-sidebar ${darkMode ? 'dark-mode' : ''}`}
+        <motion.div
+            className="Parent-sidebar"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
@@ -77,34 +77,27 @@ function SideBar({ activeItem, setActiveItem, darkMode }) {
                                 }}
                                 whileTap={{ scale: 0.98 }}
                             >
-                                <motion.div 
+                                <motion.div
                                     className="nav-icon-wrapper"
-                                    style={{ 
-                                        background: 'transparent',
-                                      
-                                    }}
-                                    animate={{
-                                        scale: isActive ? 1.1 : 1,
-                                    }}
+                                    animate={{ scale: isActive ? 1.1 : 1 }}
                                     transition={{ type: "spring", stiffness: 400 }}
                                 >
-                                    <Icon 
-                                        className="navigation-icon" 
-                                        style={{ color: isActive ? item.color : 'inherit' }}
-                                    />
+                                    <Icon className="navigation-icon" />
                                 </motion.div>
-                                <span className="nav-label">{item.name}<strong style={{color: isActive ? item.color : 'inherit'}}>.tsx</strong></span>
-                                
+                                <span className="nav-label">
+                                  {item.name}
+                                  <strong>.tsx</strong>
+                                </span>
+
                                 <AnimatePresence>
                                     {isActive && (
                                         <motion.div
                                             className="active-indicator"
                                             layoutId="activeIndicator"
-                                            initial={{ opacity: 0, scale: 0 }}
-                                            animate={{ opacity: 1, scale: 1 }}
-                                            exit={{ opacity: 0, scale: 0 }}
+                                            initial={{ opacity: 0, scaleY: 0 }}
+                                            animate={{ opacity: 1, scaleY: 1 }}
+                                            exit={{ opacity: 0, scaleY: 0 }}
                                             transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                                            style={{ backgroundColor: isActive ? item.color : 'inherit' }}
                                         />
                                     )}
                                 </AnimatePresence>

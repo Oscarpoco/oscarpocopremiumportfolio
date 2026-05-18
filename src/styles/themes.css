@@ -1,0 +1,237 @@
+/**
+ * Palette + mode tokens. Each theme defines light AND dark on <html>.
+ * Global .dark-theme in index.css only sets shared text/border neutrals.
+ */
+
+/* —— Male (blue / teal) —— */
+html[data-theme-palette="male"] {
+  --primary: #0d9488;
+  --primary-light: #2dd4bf;
+  --primary-dark: #0f766e;
+  --primary-gradient: #0d9488;
+  --primary-color: #0d9488;
+  --secondary-color: #015c56;
+  --primary-soft: rgba(13, 148, 136, 0.08);
+  --primary-soft-mid: rgba(13, 148, 136, 0.12);
+  --primary-ring: rgba(13, 148, 136, 0.2);
+  --primary-shadow-10: rgba(13, 148, 136, 0.1);
+  --primary-shadow-15: rgba(13, 148, 136, 0.15);
+  --primary-shadow-25: rgba(13, 148, 136, 0.25);
+  --primary-shadow-35: rgba(13, 148, 136, 0.35);
+  --shadow-glow: 0 0 28px rgba(13, 148, 136, 0.12);
+  --bg-primary: #f4fbfb;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #ecf4f3;
+  --bg-glass: rgba(255, 255, 255, 0.7);
+  --glass-bg: rgba(255, 255, 255, 0.8);
+}
+
+html[data-theme-palette="male"].dark-theme {
+  --primary: #06d1ff;
+  --primary-light: #35daff;
+  --primary-dark: #0ed8d1;
+  --primary-gradient: linear-gradient(135deg, #06d1ff 0%, #0ecadf 100%);
+  --primary-color: #06d1ff;
+  --secondary-color: #0891b2;
+  --primary-soft: rgba(6, 209, 255, 0.12);
+  --primary-soft-mid: rgba(6, 209, 255, 0.08);
+  --primary-ring: rgba(6, 209, 255, 0.28);
+  --primary-shadow-10: rgba(6, 209, 255, 0.1);
+  --primary-shadow-15: rgba(6, 209, 255, 0.15);
+  --primary-shadow-25: rgba(6, 209, 255, 0.25);
+  --primary-shadow-35: rgba(6, 209, 255, 0.35);
+  --shadow-glow: 0 0 30px rgba(6, 209, 255, 0.18);
+  --bg-primary: #0a1218;
+  --bg-secondary: #111c28;
+  --bg-tertiary: #1a2838;
+  --bg-glass: rgba(17, 28, 40, 0.88);
+  --glass-bg: rgba(17, 28, 40, 0.9);
+}
+
+/* —— Female (pink / rose) —— */
+html[data-theme-palette="female"] {
+  --primary: #db2777;
+  --primary-light: #f472b6;
+  --primary-dark: #be185d;
+  --primary-gradient: #db2777;
+  --primary-color: #db2777;
+  --secondary-color: #9d174d;
+  --primary-soft: rgba(219, 39, 119, 0.1);
+  --primary-soft-mid: rgba(219, 39, 119, 0.14);
+  --primary-ring: rgba(219, 39, 119, 0.22);
+  --primary-shadow-10: rgba(219, 39, 119, 0.1);
+  --primary-shadow-15: rgba(219, 39, 119, 0.15);
+  --primary-shadow-25: rgba(219, 39, 119, 0.25);
+  --primary-shadow-35: rgba(219, 39, 119, 0.35);
+  --shadow-glow: 0 0 28px rgba(219, 39, 119, 0.14);
+  --bg-primary: #fdf2f8;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #fce7f3;
+  --bg-glass: rgba(255, 255, 255, 0.75);
+  --glass-bg: rgba(255, 252, 254, 0.85);
+}
+
+html[data-theme-palette="female"].dark-theme {
+  --primary: #f472b6;
+  --primary-light: #fbcfe8;
+  --primary-dark: #ec4899;
+  --primary-gradient: linear-gradient(135deg, #f472b6 0%, #ec4899 100%);
+  --primary-color: #f472b6;
+  --secondary-color: #db2777;
+  --primary-soft: rgba(244, 114, 182, 0.14);
+  --primary-soft-mid: rgba(244, 114, 182, 0.1);
+  --primary-ring: rgba(244, 114, 182, 0.3);
+  --primary-shadow-10: rgba(244, 114, 182, 0.12);
+  --primary-shadow-15: rgba(244, 114, 182, 0.18);
+  --primary-shadow-25: rgba(244, 114, 182, 0.28);
+  --primary-shadow-35: rgba(244, 114, 182, 0.38);
+  --shadow-glow: 0 0 30px rgba(244, 114, 182, 0.2);
+  --bg-primary: #140a10;
+  --bg-secondary: #221018;
+  --bg-tertiary: #321824;
+  --bg-glass: rgba(34, 16, 24, 0.88);
+  --glass-bg: rgba(34, 16, 24, 0.9);
+}
+
+/* —— Forest (green) —— */
+html[data-theme-palette="forest"] {
+  --primary: #15803d;
+  --primary-light: #22c55e;
+  --primary-dark: #166534;
+  --primary-gradient: #15803d;
+  --primary-color: #15803d;
+  --secondary-color: #14532d;
+  --primary-soft: rgba(21, 128, 61, 0.1);
+  --primary-soft-mid: rgba(21, 128, 61, 0.14);
+  --primary-ring: rgba(21, 128, 61, 0.22);
+  --primary-shadow-10: rgba(21, 128, 61, 0.1);
+  --primary-shadow-15: rgba(21, 128, 61, 0.15);
+  --primary-shadow-25: rgba(21, 128, 61, 0.25);
+  --primary-shadow-35: rgba(21, 128, 61, 0.35);
+  --shadow-glow: 0 0 28px rgba(21, 128, 61, 0.14);
+  --bg-primary: #f0fdf4;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #dcfce7;
+  --bg-glass: rgba(255, 255, 255, 0.75);
+  --glass-bg: rgba(252, 255, 253, 0.85);
+}
+
+html[data-theme-palette="forest"].dark-theme {
+  --primary: #4ade80;
+  --primary-light: #86efac;
+  --primary-dark: #22c55e;
+  --primary-gradient: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+  --primary-color: #4ade80;
+  --secondary-color: #16a34a;
+  --primary-soft: rgba(74, 222, 128, 0.14);
+  --primary-soft-mid: rgba(74, 222, 128, 0.1);
+  --primary-ring: rgba(74, 222, 128, 0.28);
+  --primary-shadow-10: rgba(74, 222, 128, 0.1);
+  --primary-shadow-15: rgba(74, 222, 128, 0.16);
+  --primary-shadow-25: rgba(74, 222, 128, 0.26);
+  --primary-shadow-35: rgba(74, 222, 128, 0.36);
+  --shadow-glow: 0 0 30px rgba(74, 222, 128, 0.18);
+  --bg-primary: #08100a;
+  --bg-secondary: #0f1a12;
+  --bg-tertiary: #162a1c;
+  --bg-glass: rgba(15, 26, 18, 0.88);
+  --glass-bg: rgba(15, 26, 18, 0.9);
+}
+
+/* —— Sunset (amber / coral) —— */
+html[data-theme-palette="sunset"] {
+  --primary: #ea580c;
+  --primary-light: #fb923c;
+  --primary-dark: #c2410c;
+  --primary-gradient: #ea580c;
+  --primary-color: #ea580c;
+  --secondary-color: #9a3412;
+  --primary-soft: rgba(234, 88, 12, 0.1);
+  --primary-soft-mid: rgba(234, 88, 12, 0.14);
+  --primary-ring: rgba(234, 88, 12, 0.22);
+  --primary-shadow-10: rgba(234, 88, 12, 0.1);
+  --primary-shadow-15: rgba(234, 88, 12, 0.15);
+  --primary-shadow-25: rgba(234, 88, 12, 0.25);
+  --primary-shadow-35: rgba(234, 88, 12, 0.35);
+  --shadow-glow: 0 0 28px rgba(234, 88, 12, 0.14);
+  --bg-primary: #fff7ed;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #ffedd5;
+  --bg-glass: rgba(255, 255, 255, 0.75);
+  --glass-bg: rgba(255, 252, 248, 0.85);
+}
+
+html[data-theme-palette="sunset"].dark-theme {
+  --primary: #fb923c;
+  --primary-light: #fdba74;
+  --primary-dark: #f97316;
+  --primary-gradient: linear-gradient(135deg, #fb923c 0%, #f97316 100%);
+  --primary-color: #fb923c;
+  --secondary-color: #ea580c;
+  --primary-soft: rgba(251, 146, 60, 0.14);
+  --primary-soft-mid: rgba(251, 146, 60, 0.1);
+  --primary-ring: rgba(251, 146, 60, 0.28);
+  --primary-shadow-10: rgba(251, 146, 60, 0.1);
+  --primary-shadow-15: rgba(251, 146, 60, 0.16);
+  --primary-shadow-25: rgba(251, 146, 60, 0.26);
+  --primary-shadow-35: rgba(251, 146, 60, 0.36);
+  --shadow-glow: 0 0 30px rgba(251, 146, 60, 0.18);
+  --bg-primary: #140c06;
+  --bg-secondary: #221408;
+  --bg-tertiary: #341c0c;
+  --bg-glass: rgba(34, 20, 8, 0.88);
+  --glass-bg: rgba(34, 20, 8, 0.9);
+}
+
+/* —— Aurora (violet / purple) —— */
+html[data-theme-palette="aurora"] {
+  --primary: #7c3aed;
+  --primary-light: #a78bfa;
+  --primary-dark: #6d28d9;
+  --primary-gradient: #7c3aed;
+  --primary-color: #7c3aed;
+  --secondary-color: #5b21b6;
+  --primary-soft: rgba(124, 58, 237, 0.1);
+  --primary-soft-mid: rgba(124, 58, 237, 0.14);
+  --primary-ring: rgba(124, 58, 237, 0.22);
+  --primary-shadow-10: rgba(124, 58, 237, 0.1);
+  --primary-shadow-15: rgba(124, 58, 237, 0.15);
+  --primary-shadow-25: rgba(124, 58, 237, 0.25);
+  --primary-shadow-35: rgba(124, 58, 237, 0.35);
+  --shadow-glow: 0 0 28px rgba(124, 58, 237, 0.14);
+  --bg-primary: #f5f3ff;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #ede9fe;
+  --bg-glass: rgba(255, 255, 255, 0.75);
+  --glass-bg: rgba(252, 251, 255, 0.85);
+}
+
+html[data-theme-palette="aurora"].dark-theme {
+  --primary: #a78bfa;
+  --primary-light: #c4b5fd;
+  --primary-dark: #8b5cf6;
+  --primary-gradient: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
+  --primary-color: #a78bfa;
+  --secondary-color: #7c3aed;
+  --primary-soft: rgba(167, 139, 250, 0.14);
+  --primary-soft-mid: rgba(167, 139, 250, 0.1);
+  --primary-ring: rgba(167, 139, 250, 0.3);
+  --primary-shadow-10: rgba(167, 139, 250, 0.12);
+  --primary-shadow-15: rgba(167, 139, 250, 0.18);
+  --primary-shadow-25: rgba(167, 139, 250, 0.28);
+  --primary-shadow-35: rgba(167, 139, 250, 0.38);
+  --shadow-glow: 0 0 30px rgba(167, 139, 250, 0.2);
+  --bg-primary: #0c0814;
+  --bg-secondary: #14101f;
+  --bg-tertiary: #1e1830;
+  --bg-glass: rgba(20, 16, 31, 0.88);
+  --glass-bg: rgba(20, 16, 31, 0.9);
+}
+
+html.dark-theme {
+  color-scheme: dark;
+}
+
+html:not(.dark-theme) {
+  color-scheme: light;
+}

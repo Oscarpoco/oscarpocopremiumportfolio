@@ -1,32 +1,11 @@
-/* Testimonials.css */
+/* Testimonials.css — palette tokens from themes.css / index.css */
 
 :root {
-    --primary-color: #0d9488;
-    --secondary-color: #0f766e;
-    --text-color: #333333;
-    --light-text: #727272;
-    --background-color: #ffffff;
-    --card-background: #f8f9fa;
-    --border-color: #e0e0e0;
-    --shadow-color: rgba(0, 0, 0, 0.1);
-    --animation-duration: 0.3s;
-    --transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  
-  /* Dark theme colors */
-  .dark-theme {
-    --primary-color: #3b82f6;
-    --secondary-color: #60a5fa;
-    --text-color: #e0e0e0;
-    --light-text: #a0a0a0;
-    --background-color: #121212;
-    --card-background: #1e1e1e;
-    --border-color: #2a2a2a;
-    --shadow-color: rgba(0, 0, 0, 0.3);
-  }
-  
-  
-  /* Testimonials Section */
+  --animation-duration: 0.3s;
+  --transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Testimonials Section */
   #testimonials-wrapper {
     overflow-y: auto;
     padding: 140px 30px 100px;
@@ -66,7 +45,7 @@
     padding: 2rem;
     background: var(--bg-secondary);
     border: 4px dotted var(--border-color);
-    box-shadow: 0 10px 40px var(--shadow-color);
+    box-shadow: 0 10px 40px var(--primary-shadow-15);
     transition: all var(--animation-duration) var(--transition-timing);
     animation: fadeIn 0.5s ease-in-out;
     position: relative;
@@ -81,7 +60,7 @@
   /* Quote Icon */
   .quote-icon {
     font-size: 18rem;
-    color: var(--primary-color);
+    color: var(--primary);
     opacity: 0.2;
     position: absolute;
     top: 2rem;
@@ -108,12 +87,12 @@
     margin: 0;
     font-size: 1.6rem;
     font-weight: 700;
-    color: var(--text-color);
+    color: var(--text-primary);
   }
   
   .testimonial-role {
     margin: 0;
-    color: var(--light-text);
+    color: var(--text-secondary);
     font-size: 1rem;
     font-weight: 500;
   }
@@ -122,7 +101,7 @@
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    color: var(--primary-color);
+    color: var(--primary);
     font-weight: 600;
     font-size: 0.95rem;
   }
@@ -155,7 +134,7 @@
   .testimonial-content {
     font-size: 1.15rem;
     line-height: 1.8;
-    color: var(--text-color);
+    color: var(--text-primary);
     margin-bottom: 2rem;
     position: relative;
     z-index: 1;
@@ -182,13 +161,13 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: var(--light-text);
+    color: var(--text-secondary);
   }
 
   .detail-value {
     font-size: 1rem;
     font-weight: 600;
-    color: var(--text-color);
+    color: var(--text-primary);
   }
 
   /* Technologies */
@@ -200,7 +179,7 @@
 
   .tech-tag {
     padding: 0.4rem 0.8rem;
-    background: var(--primary-color);
+    background: var(--primary);
     color: white;
     border-radius: 0px;
     font-size: 0.85rem;
@@ -230,22 +209,22 @@
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background: var(--card-background);
+    background: var(--bg-secondary);
     border: 2px solid var(--border-color);
-    color: var(--text-color);
+    color: var(--text-primary);
     font-size: 1.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: all var(--animation-duration) var(--transition-timing);
-    box-shadow: 0 4px 10px var(--shadow-color);
+    box-shadow: 0 4px 10px var(--primary-shadow-15);
   }
 
   .nav-button:hover:not(:disabled) {
-    background: var(--primary-color);
+    background: var(--primary);
     color: white;
-    border-color: var(--primary-color);
+    border-color: var(--primary);
     transform: scale(1.1);
   }
 
@@ -276,9 +255,9 @@
   }
   
   .dot.active {
-    background-color: var(--primary-color);
+    background-color: var(--primary);
     transform: scale(1.3);
-    border-color: var(--primary-color);
+    border-color: var(--primary);
   }
   
   .dot:hover {
@@ -296,36 +275,44 @@
   .progress-text {
     font-size: 0.9rem;
     font-weight: 600;
-    color: var(--text-color);
+    color: var(--text-primary);
     white-space: nowrap;
   }
   
   /* Call to Action Section */
-  .testimonial-cta {
+  #testimonials-wrapper .testimonial-cta {
     text-align: center;
     margin: 4rem 2rem 2rem;
     padding: 3rem;
     border-radius: 0;
-    background: linear-gradient(135deg, var(--primary-color) 50%, var(--secondary-color) 50%);
-    color: white;
+    background: linear-gradient(
+      135deg,
+      var(--primary) 50%,
+      var(--secondary-color) 50%
+    );
+    color: #fff;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 20px 60px var(--primary-shadow-35);
+    box-shadow: var(--shadow-glow);
+    border: 2px dashed color-mix(in srgb, #fff 35%, var(--primary));
+    transition:
+      background var(--transition-normal),
+      box-shadow var(--transition-normal),
+      border-color var(--transition-normal);
   }
 
-  .dark-theme .testimonial-cta {
-    background: linear-gradient(135deg, var(--primary-color) 50%, var(--secondary-color) 50%);
-    box-shadow: 0 20px 60px rgba(59, 130, 246, 0.35);
-  }
-  
-  .testimonial-cta::before {
+  #testimonials-wrapper .testimonial-cta::before {
     content: '';
     position: absolute;
     top: -50%;
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 70%);
+    background: radial-gradient(
+      circle,
+      color-mix(in srgb, var(--primary-light) 40%, transparent) 0%,
+      transparent 70%
+    );
     animation: pulse 6s infinite linear;
   }
   
@@ -335,40 +322,46 @@
     100% { transform: scale(1) rotate(360deg); opacity: 0.5; }
   }
   
-  .testimonial-cta h3 {
+  #testimonials-wrapper .testimonial-cta h3 {
     font-size: 2rem;
     margin-bottom: 0.5rem;
     position: relative;
     z-index: 1;
+    color: #fff;
   }
-  
-  .testimonial-cta p {
+
+  #testimonials-wrapper .testimonial-cta p {
     font-size: 1.1rem;
     margin-bottom: 2rem;
     opacity: 0.95;
     position: relative;
     z-index: 1;
+    color: color-mix(in srgb, #fff 92%, var(--primary-light));
   }
-  
-  .cta-button {
+
+  #testimonials-wrapper .cta-button {
     padding: 1rem 2.5rem;
-    background-color: white;
-    color: var(--primary-color);
-    border: none;
+    background-color: var(--bg-secondary);
+    color: var(--primary);
+    border: 2px solid color-mix(in srgb, var(--primary) 40%, var(--bg-secondary));
     border-radius: 0;
     font-size: 1.1rem;
     font-weight: 700;
     cursor: pointer;
-    transition: all var(--animation-duration) var(--transition-timing);
+    transition:
+      transform var(--animation-duration) var(--transition-timing),
+      box-shadow var(--animation-duration) var(--transition-timing),
+      background-color var(--animation-duration) var(--transition-timing),
+      color var(--animation-duration) var(--transition-timing);
     position: relative;
     overflow: hidden;
     text-decoration: none;
     display: inline-block;
     z-index: 1;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 20px var(--primary-shadow-25);
   }
-  
-  .cta-button::after {
+
+  #testimonials-wrapper .cta-button::after {
     content: '';
     position: absolute;
     left: 0;
@@ -377,45 +370,52 @@
     width: 0;
     background-color: var(--primary-soft);
     transition: width 0.3s ease;
+    z-index: -1;
   }
-  
-  .cta-button:hover {
+
+  #testimonials-wrapper .cta-button:hover {
     transform: translateY(-5px);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 12px 30px var(--primary-shadow-35);
+    border-color: var(--primary);
   }
-  
-  .cta-button:hover::after {
+
+  #testimonials-wrapper .cta-button:hover::after {
     width: 100%;
   }
-  
+
   /* Social Links */
-  .social-links {
+  #testimonials-wrapper .social-links {
     display: flex;
     justify-content: center;
     gap: 1rem;
     margin-top: 2rem;
   }
-  
-  .social-link {
+
+  #testimonials-wrapper .social-links .social-link {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    background-color: var(--card-background);
-    color: var(--primary-color);
+    background-color: var(--bg-secondary);
+    color: var(--primary);
     font-size: 1.3rem;
-    transition: all var(--animation-duration) var(--transition-timing);
-    border: 2px solid var(--border-color);
-    box-shadow: 0 4px 10px var(--shadow-color);
+    transition:
+      transform var(--animation-duration) var(--transition-timing),
+      background-color var(--animation-duration) var(--transition-timing),
+      color var(--animation-duration) var(--transition-timing),
+      border-color var(--animation-duration) var(--transition-timing),
+      box-shadow var(--animation-duration) var(--transition-timing);
+    border: 2px dashed var(--border-color);
+    box-shadow: var(--shadow-sm);
   }
-  
-  .social-link:hover {
-    background-color: var(--primary-color);
-    color: white;
+
+  #testimonials-wrapper .social-links .social-link:hover {
+    background-color: var(--primary);
+    color: var(--bg-secondary);
     transform: translateY(-8px) rotate(5deg);
-    border-color: var(--primary-color);
+    border-color: var(--primary);
     box-shadow: 0 8px 20px var(--primary-shadow-35);
   }
   

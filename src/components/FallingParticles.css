@@ -1,0 +1,47 @@
+.falling-particles {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 40;
+  overflow: hidden;
+}
+
+.falling-particle {
+  position: absolute;
+  top: -8%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  opacity: 0.5;
+  will-change: transform;
+  animation: particle-fall linear infinite;
+}
+
+.falling-particles--snow .falling-particle {
+  color: color-mix(in srgb, var(--primary) 40%, #e2e8f0);
+}
+
+.falling-particles--flowers .falling-particle {
+  color: color-mix(in srgb, var(--primary) 70%, #f9a8d4);
+}
+
+.falling-particles--dev .falling-particle {
+  color: var(--primary);
+  opacity: 0.45;
+}
+
+@keyframes particle-fall {
+  0% {
+    transform: translate3d(0, -10vh, 0) rotate(0deg);
+  }
+  100% {
+    transform: translate3d(var(--particle-drift, 20px), 110vh, 0) rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .falling-particles {
+    display: none !important;
+  }
+}
