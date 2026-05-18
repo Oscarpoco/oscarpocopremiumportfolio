@@ -11,7 +11,6 @@ import {
 import {
   isWelcomeAlertDismissed,
   dismissWelcomeAlert,
-  UPDATES_AUTO_CLOSE_MS,
 } from "../config/appAlerts";
 import "./AppUpdatesAlert.css";
 
@@ -56,16 +55,6 @@ export default function AppUpdatesAlert({
     if (!idleSessionOpen || !open) return;
     closeUpdates();
   }, [idleSessionOpen, open, closeUpdates]);
-
-  useEffect(() => {
-    if (!open || idleSessionOpen) return;
-
-    const autoCloseTimer = window.setTimeout(() => {
-      closeUpdates();
-    }, UPDATES_AUTO_CLOSE_MS);
-
-    return () => window.clearTimeout(autoCloseTimer);
-  }, [open, idleSessionOpen, closeUpdates]);
 
   useEffect(() => {
     if (!open || idleSessionOpen) return;
