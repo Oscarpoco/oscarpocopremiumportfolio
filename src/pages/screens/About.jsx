@@ -630,13 +630,8 @@ function About({darkMode, toggleTheme, handleDownload, navigateToSection, partic
                                 }
                                 variants={itemVariants}
                                 custom={index}
-                                whileHover={
-                                    {
-                                        scale: 1.01,
-                                        x: 5,
-                                        backgroundColor: darkMode ? "rgba(255, 255, 255, 0.05)" : "rgba(13, 148, 136, 0.06)"
-                                    }
-                            }>
+                                whileHover={{ x: 4 }}
+                            >
                                 <div className="table-column name-column">
                                     <div className="project-name">
                                         <motion.img src={
