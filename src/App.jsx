@@ -15,6 +15,7 @@ import Profile from './pages/popupps/screens/Profile.jsx';
 // COMPONENTS
 import IntroAnimation from './components/IntroAnimation.jsx';
 import IdleSessionPrompt from './components/IdleSessionPrompt.jsx';
+import AppUpdatesAlert from './components/AppUpdatesAlert.jsx';
 import Osbot from './components/Osbot.jsx';
 import FallingParticles from './components/FallingParticles.jsx';
 import SettingsPanel from './components/SettingsPanel.jsx';
@@ -63,8 +64,13 @@ function App() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [preferences, setPreferences] = useState(() => loadPreferences());
   const [reducedMotion, setReducedMotion] = useState(false);
+  const [dashboardReady, setDashboardReady] = useState(false);
 
   const darkMode = preferences.darkMode;
+
+  const handleDashboardReady = useCallback(() => {
+    setDashboardReady(true);
+  }, []);
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -182,6 +188,7 @@ function App() {
           darkMode={darkMode}
           handleDownload={handleDownload}
           navigateToSection={navigateToSection}
+          onReady={handleDashboardReady}
         />
       </div>
 
@@ -194,6 +201,7 @@ function App() {
       )}
 
       <IdleSessionPrompt darkMode={darkMode} />
+      <AppUpdatesAlert ready={dashboardReady} darkMode={darkMode} />
       <Osbot />
 
       <SettingsPanel

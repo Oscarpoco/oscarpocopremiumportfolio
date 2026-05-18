@@ -17,9 +17,30 @@ import Error404 from "./Error404";
 const Journey = lazy(() => import("./Journey"));
 
 
-function Dashboard({ activeItem, isAuthenticated, darkMode, toggleTheme, handleDownload, navigateToSection }) {
+function Dashboard({ activeItem, isAuthenticated, darkMode, toggleTheme, handleDownload, navigateToSection, onReady }) {
 
     const scrollContainerRef = useRef(null);
+    const readyFiredRef = useRef(false);
+
+    useEffect(() => {
+        if (readyFiredRef.current || !onReady) return;
+
+        let cancelled = false;
+        const notify = () => {
+            if (!cancelled && !readyFiredRef.current) {
+                readyFiredRef.current = true;
+                onReady();
+            }
+        };
+
+        requestAnimationFrame(() => {
+            requestAnimationFrame(notify);
+        });
+
+        return () => {
+            cancelled = true;
+        };
+    }, [onReady]);
 
     useEffect(() => {
         const el = scrollContainerRef.current;
