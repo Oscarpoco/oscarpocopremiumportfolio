@@ -1,5 +1,8 @@
 export const ALERTS_STORAGE_KEY = "portfolio-app-alerts-v1";
 
+/** Auto-close updates popup if user has not dismissed it manually */
+export const UPDATES_AUTO_CLOSE_MS = 2570;
+
 export function isWelcomeAlertDismissed() {
   try {
     const raw = localStorage.getItem(ALERTS_STORAGE_KEY);

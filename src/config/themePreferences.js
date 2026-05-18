@@ -31,6 +31,12 @@ export const THEME_PALETTES = [
     description: "Violet & cosmic purple",
     swatch: ["#7c3aed", "#a78bfa"],
   },
+  {
+    id: "ocean",
+    label: "Ocean",
+    description: "Deep navy & seafoam",
+    swatch: ["#0369a1", "#22d3ee"],
+  },
 ];
 
 export const PARTICLE_EFFECTS = [

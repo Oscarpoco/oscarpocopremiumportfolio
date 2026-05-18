@@ -31,6 +31,7 @@ const MOUSEMOVE_THROTTLE_MS = 400;
 export default function IdleSessionPrompt({
   idleMs = IDLE_SESSION_MS,
   darkMode = false,
+  onOpenChange,
 }) {
   const [open, setOpen] = useState(false);
   const timerRef = useRef(null);
@@ -82,6 +83,10 @@ export default function IdleSessionPrompt({
       clearTimer();
     }
   }, [open, clearTimer]);
+
+  useEffect(() => {
+    onOpenChange?.(open);
+  }, [open, onOpenChange]);
 
   useEffect(() => {
     if (!open) return;

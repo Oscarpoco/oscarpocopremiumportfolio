@@ -164,7 +164,10 @@ export default function SettingsPanel({
                   <MdAutoAwesome size={18} aria-hidden />
                   Falling animation
                 </h3>
-                <p className="settings-hint">One effect at a time. Disabled if reduced motion is on.</p>
+                <p className="settings-hint">
+                  One effect at a time — also animates falling 1s and 0s under your
+                  profile photo. Disabled if reduced motion is on.
+                </p>
                 <div className="settings-particle-list">
                   {PARTICLE_EFFECTS.map((fx) => (
                     <button

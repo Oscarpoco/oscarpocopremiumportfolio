@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -11,42 +11,73 @@ import {
 import {
   isWelcomeAlertDismissed,
   dismissWelcomeAlert,
+  UPDATES_AUTO_CLOSE_MS,
 } from "../config/appAlerts";
 import "./AppUpdatesAlert.css";
 
-export default function AppUpdatesAlert({ ready = false, darkMode = false }) {
+export default function AppUpdatesAlert({
+  ready = false,
+  darkMode = false,
+  idleSessionOpen = false,
+}) {
   const [open, setOpen] = useState(false);
   const [doNotShowAgain, setDoNotShowAgain] = useState(false);
+  const doNotShowAgainRef = useRef(false);
 
   useEffect(() => {
-    if (!ready || isWelcomeAlertDismissed()) return;
+    doNotShowAgainRef.current = doNotShowAgain;
+  }, [doNotShowAgain]);
 
-    const timer = window.setTimeout(() => setOpen(true), 500);
-    return () => window.clearTimeout(timer);
-  }, [ready]);
+  const closeUpdates = useCallback(() => {
+    if (doNotShowAgainRef.current) {
+      dismissWelcomeAlert();
+    }
+    setOpen(false);
+  }, []);
 
   useEffect(() => {
-    if (!open) return;
+    if (!ready || isWelcomeAlertDismissed() || idleSessionOpen) return;
+
+    const showTimer = window.setTimeout(() => setOpen(true), 500);
+    return () => window.clearTimeout(showTimer);
+  }, [ready, idleSessionOpen]);
+
+  useEffect(() => {
+    if (!idleSessionOpen || !open) return;
+    closeUpdates();
+  }, [idleSessionOpen, open, closeUpdates]);
+
+  useEffect(() => {
+    if (!open || idleSessionOpen) return;
+
+    const autoCloseTimer = window.setTimeout(() => {
+      closeUpdates();
+    }, UPDATES_AUTO_CLOSE_MS);
+
+    return () => window.clearTimeout(autoCloseTimer);
+  }, [open, idleSessionOpen, closeUpdates]);
+
+  useEffect(() => {
+    if (!open || idleSessionOpen) return;
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = prev;
     };
-  }, [open]);
+  }, [open, idleSessionOpen]);
 
   const handleOk = () => {
-    if (doNotShowAgain) {
-      dismissWelcomeAlert();
-    }
-    setOpen(false);
+    closeUpdates();
   };
 
   const mounted = typeof document !== "undefined";
   if (!mounted) return null;
 
+  const showLayer = open && !idleSessionOpen;
+
   return createPortal(
     <AnimatePresence>
-      {open ? (
+      {showLayer ? (
         <motion.div
           key="app-updates-layer"
           className={`app-updates-layer ${darkMode ? "dark-theme" : ""}`}

@@ -65,6 +65,7 @@ function App() {
   const [preferences, setPreferences] = useState(() => loadPreferences());
   const [reducedMotion, setReducedMotion] = useState(false);
   const [dashboardReady, setDashboardReady] = useState(false);
+  const [idleSessionOpen, setIdleSessionOpen] = useState(false);
 
   const darkMode = preferences.darkMode;
 
@@ -189,6 +190,7 @@ function App() {
           handleDownload={handleDownload}
           navigateToSection={navigateToSection}
           onReady={handleDashboardReady}
+          particles={particleEffect}
         />
       </div>
 
@@ -200,8 +202,15 @@ function App() {
         />
       )}
 
-      <IdleSessionPrompt darkMode={darkMode} />
-      <AppUpdatesAlert ready={dashboardReady} darkMode={darkMode} />
+      <IdleSessionPrompt
+        darkMode={darkMode}
+        onOpenChange={setIdleSessionOpen}
+      />
+      <AppUpdatesAlert
+        ready={dashboardReady}
+        darkMode={darkMode}
+        idleSessionOpen={idleSessionOpen}
+      />
       <Osbot />
 
       <SettingsPanel

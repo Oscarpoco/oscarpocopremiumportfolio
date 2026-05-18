@@ -17,7 +17,7 @@ import Error404 from "./Error404";
 const Journey = lazy(() => import("./Journey"));
 
 
-function Dashboard({ activeItem, isAuthenticated, darkMode, toggleTheme, handleDownload, navigateToSection, onReady }) {
+function Dashboard({ activeItem, isAuthenticated, darkMode, toggleTheme, handleDownload, navigateToSection, onReady, particles = "none" }) {
 
     const scrollContainerRef = useRef(null);
     const readyFiredRef = useRef(false);
@@ -71,7 +71,8 @@ function Dashboard({ activeItem, isAuthenticated, darkMode, toggleTheme, handleD
             darkMode,
             handleDownload,
             navigateToSection,
-            isAuthenticated
+            isAuthenticated,
+            particles,
         };
 
         switch (activeItem) {

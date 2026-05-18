@@ -232,6 +232,51 @@ html.dark-theme {
   color-scheme: dark;
 }
 
+/* —— Ocean (navy / seafoam) —— */
+html[data-theme-palette="ocean"] {
+  --primary: #0369a1;
+  --primary-light: #0ea5e9;
+  --primary-dark: #075985;
+  --primary-gradient: #0369a1;
+  --primary-color: #0369a1;
+  --secondary-color: #164e63;
+  --primary-soft: rgba(3, 105, 161, 0.1);
+  --primary-soft-mid: rgba(3, 105, 161, 0.14);
+  --primary-ring: rgba(3, 105, 161, 0.22);
+  --primary-shadow-10: rgba(3, 105, 161, 0.1);
+  --primary-shadow-15: rgba(3, 105, 161, 0.15);
+  --primary-shadow-25: rgba(3, 105, 161, 0.25);
+  --primary-shadow-35: rgba(3, 105, 161, 0.35);
+  --shadow-glow: 0 0 28px rgba(3, 105, 161, 0.14);
+  --bg-primary: #f0f9ff;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #e0f2fe;
+  --bg-glass: rgba(255, 255, 255, 0.75);
+  --glass-bg: rgba(248, 252, 255, 0.85);
+}
+
+html[data-theme-palette="ocean"].dark-theme {
+  --primary: #22d3ee;
+  --primary-light: #67e8f9;
+  --primary-dark: #06b6d4;
+  --primary-gradient: linear-gradient(135deg, #22d3ee 0%, #06b6d4 100%);
+  --primary-color: #22d3ee;
+  --secondary-color: #0891b2;
+  --primary-soft: rgba(34, 211, 238, 0.14);
+  --primary-soft-mid: rgba(34, 211, 238, 0.1);
+  --primary-ring: rgba(34, 211, 238, 0.28);
+  --primary-shadow-10: rgba(34, 211, 238, 0.1);
+  --primary-shadow-15: rgba(34, 211, 238, 0.16);
+  --primary-shadow-25: rgba(34, 211, 238, 0.26);
+  --primary-shadow-35: rgba(34, 211, 238, 0.36);
+  --shadow-glow: 0 0 30px rgba(34, 211, 238, 0.18);
+  --bg-primary: #061018;
+  --bg-secondary: #0c1824;
+  --bg-tertiary: #122030;
+  --bg-glass: rgba(12, 24, 36, 0.88);
+  --glass-bg: rgba(12, 24, 36, 0.9);
+}
+
 html:not(.dark-theme) {
   color-scheme: light;
 }

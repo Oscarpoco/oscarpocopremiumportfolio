@@ -285,7 +285,7 @@
   gap: 20px;
 }
 
-/* Avatar + rain tunnel + social row */
+/* Avatar + binary stream + social row */
 .profile-image-stack {
   position: relative;
   display: flex;
@@ -295,8 +295,8 @@
   --profile-avatar-size: 200px;
 }
 
-/* Continuous rain between bottom of photo and social icons */
-.profile-rain {
+/* Falling 1s & 0s under avatar — when falling animation is enabled in settings */
+.profile-binary {
   position: absolute;
   left: 0;
   right: 0;
@@ -307,56 +307,97 @@
   overflow: visible;
 }
 
-.profile-rain-drop {
+.profile-binary-bit {
   position: absolute;
   top: 0;
-  width: 2px;
-  height: 13px;
-  border-radius: 2px;
-  margin-left: -1px;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.55),
-    var(--primary) 42%,
-    color-mix(in srgb, var(--primary) 25%, transparent)
-  );
-  box-shadow: 0 0 8px color-mix(in srgb, var(--primary) 35%, transparent);
-  opacity: 0.85;
-  transform: rotate(12deg);
-  animation-name: about-profile-rain-fall;
+  font-family: "Courier New", Consolas, "Liberation Mono", monospace;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0;
+  color: var(--primary);
+  text-shadow:
+    0 0 6px color-mix(in srgb, var(--primary) 55%, transparent),
+    0 0 12px color-mix(in srgb, var(--primary-light) 35%, transparent);
+  opacity: 0.88;
+  animation-name: about-profile-binary-fall;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
   will-change: transform, top, opacity;
+  user-select: none;
 }
 
-@keyframes about-profile-rain-fall {
+.profile-binary--flowers .profile-binary-bit {
+  font-size: 14px;
+  color: var(--primary-light);
+  animation-name: about-profile-binary-fall-flowers;
+}
+
+.profile-binary--dev .profile-binary-bit {
+  font-size: 12px;
+  color: var(--primary-light);
+  text-shadow: 0 0 10px var(--primary-shadow-35);
+  animation-name: about-profile-binary-fall-dev;
+  animation-duration: 0.9s !important;
+}
+
+@keyframes about-profile-binary-fall {
   0% {
-    top: -8px;
-    transform: translateX(0) rotate(12deg);
+    top: -14px;
+    transform: translateX(0);
     opacity: 0;
   }
-  8% {
+  10% {
+    opacity: 1;
+  }
+  100% {
+    top: calc(100% - 12px);
+    transform: translateX(4px);
+    opacity: 0.08;
+  }
+}
+
+@keyframes about-profile-binary-fall-flowers {
+  0% {
+    top: -12px;
+    transform: translateX(0) scale(0.85);
+    opacity: 0;
+  }
+  12% {
     opacity: 0.95;
   }
   100% {
-    top: calc(100% - 6px);
-    transform: translateX(6px) rotate(12deg);
-    opacity: 0.12;
+    top: calc(100% - 10px);
+    transform: translateX(-6px) scale(1.05);
+    opacity: 0.1;
   }
 }
 
-.dark-theme .profile-rain-drop {
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.4),
-    var(--primary-light) 40%,
-    transparent
-  );
-  box-shadow: 0 0 10px color-mix(in srgb, var(--primary-light) 30%, transparent);
+@keyframes about-profile-binary-fall-dev {
+  0% {
+    top: -10px;
+    transform: translateX(0);
+    opacity: 0;
+  }
+  6% {
+    opacity: 1;
+  }
+  100% {
+    top: calc(100% - 8px);
+    transform: translateX(8px);
+    opacity: 0.15;
+  }
+}
+
+.dark-theme .profile-binary-bit {
+  color: var(--primary-light);
+  text-shadow:
+    0 0 8px color-mix(in srgb, var(--primary-light) 50%, transparent),
+    0 0 14px color-mix(in srgb, var(--primary) 40%, transparent);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .profile-rain-drop {
+  .profile-binary-bit {
     animation: none !important;
     visibility: hidden;
   }

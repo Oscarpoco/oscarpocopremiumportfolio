@@ -17,7 +17,7 @@ import {
 } from "react-icons/md";
 import {IoIosArrowForward} from "react-icons/io";
 import {AiFillStar} from "react-icons/ai";
-import {motion} from "framer-motion";
+import {motion, AnimatePresence} from "framer-motion";
 
 // DATABASE
 import {featuredProjects} from "../Database/AboutData";
@@ -66,7 +66,7 @@ const portfolioStats = [
     },
 ];
 
-function About({darkMode, toggleTheme, handleDownload, navigateToSection}) {
+function About({darkMode, toggleTheme, handleDownload, navigateToSection, particles = "none"}) {
     const [hoveredCard, setHoveredCard] = useState(null);
     const [commitDate, setCommitDate] = useState(null);
     useEffect(() => {
@@ -114,7 +114,8 @@ function About({darkMode, toggleTheme, handleDownload, navigateToSection}) {
         }
     };
 
-    const profileRainDropCount = 36;
+    const profileBinaryCount = 32;
+    const binaryActive = particles && particles !== "none";
 
     return (
         <div className={
@@ -214,19 +215,33 @@ function About({darkMode, toggleTheme, handleDownload, navigateToSection}) {
                                     alt="Oscar Kyle Poco"
                                     className="avatar-image"/>
                             </div>
-                            <div className="profile-rain" aria-hidden>
-                                {Array.from({length: profileRainDropCount}, (_, i) => (
-                                    <span
-                                        key={i}
-                                        className="profile-rain-drop"
-                                        style={{
-                                            left: `${4 + (i * 92) / profileRainDropCount}%`,
-                                            animationDelay: `${(i % 12) * 0.12}s`,
-                                            animationDuration: `${1.1 + (i % 5) * 0.14}s`,
-                                        }}
-                                    />
-                                ))}
-                            </div>
+                            <AnimatePresence>
+                                {binaryActive && (
+                                    <motion.div
+                                        key={particles}
+                                        className={`profile-binary profile-binary--${particles}`}
+                                        aria-hidden
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        exit={{ opacity: 0 }}
+                                        transition={{ duration: 0.35 }}
+                                    >
+                                        {Array.from({ length: profileBinaryCount }, (_, i) => (
+                                            <span
+                                                key={i}
+                                                className="profile-binary-bit"
+                                                style={{
+                                                    left: `${4 + (i * 92) / profileBinaryCount}%`,
+                                                    animationDelay: `${(i % 12) * 0.1}s`,
+                                                    animationDuration: `${1.15 + (i % 5) * 0.18}s`,
+                                                }}
+                                            >
+                                                {(i + Math.floor(i / 2)) % 2 === 0 ? "1" : "0"}
+                                            </span>
+                                        ))}
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
                             <motion.h1 className="floating-header-1"
                                 initial={
                                     {scale: 0}
