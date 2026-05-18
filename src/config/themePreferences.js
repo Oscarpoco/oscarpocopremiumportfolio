@@ -47,8 +47,8 @@ export const PARTICLE_EFFECTS = [
 ];
 
 export const DEFAULT_PREFERENCES = {
-  palette: "male",
-  darkMode: false,
+  palette: "forest",
+  darkMode: true,
   particles: "none",
 };
 
@@ -89,7 +89,7 @@ export function savePreferences(prefs) {
 export function applyPreferences({ palette, darkMode }) {
   const root = document.documentElement;
   const isDark = Boolean(darkMode);
-  const activePalette = palette || "male";
+  const activePalette = palette || "forest";
 
   root.setAttribute("data-theme-palette", activePalette);
   root.setAttribute("data-theme-mode", isDark ? "dark" : "light");
