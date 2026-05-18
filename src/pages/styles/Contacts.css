@@ -1,6 +1,6 @@
-.contacts-page.dark-theme {
-  background: linear-gradient(to bottom, #121212, #1a1a2e);
-  color: #f0f0f0;
+#contact-wrapper {
+  background: var(--bg-primary);
+  color: var(--text-primary);
 }
 
 
@@ -19,14 +19,14 @@
   gap: 0;
   border-radius: 0;
   overflow: hidden;
-  box-shadow: 0 10px 36px rgba(15, 23, 42, 0.08);
+  box-shadow: var(--shadow-md);
   transition: box-shadow 0.3s ease;
   border: 2px dotted var(--border-color);
+  background: var(--bg-secondary);
 }
 
 .dark-theme .contact-container {
-  background: #222234;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+  box-shadow: var(--shadow-lg);
 }
 
 .contact-form-container {
@@ -48,16 +48,25 @@
   min-width: 500px;
   padding: 30px 50px;
   position: relative;
-  background: #1e293b;
-  color: #f8fafc;
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--primary) 85%, var(--primary-dark)) 0%,
+    color-mix(in srgb, var(--secondary-color) 70%, var(--primary-dark)) 100%
+  );
+  color: var(--bg-secondary);
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  transition: background var(--transition-normal);
 }
 
 .dark-theme .contact-info {
-  background: #0f172a;
-  color: #f1f5f9;
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--primary) 40%, var(--bg-tertiary)) 0%,
+    color-mix(in srgb, var(--primary-dark) 55%, var(--bg-primary)) 100%
+  );
+  color: var(--text-primary);
 }
 
 .contact-info h2,
@@ -76,7 +85,7 @@
   left: 0;
   width: 70px;
   height: 4px;
-  background: rgba(255, 255, 255, 0.5);
+  background: color-mix(in srgb, var(--bg-secondary) 55%, var(--primary-light));
   border-radius: 0;
 }
 
@@ -87,12 +96,8 @@
   left: 0;
   width: 56px;
   height: 3px;
-  background-color: var(--text-primary);
+  background-color: var(--primary);
   border-radius: 0;
-}
-
-.dark-theme .contact-form-container h2.send-message-text::after {
-  background-color: #e2e8f0;
 }
 
 .contact-info p {
@@ -122,21 +127,23 @@
 .icon-circle {
   width: 50px;
   height: 50px;
-  background: rgba(255, 255, 255, 0.15);
+  background: color-mix(in srgb, var(--primary-light) 25%, transparent);
+  border: 1px dashed color-mix(in srgb, var(--bg-secondary) 40%, var(--primary-light));
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-right: 20px;
   font-size: 22px;
+  color: var(--bg-secondary);
   transition: all 0.3s ease;
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 15px var(--primary-shadow-15);
 }
 
 .contact-item:hover .icon-circle {
   transform: scale(1.1);
-  background: rgba(255, 255, 255, 0.25);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  background: color-mix(in srgb, var(--primary) 45%, transparent);
+  box-shadow: 0 10px 20px var(--primary-shadow-25);
 }
 
 .contact-item h3 {
@@ -163,21 +170,24 @@
 .social-icon {
   width: 44px;
   height: 44px;
-  background: rgba(255, 255, 255, 0.15);
+  background: color-mix(in srgb, var(--primary-light) 22%, transparent);
+  border: 1px dashed color-mix(in srgb, var(--bg-secondary) 35%, var(--primary-light));
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: var(--bg-secondary);
   font-size: 20px;
   transition: all 0.3s ease;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 15px var(--primary-shadow-15);
 }
 
 .social-icon:hover {
   transform: translateY(-8px);
-  background: rgba(255, 255, 255, 0.25);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--bg-secondary);
+  box-shadow: 0 10px 20px var(--primary-shadow-35);
 }
 
 /* Form styles — zero radius, dotted borders, Md outline icons aligned with contact panel */
@@ -220,12 +230,13 @@
 
 .form-group-with-icon:focus-within,
 .form-group-with-icon.is-focused {
-  border-color: var(--text-secondary);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-soft);
 }
 
-.dark-theme .form-group-with-icon:focus-within,
-.dark-theme .form-group-with-icon.is-focused {
-  border-color: #94a3b8;
+.form-group-with-icon:focus-within .form-field-icon,
+.form-group-with-icon.is-focused .form-field-icon {
+  color: var(--primary);
 }
 
 .form-field-icon {
@@ -237,6 +248,7 @@
   color: var(--text-tertiary);
   font-size: 24px;
   border-right: 2px dotted var(--border-color);
+  transition: color var(--transition-fast);
 }
 
 .form-group-message .form-field-icon {
@@ -275,13 +287,13 @@
   color: var(--text-tertiary);
 }
 
-/* Submit — solid fill + dotted frame to match fields */
+/* Submit — theme primary */
 .submit-button {
   margin-top: 6px;
   border-radius: 0;
-  background-color: var(--text-primary);
+  background-color: var(--primary);
   color: var(--bg-secondary);
-  border: 2px dotted var(--text-primary);
+  border: 2px dotted color-mix(in srgb, var(--primary) 70%, var(--border-color));
   padding: 16px 24px;
   font-size: 15px;
   font-weight: 600;
@@ -291,34 +303,26 @@
     background-color var(--transition-normal),
     transform var(--transition-fast),
     border-color var(--transition-normal),
-    box-shadow var(--transition-normal);
+    box-shadow var(--transition-normal),
+    color var(--transition-normal);
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
   width: 100%;
-  box-shadow: none;
-}
-
-.dark-theme .submit-button {
-  background-color: #f1f5f9;
-  color: #0f172a;
-  border-color: #cbd5e1;
+  box-shadow: 0 4px 14px var(--primary-shadow-25);
 }
 
 .submit-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
-  background-color: #334155;
-  border-color: #475569;
-  color: #fff;
+  box-shadow: 0 8px 24px var(--primary-shadow-35);
+  background-color: var(--primary-dark);
+  border-color: var(--primary-dark);
+  color: var(--bg-secondary);
 }
 
-.dark-theme .submit-button:hover {
-  background-color: #e2e8f0;
-  color: #0f172a;
-  border-color: #94a3b8;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+#contact-wrapper .contact-container:hover {
+  box-shadow: var(--shadow-lg);
 }
 
 .submit-button.submitting {

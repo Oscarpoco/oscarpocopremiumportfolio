@@ -169,7 +169,6 @@ function Contacts({darkMode, toggleTheme, handleDownload}) {
                         stiffness: 50,
                         damping: 20
                     }}
-                    whileHover={{ boxShadow: "0 12px 32px rgba(15, 23, 42, 0.1)" }}
                 >
                     <motion.div
                         className="contact-info"
@@ -194,7 +193,7 @@ function Contacts({darkMode, toggleTheme, handleDownload}) {
                             >
                                 <motion.div
                                     className="icon-circle"
-                                    whileHover={{ scale: 1.2, backgroundColor: "rgba(255, 255, 255, 0.25)" }}
+                                    whileHover={{ scale: 1.2 }}
                                     transition={{ type: "spring", stiffness: 300, damping: 10 }}
                                 >
                                     <MdOutlineEmail />
@@ -213,7 +212,7 @@ function Contacts({darkMode, toggleTheme, handleDownload}) {
                             >
                                 <motion.div
                                     className="icon-circle"
-                                    whileHover={{ scale: 1.2, backgroundColor: "rgba(255, 255, 255, 0.25)" }}
+                                    whileHover={{ scale: 1.2 }}
                                     transition={{ type: "spring", stiffness: 300, damping: 10 }}
                                 >
                                     <MdOutlinePhone />
@@ -232,7 +231,7 @@ function Contacts({darkMode, toggleTheme, handleDownload}) {
                             >
                                 <motion.div
                                     className="icon-circle"
-                                    whileHover={{ scale: 1.2, backgroundColor: "rgba(255, 255, 255, 0.25)" }}
+                                    whileHover={{ scale: 1.2 }}
                                     transition={{ type: "spring", stiffness: 300, damping: 10 }}
                                 >
                                     <MdOutlineLocationOn />
@@ -251,7 +250,7 @@ function Contacts({darkMode, toggleTheme, handleDownload}) {
                             <motion.a
                                 href="https://github.com/Oscarpoco"
                                 className="social-icon"
-                                whileHover={{ y: -8, backgroundColor: "rgba(255, 255, 255, 0.3)" }}
+                                whileHover={{ y: -8 }}
                                 transition={{ type: "spring", stiffness: 300, damping: 10 }}
                             >
                                 <FaGithub />
@@ -259,7 +258,7 @@ function Contacts({darkMode, toggleTheme, handleDownload}) {
                             <motion.a
                                 href="https://linkedin.com/in/oscar-poco-71528016b/"
                                 className="social-icon"
-                                whileHover={{ y: -8, backgroundColor: "rgba(255, 255, 255, 0.3)" }}
+                                whileHover={{ y: -8 }}
                                 transition={{ type: "spring", stiffness: 300, damping: 10 }}
                             >
                                 <FaLinkedin />
@@ -267,7 +266,7 @@ function Contacts({darkMode, toggleTheme, handleDownload}) {
                             <motion.a
                                 href="https://x.com/PocoOscar"
                                 className="social-icon"
-                                whileHover={{ y: -8, backgroundColor: "rgba(255, 255, 255, 0.3)" }}
+                                whileHover={{ y: -8 }}
                                 transition={{ type: "spring", stiffness: 300, damping: 10 }}
                             >
                                 <FaTwitter />
