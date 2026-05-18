@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, memo} from "react";
 
 // STYLING
 import "../styles/About.css";
@@ -17,7 +17,8 @@ import {
 } from "react-icons/md";
 import {IoIosArrowForward} from "react-icons/io";
 import {AiFillStar} from "react-icons/ai";
-import {motion, AnimatePresence} from "framer-motion";
+import {motion, useReducedMotion} from "framer-motion";
+import {scrollIn, scrollInFade} from "./aboutAnimations";
 
 // DATABASE
 import {featuredProjects} from "../Database/AboutData";
@@ -67,8 +68,14 @@ const portfolioStats = [
 ];
 
 function About({darkMode, toggleTheme, handleDownload, navigateToSection, particles = "none"}) {
-    const [hoveredCard, setHoveredCard] = useState(null);
+    const reduceMotion = useReducedMotion();
     const [commitDate, setCommitDate] = useState(null);
+    const [scrollRoot, setScrollRoot] = useState(null);
+
+    useEffect(() => {
+        setScrollRoot(document.querySelector(".Child-dashboard"));
+    }, []);
+
     useEffect(() => {
         fetch("https://api.github.com/repos/Oscarpoco/oscarpocopremiumportfolio/commits?per_page=1").then(res => res.json()).then(data => {
             if (data && data.length > 0) {
@@ -84,37 +91,7 @@ function About({darkMode, toggleTheme, handleDownload, navigateToSection, partic
         }
     };
 
-    // Animation variants
-    const containerVariants = {
-        hidden: {
-            opacity: 0
-        },
-        visible: {
-            opacity: 1,
-            transition: {
-                when: "beforeChildren",
-                staggerChildren: 0.1
-            }
-        }
-    };
-
-    const itemVariants = {
-        hidden: {
-            y: 30,
-            opacity: 0
-        },
-        visible: {
-            y: 0,
-            opacity: 1,
-            transition: {
-                type: "spring",
-                stiffness: 100,
-                damping: 12
-            }
-        }
-    };
-
-    const profileBinaryCount = 32;
+    const profileBinaryCount = 18;
     const binaryActive = particles && particles !== "none";
 
     return (
@@ -124,39 +101,13 @@ function About({darkMode, toggleTheme, handleDownload, navigateToSection, partic
             }`
         }>
             {/* Floating Theme Toggle */}
-            <motion.button className="theme-toggle"
-                onClick={toggleTheme}
-                whileHover={
-                    {
-                        scale: 1.1,
-                        rotate: 15
-                    }
-                }
-                whileTap={
-                    {scale: 0.9}
-            }>
-                {
-                darkMode ? <MdOutlineLightMode/>: <MdOutlineDarkMode/>
-            } </motion.button>
+            <button type="button" className="theme-toggle" onClick={toggleTheme}>
+                {darkMode ? <MdOutlineLightMode /> : <MdOutlineDarkMode />}
+            </button>
 
             {/* HEADER SECTION */}
             <div className="about-header">
-                <motion.div className="header-left"
-                    initial={
-                        {
-                            x: -50,
-                            opacity: 0
-                        }
-                    }
-                    animate={
-                        {
-                            x: 0,
-                            opacity: 1
-                        }
-                    }
-                    transition={
-                        {duration: 0.5}
-                }>
+                <motion.div className="header-left" {...scrollIn(reduceMotion, 0, 16, scrollRoot)}>
                     <h1>My Portfolio</h1>
                     <div className="breadcrumb">
                         <span>Dashboard</span>
@@ -165,164 +116,79 @@ function About({darkMode, toggleTheme, handleDownload, navigateToSection, partic
                     </div>
                 </motion.div>
 
-                <motion.div className="header-actions"
-                    initial={
-                        {
-                            x: 50,
-                            opacity: 0
-                        }
-                    }
-                    animate={
-                        {
-                            x: 0,
-                            opacity: 1
-                        }
-                    }
-                    transition={
-                        {
-                            duration: 0.5,
-                            delay: 0.2
-                        }
-                }>
-                    <motion.button className="action-button download-btn primary"
+                <motion.div className="header-actions" {...scrollIn(reduceMotion, 0.06, 16, scrollRoot)}>
+                    <button
+                        type="button"
+                        className="action-button download-btn primary"
                         onClick={handleDownload}
-                        whileHover={
-                            {
-                                scale: 1.02,
-                                x: 3
-                            }
-                        }
-                        whileTap={
-                            {scale: 0.98}
-                    }>
+                    >
                         <MdDownload className="action-icon"/>
                         <span className="mobileSideBar button-action">Download CV</span>
-                    </motion.button>
+                    </button>
                 </motion.div>
             </div>
 
             {/* PROFILE SECTION */}
-            <motion.div className="profile-section"
-                variants={containerVariants}
-                initial="hidden"
-                animate="visible">
+            <motion.div className="profile-section" {...scrollIn(reduceMotion, 0, 24, scrollRoot)}>
                 <div className="profile-content">
-                    <motion.div className="profile-image-container"
-                        variants={itemVariants}>
+                    <motion.div className="profile-image-container" {...scrollIn(reduceMotion, 0.05, 28, scrollRoot)}>
                         <div className="profile-image-stack">
                             <div className="profile-image">
-                                <img src={oscar}
+                                <img
+                                    src={oscar}
                                     alt="Oscar Kyle Poco"
-                                    className="avatar-image"/>
+                                    className="avatar-image"
+                                    loading="lazy"
+                                    decoding="async"
+                                />
                             </div>
-                            <AnimatePresence>
-                                {binaryActive && (
-                                    <motion.div
-                                        key={particles}
-                                        className={`profile-binary profile-binary--${particles}`}
-                                        aria-hidden
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1 }}
-                                        exit={{ opacity: 0 }}
-                                        transition={{ duration: 0.35 }}
-                                    >
-                                        {Array.from({ length: profileBinaryCount }, (_, i) => (
-                                            <span
-                                                key={i}
-                                                className="profile-binary-bit"
-                                                style={{
-                                                    left: `${4 + (i * 92) / profileBinaryCount}%`,
-                                                    animationDelay: `${(i % 12) * 0.1}s`,
-                                                    animationDuration: `${1.15 + (i % 5) * 0.18}s`,
-                                                }}
-                                            >
-                                                {(i + Math.floor(i / 2)) % 2 === 0 ? "1" : "0"}
-                                            </span>
-                                        ))}
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
-                            <motion.h1 className="floating-header-1"
-                                initial={
-                                    {scale: 0}
-                                }
-                                animate={
-                                    {scale: 1}
-                                }
-                                transition={
-                                    {
-                                        delay: 0.5,
-                                        type: "spring"
-                                    }
-                            }>
+                            {binaryActive && (
+                                <motion.div
+                                    className={`profile-binary profile-binary--${particles}`}
+                                    aria-hidden
+                                    {...scrollInFade(reduceMotion, 0.1, scrollRoot)}
+                                >
+                                    {Array.from({ length: profileBinaryCount }, (_, i) => (
+                                        <span
+                                            key={i}
+                                            className="profile-binary-bit"
+                                            style={{
+                                                left: `${4 + (i * 92) / profileBinaryCount}%`,
+                                                animationDelay: `${(i % 12) * 0.1}s`,
+                                                animationDuration: `${1.15 + (i % 5) * 0.18}s`,
+                                            }}
+                                        >
+                                            {(i + Math.floor(i / 2)) % 2 === 0 ? "1" : "0"}
+                                        </span>
+                                    ))}
+                                </motion.div>
+                            )}
+                            <h1 className="floating-header-1 about-floating-label">
                                 Hello There!
                                 <br/>
                                 Image Still
                                 <br/>
                                 Loading...
-                            </motion.h1>
+                            </h1>
                             <div className="social-links">
-                            <motion.a href="https://github.com/Oscarpoco" className="social-link" target="_blank" rel="noopener noreferrer"
-                                whileHover={
-                                    {
-                                        y: -5,
-                                        scale: 1.1
-                                    }
-                                }
-                                whileTap={
-                                    {scale: 0.9}
-                            }>
+                            <a href="https://github.com/Oscarpoco" className="social-link" target="_blank" rel="noopener noreferrer">
                                 <FaGithub/>
-                            </motion.a>
-                            <motion.a href="https://linkedin.com/in/oscar-poco-71528016b/" className="social-link" target="_blank" rel="noopener noreferrer"
-                                whileHover={
-                                    {
-                                        y: -5,
-                                        scale: 1.1
-                                    }
-                                }
-                                whileTap={
-                                    {scale: 0.9}
-                            }>
+                            </a>
+                            <a href="https://linkedin.com/in/oscar-poco-71528016b/" className="social-link" target="_blank" rel="noopener noreferrer">
                                 <FaLinkedin/>
-                            </motion.a>
-                            <motion.a href="https://x.com/PocoOscar" className="social-link" target="_blank" rel="noopener noreferrer"
-                                whileHover={
-                                    {
-                                        y: -5,
-                                        scale: 1.1
-                                    }
-                                }
-                                whileTap={
-                                    {scale: 0.9}
-                            }>
+                            </a>
+                            <a href="https://x.com/PocoOscar" className="social-link" target="_blank" rel="noopener noreferrer">
                                 <FaTwitter/>
-                            </motion.a>
+                            </a>
                         </div>
                         </div>
                     </motion.div>
-                    <motion.div className="profile-info"
-                        variants={itemVariants}>
+                    <motion.div className="profile-info" {...scrollIn(reduceMotion, 0.08, 24, scrollRoot)}>
                         <div className="name-badge">
                             <h1 className="profile-name">Oscar Kyle Poco</h1>
-                            <motion.span className="status-badge"
-                                initial={
-                                    {
-                                        opacity: 0,
-                                        x: 20
-                                    }
-                                }
-                                animate={
-                                    {
-                                        opacity: 1,
-                                        x: 0
-                                    }
-                                }
-                                transition={
-                                    {delay: 0.6}
-                            }>
+                            <span className="status-badge">
                                 Open For Opportunities | Hire
-                            </motion.span>
+                            </span>
                         </div>
                         <h2 className="profile-title">
                             Software Developer | Learnership Facilitator
@@ -356,33 +222,10 @@ function About({darkMode, toggleTheme, handleDownload, navigateToSection, partic
                                     ".NET",
                                     "Python",
                                     "Java",
-                                ].map((skill, index) => (
-                                    <motion.span key={skill}
-                                        className="skill-tag"
-                                        initial={
-                                            {
-                                                opacity: 0,
-                                                scale: 0.8
-                                            }
-                                        }
-                                        animate={
-                                            {
-                                                opacity: 1,
-                                                scale: 1
-                                            }
-                                        }
-                                        transition={
-                                            {
-                                                delay: 0.4 + index * 0.1
-                                            }
-                                        }
-                                        whileHover={
-                                            {
-                                                scale: 1.05,
-                                                y: -2
-                                            }
-                                    }>
-                                        {skill} </motion.span>
+                                ].map((skill) => (
+                                    <span key={skill} className="skill-tag">
+                                        {skill}
+                                    </span>
                                 ))
                             } </div>
                         </div>
@@ -399,173 +242,61 @@ function About({darkMode, toggleTheme, handleDownload, navigateToSection, partic
                                     value: "3+",
                                     label: "Years of Experience"
                                 },
-                            ].map((stat, index) => (
-                                <motion.div key={
-                                        stat.label
-                                    }
-                                    className="Stat-item "
+                            ].map((stat) => (
+                                <div
+                                    key={stat.label}
+                                    className="Stat-item"
                                     id="about-item"
-                                    whileHover={
-                                        {
-                                            y: -5,
-                                            scale: 1.05
-                                        }
-                                    }
-                                    initial={
-                                        {
-                                            opacity: 0,
-                                            y: 20
-                                        }
-                                    }
-                                    animate={
-                                        {
-                                            opacity: 1,
-                                            y: 0
-                                        }
-                                    }
-                                    transition={
-                                        {
-                                            delay: 0.5 + index * 0.1
-                                        }
-                                }>
-                                    <span className="stat-value">
-                                        {
-                                        stat.value
-                                    }</span>
-                                    <span className="Stat-label">
-                                        {
-                                        stat.label
-                                    }</span>
-                                </motion.div>
+                                >
+                                    <span className="stat-value">{stat.value}</span>
+                                    <span className="Stat-label">{stat.label}</span>
+                                </div>
                             ))
                         } </div>
                     </motion.div>
                 </div>
 
-                <motion.div className="qrcode"
-                    variants={itemVariants}>
+                <motion.div className="qrcode" {...scrollIn(reduceMotion, 0.1, 24, scrollRoot)}>
                     <img src={qrcode}
                         alt="qrcode"
                         className="qrcode-image"/>
-                    <motion.h3 className="scan-tag">SCAN TO DOWNLOAD RESUME</motion.h3>
+                    <h3 className="scan-tag">SCAN TO DOWNLOAD RESUME</h3>
                 </motion.div>
             </motion.div>
 
             {/* QUICK ACCESS SECTION - CLICKABLE CARDS */}
-            <motion.div className="quick-access-section"
-                initial={
-                    {
-                        opacity: 0,
-                        y: 30
-                    }
-                }
-                animate={
-                    {
-                        opacity: 1,
-                        y: 0
-                    }
-                }
-                transition={
-                    {
-                        delay: 0.3,
-                        duration: 0.6
-                    }
-            }>
-                <div className="section-header">
+            <motion.div className="quick-access-section" {...scrollIn(reduceMotion, 0, 24, scrollRoot)}>
+                <motion.div className="section-header" {...scrollIn(reduceMotion, 0.05, 18, scrollRoot)}>
                     <h2>QUICK ACCESS</h2>
                     <p className="section-subtitle">Click a card to navigate</p>
-                </div>
+                </motion.div>
 
                 <div className="folders-container">
                     {
                     portfolioStats.map((stat, index) => (
-                        <motion.div className={
-                                `folder-card ${
-                                    hoveredCard === stat.id ? "hovered" : ""
-                                }`
-                            }
-                            key={
-                                stat.id
-                            }
-                            // style={{ background: stat.gradient }}
-                            initial={
-                                {
-                                    opacity: 0,
-                                    y: 30
+                        <motion.div
+                            className="folder-card"
+                            key={stat.id}
+                            role="button"
+                            tabIndex={0}
+                            {...scrollIn(reduceMotion, 0.04 + index * 0.05, 20, scrollRoot)}
+                            onClick={() => handleCardClick(stat.navigateTo)}
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter" || e.key === " ") {
+                                    e.preventDefault();
+                                    handleCardClick(stat.navigateTo);
                                 }
-                            }
-                            animate={
-                                {
-                                    opacity: 1,
-                                    y: 0
-                                }
-                            }
-                            transition={
-                                {
-                                    delay: 0.2 + index * 0.1,
-                                    duration: 0.5
-                                }
-                            }
-                            whileHover={
-                                {
-                                    y: -12,
-                                    scale: 1.02,
-                                    boxShadow: "0 25px 50px rgba(0, 0, 0, 0.25)"
-                                }
-                            }
-                            whileTap={
-                                {scale: 0.98}
-                            }
-                            onClick={
-                                () => handleCardClick(stat.navigateTo)
-                            }
-                            onHoverStart={
-                                () => setHoveredCard(stat.id)
-                            }
-                            onHoverEnd={
-                                () => setHoveredCard(null)
-                        }>
+                            }}
+                        >
                             <div className="folder-header">
                                 <div className="folder-title">
                                     {
                                     stat.title
                                 }</div>
-                                <motion.div className="folder-icon-container"
-                                    animate={
-                                        {
-                                            rotate: hoveredCard === stat.id ? 15 : 0
-                                        }
-                                    }
-                                    transition={
-                                        {duration: 0.3}
-                                }>
-                                    {
-                                    stat.icon
-                                } </motion.div>
+                                <div className="folder-icon-container">{stat.icon}</div>
                             </div>
                             <div className="folder-count">
-                                <motion.span className="count-number"
-                                    initial={
-                                        {
-                                            opacity: 0,
-                                            scale: 0.5
-                                        }
-                                    }
-                                    animate={
-                                        {
-                                            opacity: 1,
-                                            scale: 1
-                                        }
-                                    }
-                                    transition={
-                                        {
-                                            delay: 0.5 + 0.1 * index,
-                                            duration: 0.5
-                                        }
-                                }>
-                                    {
-                                    stat.count
-                                } </motion.span>
+                                <span className="count-number">{stat.count}</span>
                                 {
                                 stat.subtitle && (
                                     <span className="count-subtitle">
@@ -584,28 +315,10 @@ function About({darkMode, toggleTheme, handleDownload, navigateToSection, partic
             </motion.div>
 
             {/* PROJECTS SECTION */}
-            <div className="section-header">
+            <motion.div className="section-header" {...scrollIn(reduceMotion, 0, 18, scrollRoot)}>
                 <h2>THESE PROJECTS BELOW IS WHERE MY JOURNEY BEGAN. BUILDING SMALL PROJECTS NOT KNOWING THAT 1 DAY I WILL BE THE BEST SOFTWARE DEV EVER EXISTED IN MY FAMILY. DATE: 31 JUNE 2024</h2>
-            </div>
-            <motion.div className="projects-section"
-                initial={
-                    {
-                        opacity: 0,
-                        y: 40
-                    }
-                }
-                animate={
-                    {
-                        opacity: 1,
-                        y: 0
-                    }
-                }
-                transition={
-                    {
-                        delay: 0.5,
-                        duration: 0.6
-                    }
-            }>
+            </motion.div>
+            <motion.div className="projects-section" {...scrollIn(reduceMotion, 0.05, 24, scrollRoot)}>
 
                 <div className="projects-table">
                     <div className="projects-table-header">
@@ -618,35 +331,22 @@ function About({darkMode, toggleTheme, handleDownload, navigateToSection, partic
                         <div className="table-column actions-column">ACTIONS</div>
                     </div>
 
-                    <motion.div className="projects-table-body"
-                        variants={containerVariants}
-                        initial="hidden"
-                        animate="visible">
+                    <div className="projects-table-body">
                         {
                         featuredProjects.map((project, index) => (
-                            <motion.div className="project-row"
-                                key={
-                                    project.id
-                                }
-                                variants={itemVariants}
-                                custom={index}
-                                whileHover={{ x: 4 }}
+                            <motion.div
+                                className="project-row"
+                                key={project.id}
+                                {...scrollIn(reduceMotion, 0.04 + index * 0.04, 16, scrollRoot)}
                             >
                                 <div className="table-column name-column">
                                     <div className="project-name">
-                                        <motion.img src={
-                                                project.icon
-                                            }
-                                            alt={
-                                                project.name
-                                            }
+                                        <img
+                                            src={project.icon}
+                                            alt={project.name}
                                             className="project-icon"
-                                            whileHover={
-                                                {
-                                                    rotate: 10,
-                                                    scale: 1.1
-                                                }
-                                            }/>
+                                            loading="lazy"
+                                        />
                                         <span>{
                                             project.name
                                         }</span>
@@ -667,57 +367,34 @@ function About({darkMode, toggleTheme, handleDownload, navigateToSection, partic
                                     }</span>
                                 </div>
                                 <div className="table-column actions-column">
-                                    <motion.a href={
-                                            project.link
-                                        }
+                                    <a
+                                        href={project.link}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="view-project-btn"
-                                        whileHover={
-                                            {scale: 1.05}
-                                        }
-                                        whileTap={
-                                            {scale: 0.95}
-                                    }>
+                                    >
                                         View
-                                    </motion.a>
+                                    </a>
                                 </div>
                             </motion.div>
                         ))
-                    } </motion.div>
+                    } </div>
                 </div>
 
                 {/* View All Projects CTA */}
-                <motion.div className="view-all-projects"
-                    initial={
-                        {opacity: 0}
-                    }
-                    animate={
-                        {opacity: 1}
-                    }
-                    transition={
-                        {delay: 0.8}
-                }>
-                    <motion.button className="view-all-btn"
-                        onClick={
-                            () => handleCardClick("Featured")
-                        }
-                        whileHover={
-                            {
-                                scale: 1.02,
-                                x: 5
-                            }
-                        }
-                        whileTap={
-                            {scale: 0.98}
-                    }>
+                <motion.div className="view-all-projects" {...scrollIn(reduceMotion, 0.08, 18, scrollRoot)}>
+                    <button
+                        type="button"
+                        className="view-all-btn"
+                        onClick={() => handleCardClick("Featured")}
+                    >
                         <span>View All Projects</span>
                         <FaArrowRight/>
-                    </motion.button>
+                    </button>
                 </motion.div>
             </motion.div>
         </div>
     );
 }
 
-export default About;
+export default memo(About);
