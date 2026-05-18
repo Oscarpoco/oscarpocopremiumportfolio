@@ -22,7 +22,14 @@ export default function AppUpdatesAlert({
 }) {
   const [open, setOpen] = useState(false);
   const [doNotShowAgain, setDoNotShowAgain] = useState(false);
+  const [storageReady, setStorageReady] = useState(false);
+  const [permanentlyDismissed, setPermanentlyDismissed] = useState(false);
   const doNotShowAgainRef = useRef(false);
+
+  useEffect(() => {
+    setPermanentlyDismissed(isWelcomeAlertDismissed());
+    setStorageReady(true);
+  }, []);
 
   useEffect(() => {
     doNotShowAgainRef.current = doNotShowAgain;
@@ -31,16 +38,19 @@ export default function AppUpdatesAlert({
   const closeUpdates = useCallback(() => {
     if (doNotShowAgainRef.current) {
       dismissWelcomeAlert();
+      setPermanentlyDismissed(true);
     }
     setOpen(false);
   }, []);
 
   useEffect(() => {
-    if (!ready || isWelcomeAlertDismissed() || idleSessionOpen) return;
+    if (!storageReady || permanentlyDismissed || !ready || idleSessionOpen) {
+      return;
+    }
 
     const showTimer = window.setTimeout(() => setOpen(true), 500);
     return () => window.clearTimeout(showTimer);
-  }, [ready, idleSessionOpen]);
+  }, [storageReady, permanentlyDismissed, ready, idleSessionOpen]);
 
   useEffect(() => {
     if (!idleSessionOpen || !open) return;
@@ -71,7 +81,7 @@ export default function AppUpdatesAlert({
   };
 
   const mounted = typeof document !== "undefined";
-  if (!mounted) return null;
+  if (!mounted || !storageReady || permanentlyDismissed) return null;
 
   const showLayer = open && !idleSessionOpen;
 
