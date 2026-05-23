@@ -131,7 +131,7 @@ function NavigationBar({ onOpen, onOpenSettings, darkMode, toggleTheme, activeIt
       </motion.div>
 
       <span className="current-section-label label-tab" style={{ color: "green", fontSize: "16px", marginTop: "4px", fontWeight: "200" }}>
-        153 designs in one portfolio
+        I AM THE PERSON I THINK I AM: THEE DEVELOPER
       </span>
       
 
