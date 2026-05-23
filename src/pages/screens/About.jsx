@@ -13,8 +13,18 @@ import {
     MdOutlineDarkMode,
     MdCode,
     MdWork,
-    MdSchool
+    MdSchool,
+    MdUpdate,
+    MdLayers,
 } from "react-icons/md";
+import {
+    SiJavascript,
+    SiTypescript,
+    SiNodedotjs,
+    SiDotnet,
+    SiPython,
+    SiOpenjdk,
+} from "react-icons/si";
 import {IoIosArrowForward} from "react-icons/io";
 import {AiFillStar} from "react-icons/ai";
 import {motion, useReducedMotion} from "framer-motion";
@@ -24,6 +34,15 @@ import {scrollIn, scrollInFade} from "./aboutAnimations";
 import {featuredProjects} from "../Database/AboutData";
 import {experienceData} from "../Database/ExperienceData";
 
+
+const STACK_SKILLS = [
+    { name: "JavaScript", Icon: SiJavascript },
+    { name: "TypeScript", Icon: SiTypescript },
+    { name: "Node.js", Icon: SiNodedotjs },
+    { name: ".NET", Icon: SiDotnet },
+    { name: "Python", Icon: SiPython },
+    { name: "Java", Icon: SiOpenjdk },
+];
 
 const portfolioStats = [
     {
@@ -131,6 +150,7 @@ function About({darkMode, toggleTheme, handleDownload, navigateToSection, partic
             {/* PROFILE SECTION */}
             <motion.div className="profile-section" {...scrollIn(reduceMotion, 0, 24, scrollRoot)}>
                 <div className="profile-content">
+                    <div className="profile-top">
                     <motion.div className="profile-image-container" {...scrollIn(reduceMotion, 0.05, 28, scrollRoot)}>
                         <div className="profile-image-stack">
                             <div className="profile-image">
@@ -196,63 +216,46 @@ function About({darkMode, toggleTheme, handleDownload, navigateToSection, partic
                         <p className="profile-description">
                             I am a Software Developer and Learnership Facilitator with 3+ years of experience across {experienceData.length} professional roles in Full Stack Development. I currently work at WWISE as a Software Development Facilitator. My background combines hands-on development of web and mobile apps with a passion for teaching and upskilling others.
                         </p>
+                    </motion.div>
+                    </div>
 
-                        <div className="profile-update-row">
-
-
-                            <p className="portfolio-update-date">
-                                Last updated:{" "}
-                                {
-                                commitDate ? new Date(commitDate).toLocaleString(undefined, {
-                                    year: "numeric",
-                                    month: "short",
-                                    day: "numeric",
-                                    hour: "2-digit",
-                                    minute: "2-digit"
-                                }) : "Loading..."
-                            } </p>
-
-
-                            <div className="skills-container-1">
-                                {
-                                [
-                                    "JavaScript",
-                                    "TypeScript",
-                                    "Node.js",
-                                    ".NET",
-                                    "Python",
-                                    "Java",
-                                ].map((skill) => (
-                                    <span key={skill} className="skill-tag">
-                                        {skill}
-                                    </span>
-                                ))
-                            } </div>
-                        </div>
-                        <div className="profile-stats">
-                            {
-                            [
-                                {
-                                    value: "100%",
-                                    label: "Client Satisfaction"
-                                }, {
-                                    value: "3+",
-                                    label: "Projects Completed"
-                                }, {
-                                    value: "3+",
-                                    label: "Years of Experience"
-                                },
-                            ].map((stat) => (
-                                <div
-                                    key={stat.label}
-                                    className="Stat-item"
-                                    id="about-item"
+                    <motion.div
+                        className="profile-meta-block"
+                        {...scrollIn(reduceMotion, 0.1, 24, scrollRoot)}
+                    >
+                        <div className="portfolio-update-card">
+                            
+                            <div className="portfolio-update-text">
+                                <span className="portfolio-update-label">Last updated: </span>
+                                <time
+                                    className="portfolio-update-date"
+                                    dateTime={commitDate || undefined}
                                 >
-                                    <span className="stat-value">{stat.value}</span>
-                                    <span className="Stat-label">{stat.label}</span>
-                                </div>
-                            ))
-                        } </div>
+                                    {commitDate
+                                        ? new Date(commitDate).toLocaleString(undefined, {
+                                            year: "numeric",
+                                            month: "short",
+                                            day: "numeric",
+                                            hour: "2-digit",
+                                            minute: "2-digit",
+                                        })
+                                        : "Loading…"}
+                                </time>
+                                <span className="portfolio-update-label">This is real time update from my GitHub repository.</span>
+                            </div>
+                        </div>
+
+                        <div className="profile-stack-section">
+                            
+                            <div className="skills-container-1">
+                                {STACK_SKILLS.map(({ name, Icon }) => (
+                                    <span key={name} className="skill-tag">
+                                        <Icon className="skill-tag-icon" aria-hidden />
+                                        <span className="skill-tag-label">{name}</span>
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
                     </motion.div>
                 </div>
 
