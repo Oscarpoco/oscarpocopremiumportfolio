@@ -51,6 +51,7 @@ export const DEFAULT_PREFERENCES = {
   darkMode: true,
   particles: "none",
   backgroundMusic: false,
+  randomizePalette: false,
 };
 
 export function loadPreferences() {
@@ -68,6 +69,8 @@ export function loadPreferences() {
           ? parsed.particles
           : DEFAULT_PREFERENCES.particles,
         backgroundMusic: Boolean(parsed.backgroundMusic),
+        randomizePalette:
+          Boolean(parsed.backgroundMusic) && Boolean(parsed.randomizePalette),
       };
     }
     const legacyTheme = localStorage.getItem("theme");

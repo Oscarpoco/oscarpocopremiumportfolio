@@ -27,6 +27,7 @@ import {
   savePreferences,
   applyPreferences,
 } from './config/themePreferences';
+import { usePaletteRandomizer } from './hooks/usePaletteRandomizer';
 
 // STYLINGS
 import './App.css';
@@ -77,6 +78,26 @@ function App() {
   const darkMode = preferences.darkMode;
   const backgroundMusicOn =
     preferences.backgroundMusic || (settingsOpen && musicPreview);
+
+  const randomizePalettesActive =
+    !settingsOpen &&
+    preferences.randomizePalette &&
+    backgroundMusicOn;
+
+  usePaletteRandomizer(
+    randomizePalettesActive,
+    preferences.palette,
+    useCallback(
+      (nextPalette) =>
+        setPreferences((prev) => ({ ...prev, palette: nextPalette })),
+      []
+    )
+  );
+
+  useEffect(() => {
+    if (!preferences.randomizePalette || backgroundMusicOn) return;
+    setPreferences((prev) => ({ ...prev, randomizePalette: false }));
+  }, [backgroundMusicOn, preferences.randomizePalette]);
 
   const handleDashboardReady = useCallback(() => {
     setDashboardReady(true);

@@ -12,7 +12,9 @@ import {
   MdMusicNote,
   MdPlayArrow,
   MdPause,
+  MdShuffle,
 } from "react-icons/md";
+import { usePaletteRandomizer } from "../hooks/usePaletteRandomizer";
 import { MUSIC_TRACK, MUSIC_COPYRIGHT_NOTICE } from "../config/backgroundMusic";
 import {
   THEME_PALETTES,
@@ -71,13 +73,44 @@ export default function SettingsPanel({
   const mounted = typeof document !== "undefined";
   if (!mounted) return null;
 
+  const randomizeActive =
+    open && draft.backgroundMusic && draft.randomizePalette;
+
+  usePaletteRandomizer(
+    randomizeActive,
+    draft.palette,
+    (nextPalette) => setDraft((d) => ({ ...d, palette: nextPalette }))
+  );
+
   const handleSave = () => {
-    onSave(draft);
+    onSave({
+      ...draft,
+      randomizePalette: draft.backgroundMusic && draft.randomizePalette,
+    });
     onClose();
   };
 
   const handleReset = () => {
     setDraft({ ...DEFAULT_PREFERENCES });
+  };
+
+  const toggleMusic = () => {
+    setDraft((d) => {
+      const backgroundMusic = !d.backgroundMusic;
+      return {
+        ...d,
+        backgroundMusic,
+        randomizePalette: backgroundMusic ? d.randomizePalette : false,
+      };
+    });
+  };
+
+  const selectPalette = (paletteId) => {
+    setDraft((d) => ({
+      ...d,
+      palette: paletteId,
+      randomizePalette: false,
+    }));
   };
 
   return createPortal(
@@ -128,6 +161,43 @@ export default function SettingsPanel({
                   Color theme
                 </h3>
                 <p className="settings-hint">Choose a palette (Male = classic blue).</p>
+                <button
+                  type="button"
+                  className={`settings-randomize-btn ${
+                    draft.randomizePalette ? "settings-randomize-btn--active" : ""
+                  }`}
+                  disabled={!draft.backgroundMusic}
+                  onClick={() =>
+                    setDraft((d) => ({
+                      ...d,
+                      randomizePalette: !d.randomizePalette,
+                    }))
+                  }
+                  aria-pressed={draft.randomizePalette}
+                  title={
+                    draft.backgroundMusic
+                      ? undefined
+                      : "Turn on background music to use palette randomize"
+                  }
+                >
+                  <MdShuffle size={20} aria-hidden />
+                  <span className="settings-randomize-text">
+                    <span className="settings-randomize-label">
+                      Randomize palettes
+                    </span>
+                    <span className="settings-randomize-desc">
+                      Cycles every 5s while music plays — loops through all themes
+                    </span>
+                  </span>
+                  <span className="settings-randomize-status">
+                    {draft.randomizePalette ? "On" : "Off"}
+                  </span>
+                </button>
+                {!draft.backgroundMusic && (
+                  <p className="settings-randomize-locked">
+                    Enable background music above to unlock palette randomize.
+                  </p>
+                )}
                 <div className="settings-theme-grid">
                   {THEME_PALETTES.map((theme) => (
                     <button
@@ -136,7 +206,8 @@ export default function SettingsPanel({
                       className={`settings-theme-card ${
                         draft.palette === theme.id ? "settings-theme-card--active" : ""
                       }`}
-                      onClick={() => setDraft((d) => ({ ...d, palette: theme.id }))}
+                      onClick={() => selectPalette(theme.id)}
+                      disabled={draft.randomizePalette}
                     >
                       <span className="settings-theme-swatches" aria-hidden>
                         <span style={{ background: theme.swatch[0] }} />
@@ -189,12 +260,7 @@ export default function SettingsPanel({
                   className={`settings-music-btn ${
                     draft.backgroundMusic ? "settings-music-btn--active" : ""
                   }`}
-                  onClick={() =>
-                    setDraft((d) => ({
-                      ...d,
-                      backgroundMusic: !d.backgroundMusic,
-                    }))
-                  }
+                  onClick={toggleMusic}
                   aria-pressed={draft.backgroundMusic}
                 >
                   <span className="settings-music-btn-icon" aria-hidden>

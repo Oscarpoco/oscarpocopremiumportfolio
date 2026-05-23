@@ -99,10 +99,86 @@
   color: var(--text-tertiary);
 }
 
+.settings-randomize-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 12px 14px;
+  border: 2px dashed var(--border-color);
+  background: var(--bg-tertiary);
+  cursor: pointer;
+  text-align: left;
+  transition:
+    border-color var(--transition-fast),
+    background var(--transition-fast),
+    opacity var(--transition-fast);
+}
+
+.settings-randomize-btn:hover:not(:disabled) {
+  border-color: var(--primary);
+}
+
+.settings-randomize-btn--active {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+}
+
+.settings-randomize-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.settings-randomize-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.settings-randomize-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.settings-randomize-desc {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  line-height: 1.4;
+}
+
+.settings-randomize-status {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.settings-randomize-btn:disabled .settings-randomize-status {
+  color: var(--text-tertiary);
+}
+
+.settings-randomize-locked {
+  margin: -4px 0 10px;
+  font-size: 11px;
+  color: var(--text-tertiary);
+  font-style: italic;
+}
+
 .settings-theme-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 8px;
+}
+
+.settings-theme-card:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
 }
 
 .settings-theme-card {
