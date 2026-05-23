@@ -18,13 +18,12 @@ import {
     MdLayers,
 } from "react-icons/md";
 import {
-    SiJavascript,
-    SiTypescript,
     SiNodedotjs,
     SiDotnet,
     SiPython,
     SiOpenjdk,
 } from "react-icons/si";
+import { TbBrandJavascript, TbBrandTypescript } from "react-icons/tb";
 import {IoIosArrowForward} from "react-icons/io";
 import {AiFillStar} from "react-icons/ai";
 import {motion, useReducedMotion} from "framer-motion";
@@ -36,8 +35,8 @@ import {experienceData} from "../Database/ExperienceData";
 
 
 const STACK_SKILLS = [
-    { name: "JavaScript", Icon: SiJavascript },
-    { name: "TypeScript", Icon: SiTypescript },
+    { name: "JavaScript", Icon: TbBrandJavascript, outline: true },
+    { name: "TypeScript", Icon: TbBrandTypescript, outline: true },
     { name: "Node.js", Icon: SiNodedotjs },
     { name: ".NET", Icon: SiDotnet },
     { name: "Python", Icon: SiPython },
@@ -248,9 +247,16 @@ function About({darkMode, toggleTheme, handleDownload, navigateToSection, partic
                         <div className="profile-stack-section">
                             
                             <div className="skills-container-1">
-                                {STACK_SKILLS.map(({ name, Icon }) => (
+                                {STACK_SKILLS.map(({ name, Icon, outline }) => (
                                     <span key={name} className="skill-tag">
-                                        <Icon className="skill-tag-icon" aria-hidden />
+                                        <Icon
+                                            className={
+                                                outline
+                                                    ? "skill-tag-icon skill-tag-icon--outline"
+                                                    : "skill-tag-icon"
+                                            }
+                                            aria-hidden
+                                        />
                                         <span className="skill-tag-label">{name}</span>
                                     </span>
                                 ))}

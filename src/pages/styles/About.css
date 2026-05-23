@@ -640,9 +640,14 @@
 }
 
 .skill-tag-icon {
-  font-size: 20px;
+  font-size: 22px;
   flex-shrink: 0;
   color: var(--primary);
+}
+
+/* Outline brand icons (JS, TS) — no filled badge background */
+.skill-tag-icon--outline {
+  stroke-width: 1.75;
 }
 
 .skill-tag-label {
