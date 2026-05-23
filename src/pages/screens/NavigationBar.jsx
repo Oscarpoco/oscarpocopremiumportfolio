@@ -114,6 +114,7 @@ function NavigationBar({ onOpen, onOpenSettings, darkMode, toggleTheme, activeIt
       {/* ACTIVE SECTION INDICATOR - Desktop Only */}
       <motion.div
         className="active-section-indicator"
+        data-tutorial="section-indicator"
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.3 }}        
@@ -139,6 +140,7 @@ function NavigationBar({ onOpen, onOpenSettings, darkMode, toggleTheme, activeIt
       <div className="Portfolio-user">
         <motion.div
           className={`portfolio-onepage-cta ${isDesktop ? "portfolio-onepage-cta--active" : ""}`}
+          data-tutorial="profile"
           onClick={isDesktop ? onOpen : undefined}
           onKeyDown={(e) => {
             if (!isDesktop || !onOpen) return;
@@ -183,6 +185,7 @@ function NavigationBar({ onOpen, onOpenSettings, darkMode, toggleTheme, activeIt
         <motion.button
           type="button"
           className="nav-settings-btn"
+          data-tutorial="settings"
           onClick={onOpenSettings}
           aria-label="Open portfolio settings"
           whileHover={{ scale: 1.08 }}
@@ -196,6 +199,7 @@ function NavigationBar({ onOpen, onOpenSettings, darkMode, toggleTheme, activeIt
 
         <motion.div
           className="Dark-Mode"
+          data-tutorial="theme"
           onClick={toggleTheme}
           whileHover={{ scale: 1.1, rotate: 15 }}
           whileTap={{ scale: 0.9 }}

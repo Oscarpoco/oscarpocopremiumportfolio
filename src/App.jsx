@@ -16,6 +16,8 @@ import Profile from './pages/popupps/screens/Profile.jsx';
 import IntroAnimation from './components/IntroAnimation.jsx';
 import IdleSessionPrompt from './components/IdleSessionPrompt.jsx';
 import AppUpdatesAlert from './components/AppUpdatesAlert.jsx';
+import SiteTutorial from './components/SiteTutorial.jsx';
+import { isSiteTutorialComplete } from './config/tutorialPreferences';
 import Osbot from './components/Osbot.jsx';
 import FallingParticles from './components/FallingParticles.jsx';
 import SettingsPanel from './components/SettingsPanel.jsx';
@@ -66,6 +68,9 @@ function App() {
   const [reducedMotion, setReducedMotion] = useState(false);
   const [dashboardReady, setDashboardReady] = useState(false);
   const [idleSessionOpen, setIdleSessionOpen] = useState(false);
+  const [tutorialFinished, setTutorialFinished] = useState(() =>
+    isSiteTutorialComplete()
+  );
 
   const darkMode = preferences.darkMode;
 
@@ -206,8 +211,13 @@ function App() {
         darkMode={darkMode}
         onOpenChange={setIdleSessionOpen}
       />
+      <SiteTutorial
+        ready={dashboardReady && !tutorialFinished}
+        darkMode={darkMode}
+        onComplete={() => setTutorialFinished(true)}
+      />
       <AppUpdatesAlert
-        ready={dashboardReady}
+        ready={dashboardReady && tutorialFinished}
         darkMode={darkMode}
         idleSessionOpen={idleSessionOpen}
       />
@@ -222,6 +232,7 @@ function App() {
 
       <button
         className="theme-toggle theme-toggle-global"
+        data-tutorial="global-theme"
         onClick={toggleTheme}
         aria-label="Toggle theme"
       >

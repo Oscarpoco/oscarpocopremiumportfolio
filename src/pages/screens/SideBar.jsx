@@ -60,7 +60,7 @@ function SideBar({ activeItem, setActiveItem }) {
             <div className="sidebar-content">
 
                 {/* NAVIGATION LINKS */}
-                <nav className="sidebar-navigation">
+                <nav className="sidebar-navigation" data-tutorial="sidebar">
                     {navigationItems.map((item, index) => {
                         const Icon = item.icon;
                         const isActive = activeItem === item.name;

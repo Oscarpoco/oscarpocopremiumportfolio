@@ -33,6 +33,7 @@ export default function Osbot() {
       <motion.button
         type="button"
         className="osbot-fab"
+        data-tutorial="osbot"
         onClick={() => setOpen(true)}
         aria-label="Open Osbot assistant"
         whileHover={{ scale: 1.06 }}
