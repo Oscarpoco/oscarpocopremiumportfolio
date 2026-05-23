@@ -129,7 +129,7 @@ function SideBar({ activeItem, setActiveItem }) {
                                 />
                             </div>
                             <div className="stats-details">
-                                <span className="stats-text"><strong>HULK </strong>WARE <strong>MAN</strong></span>
+                                <span className="stats-text"><strong>SOFT </strong>WARE <strong>MAN</strong></span>
                             </div>
                         </div>
                     </div>
