@@ -50,6 +50,7 @@ export const DEFAULT_PREFERENCES = {
   palette: "forest",
   darkMode: true,
   particles: "none",
+  backgroundMusic: false,
 };
 
 export function loadPreferences() {
@@ -66,6 +67,7 @@ export function loadPreferences() {
         particles: PARTICLE_EFFECTS.some((p) => p.id === parsed.particles)
           ? parsed.particles
           : DEFAULT_PREFERENCES.particles,
+        backgroundMusic: Boolean(parsed.backgroundMusic),
       };
     }
     const legacyTheme = localStorage.getItem("theme");

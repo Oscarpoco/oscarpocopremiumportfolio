@@ -9,7 +9,11 @@ import {
   MdLightMode,
   MdAutoAwesome,
   MdSave,
+  MdMusicNote,
+  MdPlayArrow,
+  MdPause,
 } from "react-icons/md";
+import { MUSIC_TRACK, MUSIC_COPYRIGHT_NOTICE } from "../config/backgroundMusic";
 import {
   THEME_PALETTES,
   PARTICLE_EFFECTS,
@@ -23,12 +27,24 @@ export default function SettingsPanel({
   onClose,
   preferences,
   onSave,
+  onMusicPreviewChange,
 }) {
   const [draft, setDraft] = useState(preferences);
 
   useEffect(() => {
-    if (open) setDraft(preferences);
-  }, [open, preferences]);
+    if (open) {
+      setDraft(preferences);
+      onMusicPreviewChange?.(preferences.backgroundMusic);
+    } else {
+      onMusicPreviewChange?.(false);
+    }
+  }, [open, preferences, onMusicPreviewChange]);
+
+  useEffect(() => {
+    if (open) {
+      onMusicPreviewChange?.(draft.backgroundMusic);
+    }
+  }, [open, draft.backgroundMusic, onMusicPreviewChange]);
 
   useEffect(() => {
     if (open) {
@@ -157,6 +173,52 @@ export default function SettingsPanel({
                     Dark
                   </button>
                 </div>
+              </section>
+
+              <section className="settings-section">
+                <h3>
+                  <MdMusicNote size={18} aria-hidden />
+                  Background music
+                </h3>
+                <p className="settings-hint">
+                  Plays softly in the background. Uses your browser&apos;s audio
+                  engine — it won&apos;t slow down the site.
+                </p>
+                <button
+                  type="button"
+                  className={`settings-music-btn ${
+                    draft.backgroundMusic ? "settings-music-btn--active" : ""
+                  }`}
+                  onClick={() =>
+                    setDraft((d) => ({
+                      ...d,
+                      backgroundMusic: !d.backgroundMusic,
+                    }))
+                  }
+                  aria-pressed={draft.backgroundMusic}
+                >
+                  <span className="settings-music-btn-icon" aria-hidden>
+                    {draft.backgroundMusic ? (
+                      <MdPause size={22} />
+                    ) : (
+                      <MdPlayArrow size={22} />
+                    )}
+                  </span>
+                  <span className="settings-music-btn-text">
+                    <span className="settings-music-title">
+                      {MUSIC_TRACK.title}
+                    </span>
+                    <span className="settings-music-artist">
+                      by {MUSIC_TRACK.artist}
+                    </span>
+                  </span>
+                  <span className="settings-music-status">
+                    {draft.backgroundMusic ? "On" : "Play"}
+                  </span>
+                </button>
+                <p className="settings-music-disclaimer" role="note">
+                  <strong>Copyright notice:</strong> {MUSIC_COPYRIGHT_NOTICE}
+                </p>
               </section>
 
               <section className="settings-section">

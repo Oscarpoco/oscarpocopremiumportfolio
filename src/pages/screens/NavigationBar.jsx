@@ -8,8 +8,17 @@ import { MdDarkMode, MdLightMode, MdTouchApp, MdSettings } from "react-icons/md"
 // IMAGE
 import oscar from "./../../assets/avatar4.jfif";
 import { BiCodeAlt } from "react-icons/bi";
+import MusicVisualizer from "../../components/MusicVisualizer";
 
-function NavigationBar({ onOpen, onOpenSettings, darkMode, toggleTheme, activeItem }) {
+function NavigationBar({
+  onOpen,
+  onOpenSettings,
+  darkMode,
+  toggleTheme,
+  activeItem,
+  musicPlaying = false,
+  reducedMotion = false,
+}) {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isScrollable, setIsScrollable] = useState(false);
   const [isDesktop, setIsDesktop] = useState(() =>
@@ -108,6 +117,7 @@ function NavigationBar({ onOpen, onOpenSettings, darkMode, toggleTheme, activeIt
         <h2 className="Portfolio-h2" id="mobile-device-only">
           OSCAR POCO
         </h2>
+        <MusicVisualizer playing={musicPlaying} reducedMotion={reducedMotion} />
       </motion.div>
 
 
@@ -119,7 +129,7 @@ function NavigationBar({ onOpen, onOpenSettings, darkMode, toggleTheme, activeIt
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.3 }}        
       >
-        <span className="current-section-label">Currently viewing:</span>
+        <span className="current-section-label">viewing:</span>
         <motion.span
           className="current-section-name"
           key={activeItem}
@@ -162,7 +172,7 @@ function NavigationBar({ onOpen, onOpenSettings, darkMode, toggleTheme, activeIt
               <span className="portfolio-cta-dot" aria-hidden />
               <MdTouchApp className="portfolio-cta-icon" aria-hidden />
               <p className="portfolio-cta-label">
-                CLICK TO VIEW 1-PAGE PORTFOLIO
+                VIEW 1-PAGE PORTFOLIO
               </p>
             </div>
           </div>

@@ -178,6 +178,88 @@
   background: var(--primary-soft);
 }
 
+.settings-music-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px dashed var(--border-color);
+  background: var(--bg-tertiary);
+  cursor: pointer;
+  text-align: left;
+  transition:
+    border-color var(--transition-fast),
+    background var(--transition-fast);
+}
+
+.settings-music-btn:hover {
+  border-color: var(--primary);
+}
+
+.settings-music-btn--active {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+}
+
+.settings-music-btn-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  color: var(--primary);
+  background: var(--bg-secondary);
+  border: 1px dashed var(--primary-ring);
+}
+
+.settings-music-btn-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.settings-music-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.settings-music-artist {
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+
+.settings-music-status {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--primary);
+}
+
+.settings-music-disclaimer {
+  margin: 10px 0 0;
+  padding: 10px 12px;
+  font-size: 11px;
+  line-height: 1.55;
+  color: var(--text-tertiary);
+  background: var(--bg-tertiary);
+  border: 1px dashed var(--border-color);
+}
+
+.settings-music-disclaimer strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
 .settings-particle-list {
   display: flex;
   flex-direction: column;

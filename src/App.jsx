@@ -21,6 +21,7 @@ import { isSiteTutorialComplete } from './config/tutorialPreferences';
 import Osbot from './components/Osbot.jsx';
 import FallingParticles from './components/FallingParticles.jsx';
 import SettingsPanel from './components/SettingsPanel.jsx';
+import BackgroundMusic from './components/BackgroundMusic.jsx';
 import {
   loadPreferences,
   savePreferences,
@@ -71,8 +72,11 @@ function App() {
   const [tutorialFinished, setTutorialFinished] = useState(() =>
     isSiteTutorialComplete()
   );
+  const [musicPreview, setMusicPreview] = useState(false);
 
   const darkMode = preferences.darkMode;
+  const backgroundMusicOn =
+    preferences.backgroundMusic || (settingsOpen && musicPreview);
 
   const handleDashboardReady = useCallback(() => {
     setDashboardReady(true);
@@ -179,6 +183,8 @@ function App() {
           toggleTheme={toggleTheme}
           darkMode={darkMode}
           activeItem={activeItem}
+          musicPlaying={backgroundMusicOn}
+          reducedMotion={reducedMotion}
         />
       </div>
 
@@ -223,11 +229,14 @@ function App() {
       />
       <Osbot />
 
+      <BackgroundMusic enabled={backgroundMusicOn} />
+
       <SettingsPanel
         open={settingsOpen}
         onClose={() => setSettingsOpen(false)}
         preferences={preferences}
         onSave={handleSavePreferences}
+        onMusicPreviewChange={setMusicPreview}
       />
 
       <button
