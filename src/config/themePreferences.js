@@ -48,7 +48,7 @@ export const PARTICLE_EFFECTS = [
 
 export const DEFAULT_PREFERENCES = {
   palette: "forest",
-  darkMode: true,
+  darkMode: false,
   particles: "none",
   backgroundMusic: false,
   randomizePalette: false,
