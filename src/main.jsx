@@ -4,8 +4,10 @@ import App from './App.jsx'
 import './index.css'
 import './styles/themes.css'
 import { loadPreferences, applyPreferences } from './config/themePreferences'
+import { initFirebaseAnalytics } from './config/firebase'
 
 applyPreferences(loadPreferences())
+initFirebaseAnalytics()
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
