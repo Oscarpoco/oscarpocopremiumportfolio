@@ -14,9 +14,14 @@ import {
     MdCode,
     MdWork,
     MdSchool,
-    MdUpdate,
-    MdLayers,
+    MdForum,
+    MdMail,
+    MdCloud,
+    MdHub,
+    MdSecurity,
+    MdShield,
 } from "react-icons/md";
+import { GiPathDistance } from "react-icons/gi";
 import {
     SiNodedotjs,
     SiDotnet,
@@ -29,7 +34,7 @@ import {
 import { TbBrandJavascript, TbBrandTypescript } from "react-icons/tb";
 import {IoIosArrowForward} from "react-icons/io";
 import {AiFillStar} from "react-icons/ai";
-import {motion, useReducedMotion} from "framer-motion";
+import {motion, AnimatePresence, useReducedMotion} from "framer-motion";
 import {scrollIn, scrollInFade} from "./aboutAnimations";
 
 // DATABASE
@@ -47,6 +52,57 @@ const STACK_SKILLS = [
     { name: "Canva", Icon: SiCanva },
     { name: "Figma", Icon: SiFigma },
     { name: "Git", Icon: SiGit },
+];
+
+const ROTATING_TAGLINES = [
+    "Building web & mobile apps that ship.",
+    "Facilitating NQF5 software learnerships.",
+    "React · Node · .NET · always learning.",
+    "Code by day, mentor by passion.",
+];
+
+const CURRENT_FOCUS = [
+    {
+        title: "Cloud Computing",
+        status: "Azure & AWS fundamentals",
+        icon: MdCloud,
+    },
+    {
+        title: "Networking",
+        status: "Routing, DNS & protocols",
+        icon: MdHub,
+    },
+    {
+        title: "Penetration Testing",
+        status: "Hands-on labs & tooling",
+        icon: MdSecurity,
+    },
+    {
+        title: "Cybersecurity",
+        status: "Hardening & threat awareness",
+        icon: MdShield,
+    },
+];
+
+const SPOTLIGHT_LINKS = [
+    {
+        title: "Walk my Journey",
+        description: "Interactive career roadmap — step through every pivot.",
+        section: "Journey",
+        icon: GiPathDistance,
+    },
+    {
+        title: "Read testimonials",
+        description: "See what collaborators say — and leave your own.",
+        section: "Testimonials",
+        icon: MdForum,
+    },
+    {
+        title: "Let's connect",
+        description: "Open for opportunities, collabs, and good conversations.",
+        section: "Contact",
+        icon: MdMail,
+    },
 ];
 
 const portfolioStats = [
@@ -95,6 +151,7 @@ function About({darkMode, toggleTheme, handleDownload, navigateToSection, partic
     const reduceMotion = useReducedMotion();
     const [commitDate, setCommitDate] = useState(null);
     const [scrollRoot, setScrollRoot] = useState(null);
+    const [taglineIndex, setTaglineIndex] = useState(0);
 
     useEffect(() => {
         setScrollRoot(document.querySelector(".Child-dashboard"));
@@ -107,6 +164,16 @@ function About({darkMode, toggleTheme, handleDownload, navigateToSection, partic
             }
         });
     }, []);
+
+    useEffect(() => {
+        if (reduceMotion) return undefined;
+
+        const interval = window.setInterval(() => {
+            setTaglineIndex((prev) => (prev + 1) % ROTATING_TAGLINES.length);
+        }, 3500);
+
+        return () => window.clearInterval(interval);
+    }, [reduceMotion]);
 
     // Handle card click - navigate to section
     const handleCardClick = (section) => {
@@ -218,6 +285,22 @@ function About({darkMode, toggleTheme, handleDownload, navigateToSection, partic
                         <h2 className="profile-title">
                             Software Developer | Learnership Facilitator
                         </h2>
+                        <div className="profile-typewriter" aria-live="polite">
+                            <span className="profile-typewriter-label">Currently</span>
+                            <AnimatePresence mode="wait">
+                                <motion.span
+                                    key={taglineIndex}
+                                    className="profile-typewriter-text"
+                                    initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={reduceMotion ? undefined : { opacity: 0, y: -8 }}
+                                    transition={{ duration: 0.35 }}
+                                >
+                                    {ROTATING_TAGLINES[taglineIndex]}
+                                </motion.span>
+                            </AnimatePresence>
+                            <span className="profile-typewriter-cursor" aria-hidden>|</span>
+                        </div>
                         <p className="profile-description">
                             I am a Software Developer and Learnership Facilitator with 3+ years of experience across {experienceData.length} professional roles in Full Stack Development. I currently work at WWISE as a Software Development Facilitator. My background combines hands-on development of web and mobile apps with a passion for teaching and upskilling others.
                         </p>
@@ -249,25 +332,6 @@ function About({darkMode, toggleTheme, handleDownload, navigateToSection, partic
                                 <span className="portfolio-update-label">This is real time update from my GitHub repository.</span>
                             </div>
                         </div>
-
-                        <div className="profile-stack-section">
-                            
-                            <div className="skills-container-1">
-                                {STACK_SKILLS.map(({ name, Icon, outline }) => (
-                                    <span key={name} className="skill-tag">
-                                        <Icon
-                                            className={
-                                                outline
-                                                    ? "skill-tag-icon skill-tag-icon--outline"
-                                                    : "skill-tag-icon"
-                                            }
-                                            aria-hidden
-                                        />
-                                        <span className="skill-tag-label">{name}</span>
-                                    </span>
-                                ))}
-                            </div>
-                        </div>
                     </motion.div>
                 </div>
 
@@ -276,6 +340,76 @@ function About({darkMode, toggleTheme, handleDownload, navigateToSection, partic
                     <h3 className="scan-tag">SCAN TO DOWNLOAD RESUME</h3>
                 </motion.div>
             </motion.div>
+
+            <motion.section
+                className="about-showcase"
+                aria-label="Portfolio highlights"
+                {...scrollIn(reduceMotion, 0.04, 24, scrollRoot)}
+            >
+                <div className="about-focus-header">
+                    <h2>Currently focused on</h2>
+                    <p>What I&apos;m learning and building toward right now.</p>
+                </div>
+
+                <div className="about-stats-ribbon">
+                    {CURRENT_FOCUS.map(({ title, status, icon: Icon }, index) => (
+                        <motion.div
+                            key={title}
+                            className="about-stat-chip about-focus-chip"
+                            {...scrollIn(reduceMotion, 0.05 + index * 0.04, 18, scrollRoot)}
+                        >
+                            <span className="about-stat-icon">
+                                <Icon aria-hidden />
+                            </span>
+                            <span className="about-stat-value">{title}</span>
+                            <span className="about-stat-label">{status}</span>
+                        </motion.div>
+                    ))}
+                </div>
+
+                <div className="about-marquee" aria-hidden>
+                    <div className={`about-marquee-track ${reduceMotion ? "about-marquee-track--static" : ""}`}>
+                        {[...STACK_SKILLS, ...STACK_SKILLS].map(({ name, Icon, outline }, index) => (
+                            <span key={`${name}-${index}`} className="about-marquee-item">
+                                <Icon
+                                    className={
+                                        outline
+                                            ? "skill-tag-icon skill-tag-icon--outline"
+                                            : "skill-tag-icon"
+                                    }
+                                />
+                                {name}
+                            </span>
+                        ))}
+                    </div>
+                </div>
+
+                <div className="about-spotlight-header">
+                    <h2>Explore next</h2>
+                    <p>Jump into the parts of the portfolio people love most.</p>
+                </div>
+
+                <div className="about-spotlight-grid">
+                    {SPOTLIGHT_LINKS.map(({ title, description, section, icon: Icon }, index) => (
+                        <motion.button
+                            key={section}
+                            type="button"
+                            className="about-spotlight-card"
+                            {...scrollIn(reduceMotion, 0.06 + index * 0.05, 20, scrollRoot)}
+                            onClick={() => handleCardClick(section)}
+                        >
+                            <span className="about-spotlight-icon">
+                                <Icon aria-hidden />
+                            </span>
+                            <span className="about-spotlight-copy">
+                                <strong>{title}</strong>
+                                <span>{description}</span>
+                            </span>
+                            <FaArrowRight className="about-spotlight-arrow" aria-hidden />
+                        </motion.button>
+                    ))}
+                </div>
+            </motion.section>
 
             {/* QUICK ACCESS SECTION - CLICKABLE CARDS */}
             <motion.div className="quick-access-section" {...scrollIn(reduceMotion, 0, 24, scrollRoot)}>
