@@ -22,6 +22,7 @@ import Osbot from './components/Osbot.jsx';
 import FallingParticles from './components/FallingParticles.jsx';
 import SettingsPanel from './components/SettingsPanel.jsx';
 import BackgroundMusic from './components/BackgroundMusic.jsx';
+import CookieConsent from './components/CookieConsent.jsx';
 import {
   loadPreferences,
   savePreferences,
@@ -271,6 +272,7 @@ function App() {
 
       <SpeedInsights />
       <Analytics />
+      <CookieConsent darkMode={darkMode} />
     </div>
   );
 }
