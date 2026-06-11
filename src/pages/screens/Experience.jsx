@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import { motion, useInView, useAnimation, AnimatePresence } from "framer-motion";
 
 // STYLING
+import "../styles/About.css";
 import "../styles/Experience.css";
 
 // ICONS
@@ -10,20 +11,60 @@ import {
   MdOutlineLightMode,
   MdOutlineDarkMode,
   MdLocationOn,
+  MdCode,
+  MdTrendingUp,
 } from "react-icons/md";
 import { IoIosArrowForward, IoIosArrowDown } from "react-icons/io";
 import { FaCalendarAlt } from "react-icons/fa";
-import { BsArrowRight } from "react-icons/bs";
+import { BsArrowRight, BsBriefcase } from "react-icons/bs";
 
 // DATABASE
-import { experienceData } from "../Database/ExperienceData";
+import {
+  experienceData,
+  EXPERIENCE_CATEGORIES,
+} from "../Database/ExperienceData";
 
-// Animated Experience Card with scroll reveal
-function ExperienceCard({ exp, index, isActive, onHover }) {
+const uniqueTechCount = new Set(
+  experienceData.flatMap((entry) => entry.technologies)
+).size;
+
+const currentRolesCount = experienceData.filter((entry) =>
+  entry.period.toLowerCase().includes("current")
+).length;
+
+const EXPERIENCE_STATS = [
+  {
+    value: String(experienceData.length),
+    label: "Roles held",
+    icon: BsBriefcase,
+  },
+  {
+    value: "3+",
+    label: "Years building",
+    icon: FaCalendarAlt,
+  },
+  {
+    value: String(uniqueTechCount),
+    label: "Tools & skills",
+    icon: MdCode,
+  },
+  {
+    value: String(currentRolesCount),
+    label: "Current roles",
+    icon: MdTrendingUp,
+  },
+];
+
+const currentRole = experienceData.find((entry) =>
+  entry.period.toLowerCase().includes("current")
+);
+
+function ExperienceCard({ exp, index, isActive, onHover, registerRef }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const controls = useAnimation();
   const [isHovered, setIsHovered] = useState(false);
+  const isCurrent = exp.period.toLowerCase().includes("current");
 
   useEffect(() => {
     if (isInView) {
@@ -51,14 +92,17 @@ function ExperienceCard({ exp, index, isActive, onHover }) {
 
   return (
     <motion.div
-      ref={ref}
+      ref={(node) => {
+        ref.current = node;
+        registerRef?.(node);
+      }}
       className={`experience-card-premium ${isActive ? "active" : ""} ${isHovered ? "hovered" : ""}`}
       variants={cardVariants}
       initial="hidden"
       animate={controls}
       onMouseEnter={() => {
         setIsHovered(true);
-        onHover(index);
+        onHover(exp.id);
       }}
       onMouseLeave={() => setIsHovered(false)}
       whileHover={{
@@ -66,7 +110,6 @@ function ExperienceCard({ exp, index, isActive, onHover }) {
         transition: { duration: 0.3 },
       }}
     >
-      {/* Timeline connector */}
       <motion.div
         className="timeline-connector"
         initial={{ height: 0 }}
@@ -74,12 +117,15 @@ function ExperienceCard({ exp, index, isActive, onHover }) {
         transition={{ duration: 0.8, delay: index * 0.2 }}
       />
 
-      {/* Timeline dot */}
       <motion.div
         className="timeline-dot-1"
         initial={{ scale: 0 }}
         animate={isInView ? { scale: 1 } : {}}
-        transition={{ duration: 0.4, delay: index * 0.2 + 0.3, type: "spring" }}
+        transition={{
+          duration: 0.4,
+          delay: index * 0.2 + 0.3,
+          type: "spring",
+        }}
       >
         <motion.div
           className="dot-pulse"
@@ -91,7 +137,6 @@ function ExperienceCard({ exp, index, isActive, onHover }) {
         />
       </motion.div>
 
-      {/* Card accent */}
       <motion.div
         className="card-accent-1"
         animate={{
@@ -101,7 +146,6 @@ function ExperienceCard({ exp, index, isActive, onHover }) {
         transition={{ duration: 0.3 }}
       />
 
-      {/* Icon */}
       <motion.div
         className="experience-icon"
         animate={{
@@ -113,16 +157,20 @@ function ExperienceCard({ exp, index, isActive, onHover }) {
         {exp.icon}
       </motion.div>
 
-      {/* Content */}
       <div className="experience-content">
-        <motion.h3
-          className="experience-position-1"
-          animate={{
-            color: isHovered ? "var(--primary)" : "var(--text-primary)",
-          }}
-        >
-          {exp.position}
-        </motion.h3>
+        <div className="experience-title-row">
+          <motion.h3
+            className="experience-position-1"
+            animate={{
+              color: isHovered ? "var(--primary)" : "var(--text-primary)",
+            }}
+          >
+            {exp.position}
+          </motion.h3>
+          {isCurrent && (
+            <span className="experience-current-badge">Current</span>
+          )}
+        </div>
 
         <span className="experience-company">{exp.company}</span>
 
@@ -145,23 +193,24 @@ function ExperienceCard({ exp, index, isActive, onHover }) {
           {exp.description}
         </motion.p>
 
-        <div className="experience-technologies">
-          {exp.technologies.map((tech, techIndex) => (
-            <motion.span
-              key={techIndex}
-              className="tech-tag"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ delay: index * 0.15 + techIndex * 0.05 + 0.4 }}
-              whileHover={{ scale: 1.1, y: -3 }}
-            >
-              {tech}
-            </motion.span>
-          ))}
-        </div>
+        {exp.technologies.length > 0 && (
+          <div className="experience-technologies">
+            {exp.technologies.map((tech, techIndex) => (
+              <motion.span
+                key={tech}
+                className="tech-tag"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                transition={{ delay: index * 0.15 + techIndex * 0.05 + 0.4 }}
+                whileHover={{ scale: 1.1, y: -3 }}
+              >
+                {tech}
+              </motion.span>
+            ))}
+          </div>
+        )}
       </div>
 
-      {/* View Details Arrow */}
       <motion.div
         className="view-details"
         initial={{ opacity: 0, x: -10 }}
@@ -174,10 +223,33 @@ function ExperienceCard({ exp, index, isActive, onHover }) {
 }
 
 function Experience({ darkMode, toggleTheme, handleDownload }) {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeRoleId, setActiveRoleId] = useState(experienceData[0]?.id ?? null);
+  const [activeCategory, setActiveCategory] = useState("all");
   const containerRef = useRef(null);
+  const cardRefs = useRef({});
   const [showScrollHint, setShowScrollHint] = useState(false);
   const [hintCenterX, setHintCenterX] = useState(0);
+
+  const categoryCounts = useMemo(() => {
+    const counts = { all: experienceData.length };
+    experienceData.forEach(({ category }) => {
+      counts[category] = (counts[category] || 0) + 1;
+    });
+    return counts;
+  }, []);
+
+  const filteredExperience = useMemo(() => {
+    if (activeCategory === "all") return experienceData;
+    return experienceData.filter((entry) => entry.category === activeCategory);
+  }, [activeCategory]);
+
+  const scrollToRole = (id) => {
+    const el = cardRefs.current[id];
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
+      setActiveRoleId(id);
+    }
+  };
 
   useEffect(() => {
     const scrollRoot = containerRef.current?.closest(".Child-dashboard");
@@ -211,14 +283,13 @@ function Experience({ darkMode, toggleTheme, handleDownload }) {
       window.removeEventListener("resize", updateHint);
       ro.disconnect();
     };
-  }, []);
+  }, [filteredExperience.length]);
 
   return (
     <div
       ref={containerRef}
       className={`experience-container ${darkMode ? "dark-theme" : ""}`}
     >
-      {/* Floating Theme Toggle */}
       <motion.button
         className="theme-toggle"
         onClick={toggleTheme}
@@ -228,7 +299,6 @@ function Experience({ darkMode, toggleTheme, handleDownload }) {
         {darkMode ? <MdOutlineLightMode /> : <MdOutlineDarkMode />}
       </motion.button>
 
-      {/* HEADER SECTION */}
       <div className="about-header">
         <motion.div
           className="header-left"
@@ -251,6 +321,7 @@ function Experience({ darkMode, toggleTheme, handleDownload }) {
           transition={{ duration: 0.5, delay: 0.2 }}
         >
           <motion.button
+            type="button"
             className="action-button download-btn primary"
             onClick={handleDownload}
             whileHover={{ scale: 1.02, x: 3 }}
@@ -262,7 +333,6 @@ function Experience({ darkMode, toggleTheme, handleDownload }) {
         </motion.div>
       </div>
 
-      {/* SECTION HEADER */}
       <motion.div
         className="section-intro"
         initial={{ opacity: 0, y: 20 }}
@@ -280,18 +350,113 @@ function Experience({ darkMode, toggleTheme, handleDownload }) {
         </p>
       </motion.div>
 
-      {/* EXPERIENCE TIMELINE */}
-      <div className="experience-timeline">
-        {experienceData &&
-          experienceData.map((exp, index) => (
-            <ExperienceCard
-              key={exp.id}
-              exp={exp}
-              index={index}
-              isActive={index === activeIndex}
-              onHover={setActiveIndex}
-            />
+      <motion.div
+        className="experience-stats"
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.35, duration: 0.45 }}
+      >
+        {EXPERIENCE_STATS.map(({ value, label, icon: Icon }) => (
+          <div key={label} className="stats-card">
+            <span className="stats-icon">
+              <Icon aria-hidden />
+            </span>
+            <div className="stats-info">
+              <span className="stats-value">{value}</span>
+              <span className="stats-label">{label}</span>
+            </div>
+          </div>
+        ))}
+      </motion.div>
+
+      {currentRole && (
+        <motion.div
+          className="experience-highlight-strip"
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.45 }}
+        >
+          <BsBriefcase aria-hidden />
+          <span>
+            <strong>Currently:</strong> {currentRole.position} at{" "}
+            {currentRole.company}
+          </span>
+        </motion.div>
+      )}
+
+      <motion.div
+        className="experience-filter-bar"
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.45, duration: 0.45 }}
+      >
+        {EXPERIENCE_CATEGORIES.map(({ id, label }) => (
+          <button
+            key={id}
+            type="button"
+            className={`experience-filter-chip ${
+              activeCategory === id ? "experience-filter-chip--active" : ""
+            }`}
+            onClick={() => setActiveCategory(id)}
+          >
+            {label}
+            <span className="experience-filter-count">
+              {categoryCounts[id] ?? 0}
+            </span>
+          </button>
+        ))}
+      </motion.div>
+
+      {filteredExperience.length > 1 && (
+        <motion.nav
+          className="experience-jump-nav"
+          aria-label="Jump to role"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.45 }}
+        >
+          {filteredExperience.map((entry) => (
+            <button
+              key={entry.id}
+              type="button"
+              className={`experience-jump-btn ${
+                activeRoleId === entry.id ? "experience-jump-btn--active" : ""
+              }`}
+              onClick={() => scrollToRole(entry.id)}
+            >
+              {entry.company}
+            </button>
           ))}
+        </motion.nav>
+      )}
+
+      <div className="experience-timeline">
+        <AnimatePresence mode="popLayout">
+          {filteredExperience.length === 0 ? (
+            <motion.p
+              key="empty"
+              className="experience-empty"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              No roles in this category yet.
+            </motion.p>
+          ) : (
+            filteredExperience.map((exp, index) => (
+              <ExperienceCard
+                key={exp.id}
+                exp={exp}
+                index={index}
+                isActive={activeRoleId === exp.id}
+                onHover={setActiveRoleId}
+                registerRef={(node) => {
+                  if (node) cardRefs.current[exp.id] = node;
+                }}
+              />
+            ))
+          )}
+        </AnimatePresence>
       </div>
 
       <AnimatePresence>
