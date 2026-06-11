@@ -31,7 +31,8 @@ function normalizeTestimonial(doc) {
     technologies: Array.isArray(data.technologies)
       ? data.technologies
       : EMPTY_TESTIMONIAL.technologies,
-    createdAt: data.createdAt?.toMillis?.() ?? Date.now(),
+    createdAt: data.createdAt?.toMillis?.() ?? null,
+    date: typeof data.date === "string" ? data.date.trim() : "",
   };
 }
 
@@ -42,7 +43,7 @@ export async function fetchFirebaseTestimonials() {
     const snapshot = await getDocs(collection(db, COLLECTION));
     return snapshot.docs
       .map(normalizeTestimonial)
-      .sort((a, b) => b.createdAt - a.createdAt);
+      .sort((a, b) => (b.createdAt ?? 0) - (a.createdAt ?? 0));
   } catch (error) {
     console.error("Failed to load testimonials from Firebase:", error);
     return [];

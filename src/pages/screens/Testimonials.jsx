@@ -21,7 +21,9 @@ import {
   MdOutlineDarkMode,
   MdComment,
   MdForum,
+  MdCalendarToday,
 } from "react-icons/md";
+import { BsListUl, BsGridFill } from "react-icons/bs";
 import { IoIosArrowForward } from "react-icons/io";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -30,9 +32,70 @@ import { testimonials as dummyTestimonials } from "../Database/TestimonialsData"
 import { fetchFirebaseTestimonials } from "../../services/testimonialsService";
 import TestimonialCommentForm from "../../components/TestimonialCommentForm";
 
+const LIST_PAGE_SIZE = 12;
+
+function truncateText(text, maxLength = 120) {
+  if (!text || text.length <= maxLength) return text;
+  return `${text.slice(0, maxLength).trim()}…`;
+}
+
+function getTestimonialDate(item) {
+  if (typeof item?.date === "string" && item.date.trim()) {
+    return { label: item.date.trim(), dateTime: undefined };
+  }
+
+  if (item?.createdAt) {
+    const parsed = new Date(item.createdAt);
+    if (!Number.isNaN(parsed.getTime())) {
+      return {
+        label: parsed.toLocaleDateString(undefined, {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+        }),
+        dateTime: parsed.toISOString(),
+      };
+    }
+  }
+
+  return null;
+}
+
+function TestimonialDate({ item, className = "" }) {
+  const formatted = getTestimonialDate(item);
+  if (!formatted) return null;
+
+  return (
+    <span className={`testimonial-date ${className}`.trim()}>
+      <MdCalendarToday aria-hidden />
+      <time dateTime={formatted.dateTime}>{formatted.label}</time>
+    </span>
+  );
+}
+
+function StarRating({ rating, compact = false }) {
+  return (
+    <span
+      className={compact ? "testimonial-list-rating" : "testimonial-rating"}
+      aria-label={`${rating} out of 5 stars`}
+    >
+      {[...Array(5)].map((_, i) => (
+        <span
+          key={i}
+          className={`rating-star ${i < rating ? "filled" : ""}`}
+        >
+          ★
+        </span>
+      ))}
+    </span>
+  );
+}
+
 function Testimonials({ darkMode, toggleTheme, handleDownload }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const [viewMode, setViewMode] = useState("carousel");
+  const [listPage, setListPage] = useState(1);
   const [firebaseTestimonials, setFirebaseTestimonials] = useState([]);
   const [isLoadingFirebase, setIsLoadingFirebase] = useState(true);
   const [isCommentFormOpen, setIsCommentFormOpen] = useState(false);
@@ -45,6 +108,16 @@ function Testimonials({ darkMode, toggleTheme, handleDownload }) {
   const communityCount = firebaseTestimonials.length;
   const totalCount = allTestimonials.length;
   const activeItem = allTestimonials[activeTestimonial];
+
+  const totalListPages = Math.max(1, Math.ceil(totalCount / LIST_PAGE_SIZE));
+
+  const paginatedTestimonials = useMemo(() => {
+    const start = (listPage - 1) * LIST_PAGE_SIZE;
+    return allTestimonials.slice(start, start + LIST_PAGE_SIZE);
+  }, [allTestimonials, listPage]);
+
+  const listRangeStart = totalCount === 0 ? 0 : (listPage - 1) * LIST_PAGE_SIZE + 1;
+  const listRangeEnd = Math.min(listPage * LIST_PAGE_SIZE, totalCount);
 
   const loadFirebaseTestimonials = useCallback(async () => {
     setIsLoadingFirebase(true);
@@ -68,14 +141,20 @@ function Testimonials({ darkMode, toggleTheme, handleDownload }) {
   }, []);
 
   useEffect(() => {
-    if (allTestimonials.length === 0) return;
+    if (viewMode !== "carousel" || allTestimonials.length === 0) return;
 
     const interval = window.setInterval(() => {
       setActiveTestimonial((prev) => (prev + 1) % allTestimonials.length);
     }, 7000);
 
     return () => window.clearInterval(interval);
-  }, [allTestimonials.length]);
+  }, [viewMode, allTestimonials.length]);
+
+  useEffect(() => {
+    if (listPage > totalListPages) {
+      setListPage(totalListPages);
+    }
+  }, [listPage, totalListPages]);
 
   useEffect(() => {
     if (activeTestimonial >= allTestimonials.length) {
@@ -101,6 +180,16 @@ function Testimonials({ darkMode, toggleTheme, handleDownload }) {
     const fetched = await loadFirebaseTestimonials();
     const mergedLength = dummyTestimonials.length + fetched.length;
     setActiveTestimonial(Math.max(0, mergedLength - 1));
+    setViewMode("carousel");
+  };
+
+  const openTestimonialInCarousel = (index) => {
+    setActiveTestimonial(index);
+    setViewMode("carousel");
+  };
+
+  const goToListPage = (page) => {
+    setListPage(Math.min(Math.max(1, page), totalListPages));
   };
 
   const containerVariants = {
@@ -258,7 +347,38 @@ function Testimonials({ darkMode, toggleTheme, handleDownload }) {
           </motion.button>
         </motion.div>
 
-        {activeItem && (
+        <motion.div className="testimonials-view-bar" variants={itemVariants}>
+          <div className="testimonials-view-toggle">
+            <button
+              type="button"
+              className={`testimonials-view-btn ${
+                viewMode === "carousel" ? "testimonials-view-btn--active" : ""
+              }`}
+              onClick={() => setViewMode("carousel")}
+            >
+              <BsGridFill aria-hidden />
+              <span>Spotlight</span>
+            </button>
+            <button
+              type="button"
+              className={`testimonials-view-btn ${
+                viewMode === "list" ? "testimonials-view-btn--active" : ""
+              }`}
+              onClick={() => setViewMode("list")}
+            >
+              <BsListUl aria-hidden />
+              <span>All comments</span>
+              <span className="testimonials-view-count">{totalCount}</span>
+            </button>
+          </div>
+          {viewMode === "list" && (
+            <span className="testimonials-list-summary">
+              {listRangeStart}–{listRangeEnd} of {totalCount}
+            </span>
+          )}
+        </motion.div>
+
+        {viewMode === "carousel" && activeItem && (
           <motion.div className="testimonials-slider" variants={itemVariants}>
             <AnimatePresence mode="wait">
               <motion.div
@@ -304,6 +424,7 @@ function Testimonials({ darkMode, toggleTheme, handleDownload }) {
                         {activeItem.company}
                       </motion.div>
                     )}
+                    <TestimonialDate item={activeItem} className="testimonial-date--header" />
                   </div>
                 </div>
 
@@ -313,17 +434,7 @@ function Testimonials({ darkMode, toggleTheme, handleDownload }) {
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.5 }}
                 >
-                  {[...Array(5)].map((_, i) => (
-                    <motion.span
-                      key={i}
-                      className={`rating-star ${i < activeItem.rating ? "filled" : ""}`}
-                      initial={{ opacity: 0, scale: 0 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.5 + i * 0.05 }}
-                    >
-                      ★
-                    </motion.span>
-                  ))}
+                  <StarRating rating={activeItem.rating} />
                 </motion.div>
 
                 <motion.p
@@ -357,6 +468,20 @@ function Testimonials({ darkMode, toggleTheme, handleDownload }) {
                     <span className="detail-value">{activeItem.duration}</span>
                   </div>
 
+                  {(() => {
+                    const posted = getTestimonialDate(activeItem);
+                    if (!posted) return null;
+                    return (
+                      <div className="detail-item">
+                        <span className="detail-label">
+                          <MdCalendarToday style={{ marginRight: "0.5rem" }} />
+                          Posted
+                        </span>
+                        <span className="detail-value">{posted.label}</span>
+                      </div>
+                    );
+                  })()}
+
                   {activeItem.technologies?.length > 0 && (
                     <div className="detail-item">
                       <span className="detail-label">Technologies</span>
@@ -382,6 +507,7 @@ function Testimonials({ darkMode, toggleTheme, handleDownload }) {
           </motion.div>
         )}
 
+        {viewMode === "carousel" && (
         <div className="testimonial-navigation">
           <motion.button
             type="button"
@@ -425,6 +551,129 @@ function Testimonials({ darkMode, toggleTheme, handleDownload }) {
             <FaChevronRight />
           </motion.button>
         </div>
+        )}
+
+        {viewMode === "list" && (
+          <motion.div
+            className="testimonials-list-section"
+            variants={itemVariants}
+          >
+            {totalCount === 0 ? (
+              <p className="testimonials-list-empty">
+                No comments yet. Be the first to share your experience.
+              </p>
+            ) : (
+              <>
+                <ul className="testimonials-list">
+                  {paginatedTestimonials.map((item, pageIndex) => {
+                    const globalIndex = (listPage - 1) * LIST_PAGE_SIZE + pageIndex;
+                    return (
+                      <li key={item.id}>
+                        <button
+                          type="button"
+                          className="testimonial-list-item"
+                          onClick={() => openTestimonialInCarousel(globalIndex)}
+                        >
+                          <div className="testimonial-list-item__top">
+                            <div className="testimonial-list-item__identity">
+                              <span className="testimonial-list-item__name">
+                                {item.name}
+                              </span>
+                              {item.source === "firebase" && (
+                                <span className="testimonial-community-badge">
+                                  Community
+                                </span>
+                              )}
+                            </div>
+                            <StarRating rating={item.rating} compact />
+                          </div>
+                          <div className="testimonial-list-item__meta">
+                            <span>{item.role}</span>
+                            {item.company && (
+                              <>
+                                <span aria-hidden>·</span>
+                                <span>{item.company}</span>
+                              </>
+                            )}
+                            {item.project && (
+                              <>
+                                <span aria-hidden>·</span>
+                                <span>{item.project}</span>
+                              </>
+                            )}
+                            {getTestimonialDate(item) && (
+                              <>
+                                <span aria-hidden>·</span>
+                                <TestimonialDate
+                                  item={item}
+                                  className="testimonial-date--list"
+                                />
+                              </>
+                            )}
+                          </div>
+                          <p className="testimonial-list-item__content">
+                            {truncateText(item.content, 140)}
+                          </p>
+                        </button>
+                      </li>
+                    );
+                  })}
+                </ul>
+
+                {totalListPages > 1 && (
+                  <nav
+                    className="testimonials-list-pagination"
+                    aria-label="Testimonials pages"
+                  >
+                    <button
+                      type="button"
+                      className="testimonials-page-btn"
+                      onClick={() => goToListPage(listPage - 1)}
+                      disabled={listPage <= 1}
+                    >
+                      <FaChevronLeft aria-hidden />
+                      Prev
+                    </button>
+
+                    {totalListPages <= 9 ? (
+                      <div className="testimonials-page-numbers">
+                        {Array.from({ length: totalListPages }, (_, i) => i + 1).map(
+                          (page) => (
+                            <button
+                              key={page}
+                              type="button"
+                              className={`testimonials-page-num ${
+                                page === listPage ? "testimonials-page-num--active" : ""
+                              }`}
+                              onClick={() => goToListPage(page)}
+                              aria-current={page === listPage ? "page" : undefined}
+                            >
+                              {page}
+                            </button>
+                          )
+                        )}
+                      </div>
+                    ) : (
+                      <span className="testimonials-page-status">
+                        Page {listPage} of {totalListPages}
+                      </span>
+                    )}
+
+                    <button
+                      type="button"
+                      className="testimonials-page-btn"
+                      onClick={() => goToListPage(listPage + 1)}
+                      disabled={listPage >= totalListPages}
+                    >
+                      Next
+                      <FaChevronRight aria-hidden />
+                    </button>
+                  </nav>
+                )}
+              </>
+            )}
+          </motion.div>
+        )}
       </motion.div>
 
       <motion.div
