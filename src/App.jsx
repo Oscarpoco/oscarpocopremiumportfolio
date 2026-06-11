@@ -33,7 +33,7 @@ import { usePaletteRandomizer } from './hooks/usePaletteRandomizer';
 import './App.css';
 
 // RESUME
-import resume from './assets/oscarkylpoco.pdf'
+const resume = '/oscarkylpoco.pdf';
 
 function App() {
   const routeMap = {

@@ -3,7 +3,7 @@ import React, {useState, useEffect, memo} from "react";
 // STYLING
 import "../styles/About.css";
 import oscar from "../../assets/background-one.jpg";
-import qrcode from "../../assets/qrcode.jfif";
+import ResumeQrCode from "../../components/ResumeQrCode";
 
 // ICONS
 import {FaGithub, FaLinkedin, FaTwitter, FaArrowRight} from "react-icons/fa";
@@ -22,6 +22,9 @@ import {
     SiDotnet,
     SiPython,
     SiOpenjdk,
+    SiCanva,
+    SiFigma,
+    SiGit,
 } from "react-icons/si";
 import { TbBrandJavascript, TbBrandTypescript } from "react-icons/tb";
 import {IoIosArrowForward} from "react-icons/io";
@@ -41,6 +44,9 @@ const STACK_SKILLS = [
     { name: ".NET", Icon: SiDotnet },
     { name: "Python", Icon: SiPython },
     { name: "Java", Icon: SiOpenjdk },
+    { name: "Canva", Icon: SiCanva },
+    { name: "Figma", Icon: SiFigma },
+    { name: "Git", Icon: SiGit },
 ];
 
 const portfolioStats = [
@@ -266,9 +272,7 @@ function About({darkMode, toggleTheme, handleDownload, navigateToSection, partic
                 </div>
 
                 <motion.div className="qrcode" {...scrollIn(reduceMotion, 0.1, 24, scrollRoot)}>
-                    <img src={qrcode}
-                        alt="qrcode"
-                        className="qrcode-image"/>
+                    <ResumeQrCode darkMode={darkMode} />
                     <h3 className="scan-tag">SCAN TO DOWNLOAD RESUME</h3>
                 </motion.div>
             </motion.div>
