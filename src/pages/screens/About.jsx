@@ -4,6 +4,7 @@ import React, {useState, useEffect, memo} from "react";
 import "../styles/About.css";
 import oscar from "../../assets/background-one.jpg";
 import ResumeQrCode from "../../components/ResumeQrCode";
+import LearningCurveChart from "../../components/LearningCurveChart";
 
 // ICONS
 import {FaGithub, FaLinkedin, FaTwitter, FaArrowRight} from "react-icons/fa";
@@ -346,6 +347,15 @@ function About({darkMode, toggleTheme, handleDownload, navigateToSection, partic
                 aria-label="Portfolio highlights"
                 {...scrollIn(reduceMotion, 0.04, 24, scrollRoot)}
             >
+                <div className="about-focus-header">
+                    <h2>Software development learning curve</h2>
+                    <p>How my skills grew from first certifications in 2022 to full-stack delivery today.</p>
+                </div>
+
+                <motion.div {...scrollIn(reduceMotion, 0.05, 20, scrollRoot)}>
+                    <LearningCurveChart reduceMotion={reduceMotion} />
+                </motion.div>
+
                 <div className="about-focus-header">
                     <h2>Currently focused on</h2>
                     <p>What I&apos;m learning and building toward right now.</p>

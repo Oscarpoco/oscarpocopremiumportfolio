@@ -1,0 +1,205 @@
+.learning-curve-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 18px 16px 16px;
+  background: var(--bg-secondary);
+  border: 2px dashed var(--border-color);
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.learning-curve-chart:hover {
+  border-color: var(--primary-ring);
+  box-shadow: var(--shadow-md);
+}
+
+.learning-curve-chart__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.learning-curve-chart__legend {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.learning-curve-chart__legend-line {
+  width: 22px;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    var(--primary-light, var(--primary)),
+    var(--primary)
+  );
+}
+
+.learning-curve-chart__range {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--primary);
+  padding: 4px 10px;
+  border: 1px dashed color-mix(in srgb, var(--primary) 40%, var(--border-color));
+  background: var(--primary-soft);
+}
+
+.learning-curve-chart__canvas-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.learning-curve-chart__svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.learning-curve-chart__grid-line {
+  stroke: color-mix(in srgb, var(--border-color) 85%, transparent);
+  stroke-width: 1;
+  stroke-dasharray: 4 6;
+}
+
+.learning-curve-chart__axis-label {
+  fill: var(--text-tertiary);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.learning-curve-chart__x-label {
+  fill: var(--text-secondary);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.learning-curve-chart__dot {
+  fill: var(--bg-secondary);
+  stroke: var(--primary);
+  stroke-width: 2.5;
+  pointer-events: none;
+}
+
+.learning-curve-chart__dot--active {
+  fill: var(--primary);
+  stroke: var(--bg-primary);
+  stroke-width: 2;
+}
+
+.learning-curve-chart__markers {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.learning-curve-chart__marker {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  margin: -14px 0 0 -14px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.learning-curve-chart__marker:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.learning-curve-chart__tooltip {
+  position: absolute;
+  z-index: 2;
+  min-width: 180px;
+  max-width: min(260px, 72vw);
+  padding: 10px 12px;
+  transform: translate(-50%, calc(-100% - 14px));
+  background: var(--bg-primary);
+  border: 2px dashed var(--primary-ring);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  pointer-events: none;
+  text-align: left;
+}
+
+.learning-curve-chart__tooltip strong {
+  font-size: 13px;
+  color: var(--text-primary);
+}
+
+.learning-curve-chart__tooltip-value {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+.learning-curve-chart__tooltip span:last-child {
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--text-secondary);
+}
+
+.learning-curve-chart__milestones {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 14px;
+  margin: 0;
+  padding: 12px 0 0;
+  list-style: none;
+  border-top: 2px dashed var(--border-color);
+}
+
+.learning-curve-chart__milestones li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--text-secondary);
+}
+
+.learning-curve-chart__milestones-date {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+@media (max-width: 768px) {
+  .learning-curve-chart {
+    padding: 14px 12px 12px;
+  }
+
+  .learning-curve-chart__milestones {
+    grid-template-columns: 1fr;
+  }
+
+  .learning-curve-chart__tooltip {
+    max-width: min(220px, 84vw);
+  }
+}
+
+@media (max-width: 576px) {
+  .learning-curve-chart__milestones {
+    display: none;
+  }
+}

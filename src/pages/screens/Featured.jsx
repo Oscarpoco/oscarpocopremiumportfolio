@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 // ICONS
@@ -18,91 +18,132 @@ import {
   MdRocketLaunch,
   MdCheck,
   MdClose,
+  MdDownload,
 } from "react-icons/md";
-import { BsGridFill, BsListUl, BsGrid3X3Gap } from "react-icons/bs";
+import { BsListUl, BsGrid3X3Gap } from "react-icons/bs";
 import { IoIosArrowForward } from "react-icons/io";
 
 // PROJECT DATA
 import { projects } from "../Database/Projects";
 
 // STYLES
+import "../styles/About.css";
 import "../styles/Featured.css";
 
-function Featured({ darkMode, toggleTheme }) {
-  const [activeTab, setActiveTab] = useState("current");
+const AUTOPLAY_MS = 6000;
+
+const allProjects = [
+  ...(projects.featured || []),
+  ...(projects.current || []),
+  ...(projects.completed || []),
+];
+
+const spotlightProject =
+  projects.current?.[0] || projects.featured?.[0] || null;
+
+const PROJECT_STATS = [
+  {
+    value: String(projects.featured?.length || 0),
+    label: "Featured",
+    icon: FaStar,
+    className: "featured-icon",
+  },
+  {
+    value: String(projects.current?.length || 0),
+    label: "In progress",
+    icon: MdRocketLaunch,
+    className: "progress-icon",
+  },
+  {
+    value: String(projects.completed?.length || 0),
+    label: "Completed",
+    icon: MdCheck,
+    className: "completed-icon",
+  },
+  {
+    value: String(
+      new Set(allProjects.flatMap((project) => project.technologies)).size
+    ),
+    label: "Technologies",
+    icon: MdCode,
+    className: "tech-icon",
+  },
+];
+
+function getProjectsForTab(tabId) {
+  switch (tabId) {
+    case "featured":
+      return projects.featured || [];
+    case "current":
+      return projects.current || [];
+    case "completed":
+      return projects.completed || [];
+    default:
+      return projects.featured || [];
+  }
+}
+
+function filterByTech(projectList, selectedTech) {
+  if (selectedTech.length === 0) return projectList;
+  return projectList.filter((project) =>
+    project.technologies.some((tech) => selectedTech.includes(tech))
+  );
+}
+
+function Featured({ darkMode, toggleTheme, handleDownload }) {
+  const [activeTab, setActiveTab] = useState("featured");
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [viewMode, setViewMode] = useState("grid"); // carousel, grid
+  const [viewMode, setViewMode] = useState("grid");
   const [filterOpen, setFilterOpen] = useState(false);
   const [selectedTech, setSelectedTech] = useState([]);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-  const headerRef = useRef(null);
 
-  // Get current projects based on active tab
-  const getCurrentProjects = useCallback(() => {
-    let projectList = [];
-    switch (activeTab) {
-      case "featured":
-        projectList = projects.featured || [];
-        break;
-      case "current":
-        projectList = projects.current || [];
-        break;
-      case "completed":
-        projectList = projects.completed || [];
-        break;
-      default:
-        projectList = projects.featured || [];
-    }
+  const allTechnologies = useMemo(
+    () =>
+      Array.from(
+        new Set(allProjects.flatMap((project) => project.technologies))
+      ).sort(),
+    []
+  );
 
-    // Filter by selected tech if any
-    if (selectedTech.length > 0) {
-      projectList = projectList.filter((project) =>
-        project.technologies.some((tech) => selectedTech.includes(tech)),
-      );
-    }
+  const currentProjects = useMemo(
+    () => filterByTech(getProjectsForTab(activeTab), selectedTech),
+    [activeTab, selectedTech]
+  );
 
-    return projectList;
-  }, [activeTab, selectedTech]);
+  const tabCounts = useMemo(
+    () => ({
+      featured: filterByTech(projects.featured || [], selectedTech).length,
+      current: filterByTech(projects.current || [], selectedTech).length,
+      completed: filterByTech(projects.completed || [], selectedTech).length,
+    }),
+    [selectedTech]
+  );
 
-  const currentProjects = getCurrentProjects();
-
-  // Get all unique technologies
-  const getAllTechnologies = () => {
-    const allTech = new Set();
-    Object.values(projects).forEach((category) => {
-      category.forEach((project) => {
-        project.technologies.forEach((tech) => allTech.add(tech));
-      });
-    });
-    return Array.from(allTech).sort();
-  };
-
-  // Auto-slide effect
   useEffect(() => {
     if (
       !isAutoPlaying ||
       viewMode !== "carousel" ||
       currentProjects.length <= 1
-    )
+    ) {
       return;
+    }
 
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % currentProjects.length);
-    }, 6000);
+    }, AUTOPLAY_MS);
 
     return () => clearInterval(interval);
   }, [isAutoPlaying, viewMode, currentProjects.length]);
 
-  // Reset index when tab changes
   useEffect(() => {
     setCurrentIndex(0);
   }, [activeTab, selectedTech]);
 
-  // Navigation handlers
   const handlePrev = () => {
     setIsAutoPlaying(false);
     setCurrentIndex(
-      (prev) => (prev - 1 + currentProjects.length) % currentProjects.length,
+      (prev) => (prev - 1 + currentProjects.length) % currentProjects.length
     );
   };
 
@@ -113,7 +154,7 @@ function Featured({ darkMode, toggleTheme }) {
 
   const toggleTech = (tech) => {
     setSelectedTech((prev) =>
-      prev.includes(tech) ? prev.filter((t) => t !== tech) : [...prev, tech],
+      prev.includes(tech) ? prev.filter((t) => t !== tech) : [...prev, tech]
     );
   };
 
@@ -121,14 +162,12 @@ function Featured({ darkMode, toggleTheme }) {
     setSelectedTech([]);
   };
 
-  // Tab data
   const tabs = [
     { id: "featured", label: "Featured", icon: <FaStar /> },
     { id: "current", label: "In Progress", icon: <MdRocketLaunch /> },
     { id: "completed", label: "Completed", icon: <MdCheck /> },
   ];
 
-  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -186,8 +225,8 @@ function Featured({ darkMode, toggleTheme }) {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      {/* Theme Toggle */}
       <motion.button
+        type="button"
         className="theme-toggle"
         onClick={toggleTheme}
         whileHover={{ scale: 1.1, rotate: 15 }}
@@ -196,37 +235,38 @@ function Featured({ darkMode, toggleTheme }) {
         {darkMode ? <MdOutlineLightMode /> : <MdOutlineDarkMode />}
       </motion.button>
 
-      {/* Header Section */}
       <motion.div
-        ref={headerRef}
         className="about-header"
         initial={{ y: -30, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.1 }}
       >
-        <div className="header-content">
-          <h1 className="featured-title">My Projects</h1>
+        <div className="header-left">
+          <h1>Featured</h1>
           <div className="breadcrumb">
             <span>Portfolio</span>
             <IoIosArrowForward className="breadcrumb-icon" />
-            <span className="current">Projects</span>
+            <span className="current-page">Featured</span>
           </div>
         </div>
 
         <div className="header-actions">
-          {/* View Mode Toggle */}
           <div className="view-toggle">
             <motion.button
+              type="button"
               className={`view-btn ${viewMode === "carousel" ? "active" : ""}`}
               onClick={() => setViewMode("carousel")}
+              aria-label="Carousel view"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
               <BsListUl />
             </motion.button>
             <motion.button
+              type="button"
               className={`view-btn ${viewMode === "grid" ? "active" : ""}`}
               onClick={() => setViewMode("grid")}
+              aria-label="Grid view"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -234,8 +274,8 @@ function Featured({ darkMode, toggleTheme }) {
             </motion.button>
           </div>
 
-          {/* Filter Button */}
           <motion.button
+            type="button"
             className={`filter-btn ${filterOpen ? "active" : ""}`}
             onClick={() => setFilterOpen(!filterOpen)}
             whileHover={{ scale: 1.05 }}
@@ -247,10 +287,72 @@ function Featured({ darkMode, toggleTheme }) {
               <span className="filter-count">{selectedTech.length}</span>
             )}
           </motion.button>
+
+          <motion.button
+            type="button"
+            className="action-button download-btn primary"
+            onClick={handleDownload}
+            whileHover={{ scale: 1.02, x: 3 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <MdDownload className="action-icon" />
+            <span className="mobileSideBar button-action">Download CV</span>
+          </motion.button>
         </div>
       </motion.div>
 
-      {/* Filter Panel */}
+      <motion.div
+        className="section-intro"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.25, duration: 0.5 }}
+      >
+        <h2 className="section-title">
+          <span className="title-accent" />
+          Featured Projects
+        </h2>
+        <p className="section-subtitle">
+          Mobile and web products I have built, shipped, or am actively developing
+          — from career platforms to on-demand service apps.
+        </p>
+      </motion.div>
+
+      <motion.div
+        className="featured-stats"
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3, duration: 0.45 }}
+      >
+        {PROJECT_STATS.map(({ value, label, icon: Icon, className }) => (
+          <div key={label} className="stats-card">
+            <span className={`stats-icon ${className}`}>
+              <Icon aria-hidden />
+            </span>
+            <div className="stats-info">
+              <span className="stats-value">{value}</span>
+              <span className="stats-label">{label}</span>
+            </div>
+          </div>
+        ))}
+      </motion.div>
+
+      {spotlightProject && (
+        <motion.div
+          className="featured-highlight-strip"
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.35, duration: 0.45 }}
+        >
+          <MdRocketLaunch aria-hidden />
+          <span>
+            <strong>Building now:</strong> {spotlightProject.title}
+            {spotlightProject.completionDate
+              ? ` · ${spotlightProject.completionDate}`
+              : ""}
+          </span>
+        </motion.div>
+      )}
+
       <AnimatePresence>
         {filterOpen && (
           <motion.div
@@ -261,22 +363,32 @@ function Featured({ darkMode, toggleTheme }) {
             transition={{ duration: 0.3 }}
           >
             <div className="filter-header">
-              <h3>Filter by Technology</h3>
+              <h3>
+                Filter by technology
+                {selectedTech.length > 0 && (
+                  <span className="filter-active-note">
+                    · {currentProjects.length} match
+                    {currentProjects.length === 1 ? "" : "es"}
+                  </span>
+                )}
+              </h3>
               {selectedTech.length > 0 && (
                 <motion.button
+                  type="button"
                   className="clear-filters"
                   onClick={clearFilters}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <MdClose /> Clear All
+                  <MdClose /> Clear all
                 </motion.button>
               )}
             </div>
             <div className="filter-chips">
-              {getAllTechnologies().map((tech, index) => (
+              {allTechnologies.map((tech, index) => (
                 <motion.button
                   key={tech}
+                  type="button"
                   className={`tech-chip ${selectedTech.includes(tech) ? "selected" : ""}`}
                   onClick={() => toggleTech(tech)}
                   initial={{ opacity: 0, scale: 0.8 }}
@@ -296,7 +408,6 @@ function Featured({ darkMode, toggleTheme }) {
         )}
       </AnimatePresence>
 
-      {/* Project Tabs */}
       <motion.div
         className="project-tabs"
         initial={{ y: 20, opacity: 0 }}
@@ -306,6 +417,7 @@ function Featured({ darkMode, toggleTheme }) {
         {tabs.map((tab, index) => (
           <motion.button
             key={tab.id}
+            type="button"
             className={`tab ${activeTab === tab.id ? "active" : ""}`}
             onClick={() => setActiveTab(tab.id)}
             initial={{ opacity: 0, y: 10 }}
@@ -316,20 +428,11 @@ function Featured({ darkMode, toggleTheme }) {
           >
             <span className="tab-icon">{tab.icon}</span>
             <span className="tab-label">{tab.label}</span>
-            <span className="tab-count">
-              {activeTab === tab.id
-                ? currentProjects.length
-                : tab.id === "featured"
-                  ? projects.featured?.length || 0
-                  : tab.id === "current"
-                    ? projects.current?.length || 0
-                    : projects.completed?.length || 0}
-            </span>
+            <span className="tab-count">{tabCounts[tab.id]}</span>
           </motion.button>
         ))}
       </motion.div>
 
-      {/* No Results */}
       {currentProjects.length === 0 && (
         <motion.div
           className="no-results"
@@ -340,23 +443,25 @@ function Featured({ darkMode, toggleTheme }) {
           <h3>No projects found</h3>
           <p>Try adjusting your filters or switch to a different tab.</p>
           <motion.button
+            type="button"
             className="clear-btn"
             onClick={clearFilters}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            Clear Filters
+            Clear filters
           </motion.button>
         </motion.div>
       )}
 
-      {/* Carousel View */}
       {viewMode === "carousel" && currentProjects.length > 0 && (
         <div className="project-showcase">
           <div className="project-carousel">
             <motion.button
+              type="button"
               className="nav-btn prev"
               onClick={handlePrev}
+              aria-label="Previous project"
               whileHover={{ scale: 1.1, x: -5 }}
               whileTap={{ scale: 0.9 }}
               disabled={currentProjects.length <= 1}
@@ -367,7 +472,7 @@ function Featured({ darkMode, toggleTheme }) {
             <div className="carousel-window">
               <AnimatePresence mode="wait" custom={1}>
                 <motion.div
-                  key={currentIndex}
+                  key={currentProjects[currentIndex]?.id ?? currentIndex}
                   className="project-card"
                   variants={slideVariants}
                   initial="enter"
@@ -376,29 +481,30 @@ function Featured({ darkMode, toggleTheme }) {
                   custom={1}
                 >
                   {currentProjects[currentIndex] && (
-                    <ProjectCardLarge
-                      project={currentProjects[currentIndex]}
-                      darkMode={darkMode}
-                    />
+                    <ProjectCardLarge project={currentProjects[currentIndex]} />
                   )}
                 </motion.div>
               </AnimatePresence>
 
-              {/* Progress bar */}
               {isAutoPlaying && currentProjects.length > 1 && (
                 <motion.div
                   className="progress-bar"
                   initial={{ scaleX: 0 }}
                   animate={{ scaleX: 1 }}
-                  transition={{ duration:20,ease: "linear" }}
-                  key={`progress-${currentIndex}`}
+                  transition={{
+                    duration: AUTOPLAY_MS / 1000,
+                    ease: "linear",
+                  }}
+                  key={`progress-${currentProjects[currentIndex]?.id}-${currentIndex}`}
                 />
               )}
             </div>
 
             <motion.button
+              type="button"
               className="nav-btn next"
               onClick={handleNext}
+              aria-label="Next project"
               whileHover={{ scale: 1.1, x: 5 }}
               whileTap={{ scale: 0.9 }}
               disabled={currentProjects.length <= 1}
@@ -407,12 +513,13 @@ function Featured({ darkMode, toggleTheme }) {
             </motion.button>
           </div>
 
-          {/* Indicators */}
           <div className="carousel-indicators">
-            {currentProjects.map((_, index) => (
+            {currentProjects.map((project, index) => (
               <motion.button
-                key={index}
+                key={project.id}
+                type="button"
                 className={`indicator ${index === currentIndex ? "active" : ""}`}
+                aria-label={`Go to ${project.title}`}
                 onClick={() => {
                   setIsAutoPlaying(false);
                   setCurrentIndex(index);
@@ -425,7 +532,6 @@ function Featured({ darkMode, toggleTheme }) {
         </div>
       )}
 
-      {/* Grid View */}
       {viewMode === "grid" && currentProjects.length > 0 && (
         <motion.div
           className="projects-grid"
@@ -435,69 +541,16 @@ function Featured({ darkMode, toggleTheme }) {
         >
           {currentProjects.map((project, index) => (
             <motion.div key={project.id} variants={itemVariants} custom={index}>
-              <ProjectCardGrid project={project} darkMode={darkMode} />
+              <ProjectCardGrid project={project} />
             </motion.div>
           ))}
         </motion.div>
       )}
-
-      {/* Stats Section */}
-      <motion.div
-        className="stats-section"
-        initial={{ y: 30, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.5, duration: 0.5 }}
-      >
-        <motion.div className="stat-card" whileHover={{ y: -8, scale: 1.02 }}>
-          <div className="stat-icon featured-icon">
-            <FaStar />
-          </div>
-          <div className="stat-info">
-            <span className="stat-number">
-              {projects.featured?.length || 0}
-            </span>
-            <span className="stat-label">Featured</span>
-          </div>
-        </motion.div>
-
-        <motion.div className="stat-card" whileHover={{ y: -8, scale: 1.02 }}>
-          <div className="stat-icon progress-icon">
-            <MdRocketLaunch />
-          </div>
-          <div className="stat-info">
-            <span className="stat-number">{projects.current?.length || 0}</span>
-            <span className="stat-label">In Progress</span>
-          </div>
-        </motion.div>
-
-        <motion.div className="stat-card" whileHover={{ y: -8, scale: 1.02 }}>
-          <div className="stat-icon completed-icon">
-            <MdCheck />
-          </div>
-          <div className="stat-info">
-            <span className="stat-number">
-              {projects.completed?.length || 0}
-            </span>
-            <span className="stat-label">Completed</span>
-          </div>
-        </motion.div>
-
-        <motion.div className="stat-card" whileHover={{ y: -8, scale: 1.02 }}>
-          <div className="stat-icon tech-icon">
-            <MdCode />
-          </div>
-          <div className="stat-info">
-            <span className="stat-number">{getAllTechnologies().length}</span>
-            <span className="stat-label">Technologies</span>
-          </div>
-        </motion.div>
-      </motion.div>
     </motion.div>
   );
 }
 
-// Large Project Card Component (for carousel)
-function ProjectCardLarge({ project, darkMode }) {
+function ProjectCardLarge({ project }) {
   return (
     <motion.div
       className="project-card-large"
@@ -588,7 +641,7 @@ function ProjectCardLarge({ project, darkMode }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
         >
-          {project.github && (
+          {project.github ? (
             <motion.a
               href={project.github}
               target="_blank"
@@ -599,8 +652,12 @@ function ProjectCardLarge({ project, darkMode }) {
             >
               <FaGithub /> View Code
             </motion.a>
+          ) : (
+            <span className="action-btn action-btn--disabled">
+              <FaGithub /> Code coming soon
+            </span>
           )}
-          {project.liveLink && (
+          {project.liveLink ? (
             <motion.a
               href={project.liveLink}
               target="_blank"
@@ -611,6 +668,10 @@ function ProjectCardLarge({ project, darkMode }) {
             >
               <FaExternalLinkAlt /> Live Demo
             </motion.a>
+          ) : (
+            <span className="action-btn action-btn--disabled live-btn--muted">
+              <FaExternalLinkAlt /> Demo coming soon
+            </span>
           )}
         </motion.div>
       </div>
@@ -618,8 +679,7 @@ function ProjectCardLarge({ project, darkMode }) {
   );
 }
 
-// Grid Project Card Component
-function ProjectCardGrid({ project, darkMode }) {
+function ProjectCardGrid({ project }) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
