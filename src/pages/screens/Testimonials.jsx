@@ -271,19 +271,20 @@ function Testimonials({ darkMode, toggleTheme, handleDownload }) {
               >
                 <div className="quote-icon">"</div>
 
-                {activeItem.source === "firebase" && (
-                  <span className="testimonial-community-badge">Community voice</span>
-                )}
-
                 <div className="testimonial-header">
                   <div className="testimonial-info">
-                    <motion.h3
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.2 }}
-                    >
-                      {activeItem.name}
-                    </motion.h3>
+                    <div className="testimonial-name-row">
+                      <motion.h3
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.2 }}
+                      >
+                        {activeItem.name}
+                      </motion.h3>
+                      {activeItem.source === "firebase" && (
+                        <span className="testimonial-community-badge">Community</span>
+                      )}
+                    </div>
                     <motion.p
                       className="testimonial-role"
                       initial={{ opacity: 0, y: 10 }}

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { MdClose, MdSend, MdStar, MdStarBorder } from "react-icons/md";
+import { MdClose, MdStar, MdStarBorder } from "react-icons/md";
 import { submitTestimonial } from "../services/testimonialsService";
 import "../pages/styles/About.css";
 import "./TestimonialCommentForm.css";
@@ -199,47 +199,46 @@ export default function TestimonialCommentForm({
                   />
                 </label>
 
-                <div className="testimonial-form-rating">
-                  <span>Rating *</span>
-                  <div className="testimonial-form-stars">
-                    {[1, 2, 3, 4, 5].map((value) => (
-                      <button
-                        key={value}
-                        type="button"
-                        className={`testimonial-form-star ${
-                          value <= form.rating ? "is-active" : ""
-                        }`}
-                        onClick={() =>
-                          setForm((prev) => ({ ...prev, rating: value }))
-                        }
-                        aria-label={`Rate ${value} out of 5`}
-                      >
-                        {value <= form.rating ? (
-                          <MdStar size={24} />
-                        ) : (
-                          <MdStarBorder size={24} />
-                        )}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
                 {status === "error" && (
                   <p className="testimonial-form-error" role="alert">
                     {errorMessage}
                   </p>
                 )}
 
-                <button
-                  type="submit"
-                  className="action-button primary testimonial-form-submit"
-                  disabled={status === "submitting"}
-                >
-                  <MdSend size={18} />
-                  <span>
+                <div className="testimonial-form-footer-row">
+                  <div className="testimonial-form-rating">
+                    <span>Rating *</span>
+                    <div className="testimonial-form-stars">
+                      {[1, 2, 3, 4, 5].map((value) => (
+                        <button
+                          key={value}
+                          type="button"
+                          className={`testimonial-form-star ${
+                            value <= form.rating ? "is-active" : ""
+                          }`}
+                          onClick={() =>
+                            setForm((prev) => ({ ...prev, rating: value }))
+                          }
+                          aria-label={`Rate ${value} out of 5`}
+                        >
+                          {value <= form.rating ? (
+                            <MdStar size={24} />
+                          ) : (
+                            <MdStarBorder size={24} />
+                          )}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="action-button primary testimonial-form-submit"
+                    disabled={status === "submitting"}
+                  >
                     {status === "submitting" ? "Sending..." : "Post comment"}
-                  </span>
-                </button>
+                  </button>
+                </div>
               </form>
             )}
           </motion.div>
