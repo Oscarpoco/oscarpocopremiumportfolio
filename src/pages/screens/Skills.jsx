@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
-import { motion, useInView, useAnimation } from "framer-motion";
+import React, { useState, useEffect, useRef, useMemo } from "react";
+import { motion, useInView, useAnimation, AnimatePresence, useReducedMotion } from "framer-motion";
 
 // STYLING
+import "../styles/About.css";
 import "../styles/Skills.css";
 
 // ICONS
@@ -10,16 +11,52 @@ import {
   MdOutlineLightMode,
   MdOutlineDarkMode,
   MdCode,
+  MdCloud,
+  MdHub,
+  MdSecurity,
+  MdShield,
+  MdCategory,
 } from "react-icons/md";
 import { IoIosArrowForward } from "react-icons/io";
-import { FaStar, FaArrowRight } from "react-icons/fa";
+import { FaArrowRight, FaStar } from "react-icons/fa";
 import { BsLightningChargeFill } from "react-icons/bs";
 
 // DATABASE
-import { skillsData } from "../Database/SkillsData";
+import { skillsData, SKILL_CATEGORIES } from "../Database/SkillsData";
 
-// Animated skill card component with scroll reveal
-function AnimatedSkillCard({ skill, index, darkMode }) {
+const LEARNING_NOW = [
+  { label: "Cloud", icon: MdCloud },
+  { label: "Networking", icon: MdHub },
+  { label: "Pentest", icon: MdSecurity },
+  { label: "Cybersecurity", icon: MdShield },
+];
+
+const SKILL_STATS = [
+  {
+    value: String(skillsData.length),
+    label: "Core competencies",
+    icon: MdCode,
+  },
+  {
+    value: String(
+      new Set(skillsData.map((skill) => skill.category)).size
+    ),
+    label: "Skill domains",
+    icon: MdCategory,
+  },
+  {
+    value: "3+",
+    label: "Years in production",
+    icon: FaStar,
+  },
+  {
+    value: String(LEARNING_NOW.length),
+    label: "Areas leveling up",
+    icon: BsLightningChargeFill,
+  },
+];
+
+function AnimatedSkillCard({ skill, index }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
   const controls = useAnimation();
@@ -43,19 +80,30 @@ function AnimatedSkillCard({ skill, index, darkMode }) {
       scale: 1,
       transition: {
         duration: 0.6,
-        delay: index * 0.1,
+        delay: index * 0.08,
         ease: [0.25, 0.46, 0.45, 0.94],
       },
     },
+    exit: {
+      opacity: 0,
+      scale: 0.92,
+      transition: { duration: 0.2 },
+    },
   };
+
+  const categoryLabel =
+    SKILL_CATEGORIES.find((item) => item.id === skill.category)?.label ||
+    skill.category;
 
   return (
     <motion.div
+      layout
       ref={ref}
       className={`skill-card-premium ${isHovered ? "hovered" : ""}`}
       variants={cardVariants}
       initial="hidden"
       animate={controls}
+      exit="exit"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       whileHover={{
@@ -64,7 +112,6 @@ function AnimatedSkillCard({ skill, index, darkMode }) {
         transition: { duration: 0.3 },
       }}
     >
-      {/* Animated accent line */}
       <motion.div
         className="accent-line"
         initial={{ height: "30px" }}
@@ -72,7 +119,6 @@ function AnimatedSkillCard({ skill, index, darkMode }) {
         transition={{ duration: 0.3 }}
       />
 
-      {/* Glow effect */}
       <motion.div
         className="card-glow"
         animate={{
@@ -83,6 +129,8 @@ function AnimatedSkillCard({ skill, index, darkMode }) {
       />
 
       <div className="skill-card-content">
+        <span className="skill-category-pill">{categoryLabel}</span>
+
         <motion.div
           className="skill-icon-wrapper"
           animate={{
@@ -102,6 +150,8 @@ function AnimatedSkillCard({ skill, index, darkMode }) {
         <motion.a
           href={skill.link}
           className="skill-link"
+          target="_blank"
+          rel="noopener noreferrer"
           animate={{ x: isHovered ? 5 : 0 }}
           transition={{ duration: 0.3 }}
         >
@@ -114,10 +164,24 @@ function AnimatedSkillCard({ skill, index, darkMode }) {
 }
 
 function Skills({ darkMode, toggleTheme, handleDownload }) {
+  const reduceMotion = useReducedMotion();
+  const [activeCategory, setActiveCategory] = useState("all");
+
+  const categoryCounts = useMemo(() => {
+    const counts = { all: skillsData.length };
+    skillsData.forEach((skill) => {
+      counts[skill.category] = (counts[skill.category] || 0) + 1;
+    });
+    return counts;
+  }, []);
+
+  const filteredSkills = useMemo(() => {
+    if (activeCategory === "all") return skillsData;
+    return skillsData.filter((skill) => skill.category === activeCategory);
+  }, [activeCategory]);
 
   return (
     <div className={`skills-container ${darkMode ? "dark-theme" : ""}`}>
-      {/* Floating Theme Toggle */}
       <motion.button
         className="theme-toggle"
         onClick={toggleTheme}
@@ -127,7 +191,6 @@ function Skills({ darkMode, toggleTheme, handleDownload }) {
         {darkMode ? <MdOutlineLightMode /> : <MdOutlineDarkMode />}
       </motion.button>
 
-      {/* HEADER SECTION */}
       <div className="about-header">
         <motion.div
           className="header-left"
@@ -150,6 +213,7 @@ function Skills({ darkMode, toggleTheme, handleDownload }) {
           transition={{ duration: 0.5, delay: 0.2 }}
         >
           <motion.button
+            type="button"
             className="action-button download-btn primary"
             onClick={handleDownload}
             whileHover={{ scale: 1.02, x: 3 }}
@@ -161,7 +225,6 @@ function Skills({ darkMode, toggleTheme, handleDownload }) {
         </motion.div>
       </div>
 
-      {/* SECTION HEADER */}
       <motion.div
         className="section-intro"
         initial={{ opacity: 0, y: 20 }}
@@ -178,18 +241,86 @@ function Skills({ darkMode, toggleTheme, handleDownload }) {
         </p>
       </motion.div>
 
-      {/* SKILLS CARDS GRID */}
-      <div className="skills-grid">
-        {skillsData &&
-          skillsData.map((skill, index) => (
+      <motion.div
+        className="skills-stats"
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.35, duration: 0.45 }}
+      >
+        {SKILL_STATS.map(({ value, label, icon: Icon }) => (
+          <div key={label} className="stats-card">
+            <span className="stats-icon">
+              <Icon aria-hidden />
+            </span>
+            <div className="stats-info">
+              <span className="stats-value">{value}</span>
+              <span className="stats-label">{label}</span>
+            </div>
+          </div>
+        ))}
+      </motion.div>
+
+      <motion.div
+        className="skills-learning-strip"
+        initial={{ opacity: 0, y: 14 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4, duration: 0.45 }}
+      >
+        <div className="skills-learning-copy">
+          <BsLightningChargeFill aria-hidden />
+          <span>
+            <strong>Leveling up now:</strong> cloud, networking, pentest &amp;
+            security fundamentals
+          </span>
+        </div>
+        <div className="skills-learning-tags">
+          {LEARNING_NOW.map(({ label, icon: Icon }) => (
+            <span key={label} className="skills-learning-tag">
+              <Icon aria-hidden />
+              {label}
+            </span>
+          ))}
+        </div>
+      </motion.div>
+
+      <motion.div
+        className="skills-filter-bar"
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.45, duration: 0.45 }}
+      >
+        {SKILL_CATEGORIES.map(({ id, label }) => (
+          <button
+            key={id}
+            type="button"
+            className={`skills-filter-chip ${
+              activeCategory === id ? "skills-filter-chip--active" : ""
+            }`}
+            onClick={() => setActiveCategory(id)}
+          >
+            {label}
+            <span className="skills-filter-count">
+              {categoryCounts[id] || 0}
+            </span>
+          </button>
+        ))}
+      </motion.div>
+
+      <motion.div className="skills-grid" layout={!reduceMotion}>
+        <AnimatePresence mode="popLayout">
+          {filteredSkills.map((skill, index) => (
             <AnimatedSkillCard
               key={skill.id}
               skill={skill}
               index={index}
-              darkMode={darkMode}
             />
           ))}
-      </div>
+        </AnimatePresence>
+      </motion.div>
+
+      {filteredSkills.length === 0 && (
+        <p className="skills-empty-state">No skills in this category yet.</p>
+      )}
     </div>
   );
 }

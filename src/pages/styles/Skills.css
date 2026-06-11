@@ -107,41 +107,44 @@
 
 /* STATS SECTION */
 .skills-stats {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  margin-bottom: 32px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
 }
 
 .skills-stats .stats-card {
-  flex: 1 1 calc(33.333% - 16px);
-  min-width: 180px;
+  min-width: 0;
 }
 
 .stats-card {
   display: flex;
   align-items: center;
   gap: 16px;
-  padding: 24px;
+  padding: 18px 16px;
   background: var(--bg-secondary);
-  border-radius: var(--radius-xl);
-  border: 1px solid var(--border-color);
+  border-radius: 0;
+  border: 2px dashed var(--border-color);
   transition: all var(--transition-normal);
 }
 
 .stats-card:hover {
-  border-color: var(--primary);
-  box-shadow: 0 10px 30px var(--primary-shadow-10);
+  border-color: var(--primary-ring);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
 }
 
 .stats-icon {
-  width: 52px;
-  height: 52px;
-  border-radius: var(--radius-md);
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 22px;
+  font-size: 20px;
+  background: var(--primary-soft);
+  color: var(--primary);
+  flex-shrink: 0;
 }
 
 .stats-info {
@@ -198,6 +201,129 @@
   line-height: 1.6;
   max-width: 600px;
   margin: 0;
+}
+
+.skills-learning-strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px 18px;
+  margin-bottom: 22px;
+  padding: 14px 16px;
+  background: color-mix(in srgb, var(--primary) 7%, var(--bg-secondary));
+  border: 2px dashed color-mix(in srgb, var(--primary) 35%, var(--border-color));
+}
+
+.skills-learning-copy {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.skills-learning-copy svg {
+  flex-shrink: 0;
+  color: var(--primary);
+  font-size: 18px;
+}
+
+.skills-learning-copy strong {
+  color: var(--text-primary);
+}
+
+.skills-learning-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.skills-learning-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--primary);
+  background: var(--bg-secondary);
+  border: 1px dashed var(--primary-ring);
+}
+
+.skills-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.skills-filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border: 1px dashed var(--border-color);
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    border-color var(--transition-fast),
+    color var(--transition-fast),
+    background var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.skills-filter-chip:hover {
+  border-color: var(--primary-ring);
+  color: var(--primary);
+}
+
+.skills-filter-chip--active {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+
+.skills-filter-count {
+  min-width: 20px;
+  padding: 1px 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-align: center;
+  background: var(--bg-tertiary);
+  color: var(--text-tertiary);
+}
+
+.skills-filter-chip--active .skills-filter-count {
+  background: color-mix(in srgb, var(--primary) 18%, var(--bg-secondary));
+  color: var(--primary);
+}
+
+.skills-empty-state {
+  margin: 0 0 24px;
+  padding: 20px;
+  text-align: center;
+  color: var(--text-tertiary);
+  border: 2px dashed var(--border-color);
+  background: var(--bg-secondary);
+}
+
+.skill-category-pill {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 3px 8px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--primary);
+  border-bottom: 2px dotted var(--primary-ring);
 }
 
 /* SKILLS GRID */
@@ -327,7 +453,7 @@
 /* RESPONSIVE */
 @media (max-width: 992px) {
   .skills-stats {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -350,6 +476,11 @@
 
   .page-title {
     font-size: 14px;
+  }
+
+  .skills-learning-strip {
+    flex-direction: column;
+    align-items: stretch;
   }
 
   .skills-stats {

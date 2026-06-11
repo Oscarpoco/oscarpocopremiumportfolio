@@ -20,6 +20,7 @@ export const skillsData = [
         description:
             "Building responsive web interfaces with React, TypeScript, and modern state patterns (including Redux), aligned with production-grade front-end workflows.",
         link: "https://react.dev/",
+        category: "frontend",
     },
     {
         id: 2,
@@ -28,6 +29,7 @@ export const skillsData = [
         description:
             "Developing server-side logic with Node.js and Express, designing RESTful APIs, and connecting clients to robust back-end services.",
         link: "https://nodejs.org/en/learn/getting-started/introduction-to-nodejs",
+        category: "backend",
     },
     {
         id: 3,
@@ -36,6 +38,7 @@ export const skillsData = [
         description:
             "Modeling and querying data with MongoDB, and integrating Firebase for auth, realtime features, and serverless backends in full-stack apps.",
         link: "https://www.mongodb.com/resources/products/fundamentals/overview",
+        category: "backend",
     },
     {
         id: 4,
@@ -44,6 +47,7 @@ export const skillsData = [
         description:
             "Shipping cross-platform mobile experiences with React Native and Expo alongside shared JavaScript tooling and APIs.",
         link: "https://reactnative.dev/",
+        category: "mobile",
     },
     {
         id: 5,
@@ -52,6 +56,7 @@ export const skillsData = [
         description:
             "Analyzing requirements, structuring solutions, and applying systems design thinking learned through formal IT application development study.",
         link: "https://www.ibm.com/topics/systems-analysis",
+        category: "architecture",
     },
     {
         id: 6,
@@ -60,6 +65,7 @@ export const skillsData = [
         description:
             "Applying cloud fundamentals and deployment-minded practices anchored by Oracle Cloud Infrastructure and modern hosted services.",
         link: "https://docs.oracle.com/en-us/iaas/Content/GSG/Concepts/baremetalintro.htm",
+        category: "cloud",
     },
     {
         id: 7,
@@ -68,6 +74,7 @@ export const skillsData = [
         description:
             "Grounding development in information systems security concepts and awareness of standards such as ISO 27001 alongside secure coding habits.",
         link: "https://www.iso.org/standard/27001",
+        category: "security",
     },
     {
         id: 8,
@@ -76,6 +83,7 @@ export const skillsData = [
         description:
             "Facilitating NQF-aligned software development learnerships, mentoring learners through projects and assessments, and supporting workplace readiness outcomes.",
         link: "https://www.saqa.org.za/",
+        category: "leadership",
     },
     {
         id: 9,
@@ -84,6 +92,7 @@ export const skillsData = [
         description:
             "Working in iterative, team-based delivery with emphasis on collaboration, backlog-driven progress, and clear communication across stakeholders.",
         link: "https://www.agilealliance.org/agile101/",
+        category: "leadership",
     },
     {
         id: 10,
@@ -92,6 +101,7 @@ export const skillsData = [
         description:
             "Writing clear, maintainable Python for scripting, APIs, automation, and data workflows that complement broader application delivery.",
         link: "https://www.python.org/",
+        category: "languages",
     },
     {
         id: 11,
@@ -100,6 +110,7 @@ export const skillsData = [
         description:
             "Applying object-oriented design and JVM-based development for robust backends, portability, and integration with enterprise-style systems.",
         link: "https://docs.oracle.com/en/java/",
+        category: "languages",
     },
     {
         id: 12,
@@ -108,5 +119,19 @@ export const skillsData = [
         description:
             "Building interactive dashboards and reports in Power BI, shaping metrics and visuals so stakeholders can explore trends and support decisions.",
         link: "https://powerbi.microsoft.com/",
+        category: "data",
     },
+];
+
+export const SKILL_CATEGORIES = [
+    { id: "all", label: "All skills" },
+    { id: "frontend", label: "Frontend" },
+    { id: "backend", label: "Backend" },
+    { id: "mobile", label: "Mobile" },
+    { id: "cloud", label: "Cloud" },
+    { id: "security", label: "Security" },
+    { id: "data", label: "Data" },
+    { id: "leadership", label: "Leadership" },
+    { id: "languages", label: "Languages" },
+    { id: "architecture", label: "Architecture" },
 ];
