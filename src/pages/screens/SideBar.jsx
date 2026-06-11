@@ -18,7 +18,7 @@ const navigationItems = [
     { name: "Education", icon: MdSchool },
     { name: "Featured", icon: AiFillStar },
     { name: "Testimonials", icon: BsAward },
-    { name: "Journey", icon: GiPathDistance, desktopOnly: true },
+    { name: "Journey", icon: GiPathDistance },
     { name: "Contact", icon: BiSolidMessageDetail },
 ];
 

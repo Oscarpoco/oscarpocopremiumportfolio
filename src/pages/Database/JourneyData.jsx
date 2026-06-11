@@ -21,7 +21,7 @@ const journeyStepsUnsorted = [
       "Completed matric with Mathematics and Physical Science, building analytical thinking and discipline before any formal tech training. That STEM base still shapes how I break down problems, reason about systems, and learn new stacks quickly.",
     type: "education",
     status: "completed",
-    color: "#f59e0b",
+    colorToken: "warning",
     icon: MdSchool,
   },
   {
@@ -34,7 +34,7 @@ const journeyStepsUnsorted = [
       "Enrolled in Mechanical Engineering NATED studies. I left the programme before qualifying — not a failure story, but a turning point: I realised my energy belonged in software, not the workshop floor. The engineering mindset (structure, precision, iteration) carried straight into how I write code today.",
     type: "education",
     status: "failed",
-    color: "#ef4444",
+    colorToken: "danger",
     icon: MdEngineering,
   },
   {
@@ -47,7 +47,7 @@ const journeyStepsUnsorted = [
       "Selected for PLP's intensive web development scholarship. Daily sprints through HTML, CSS, JavaScript, and React — first exposure to component thinking, Git workflows, and shipping small projects under deadline. This is where I went from curious tinkerer to someone who could build and deploy a real front end.",
     type: "education",
     status: "completed",
-    color: "#06b6d4",
+    colorToken: "primary-light",
     icon: MdCode,
   },
   {
@@ -60,7 +60,7 @@ const journeyStepsUnsorted = [
       "Employed on the EPWP Jozi Ihlomile programme, educating households in Lawley on health and wellness door to door. Built communication, empathy, and explaining complex ideas simply — skills that show up every day when I mentor learners, run demos, or write user-facing copy for products.",
     type: "experience",
     status: "completed",
-    color: "#8b5cf6",
+    colorToken: "secondary",
     icon: MdHealthAndSafety,
   },
   {
@@ -73,7 +73,7 @@ const journeyStepsUnsorted = [
       "Returned to PLP as a data collector, conducting structured alumni outreach and feedback calls nationwide. Logged outcomes, spotted patterns in graduate journeys, and helped the organisation improve programme quality — early practice in listening, documenting, and turning conversations into actionable insight.",
     type: "experience",
     status: "completed",
-    color: "#06b6d4",
+    colorToken: "primary-light",
     icon: MdPhoneInTalk,
   },
   {
@@ -86,7 +86,7 @@ const journeyStepsUnsorted = [
       "Immersive academy and placement building production apps with React, React Native, Node.js, and MongoDB. Worked in teams on real briefs: API design, state management, mobile builds, and code review. This period cemented full-stack habits and the confidence to own features end to end.",
     type: "experience",
     status: "completed",
-    color: "#10b981",
+    colorToken: "success",
     icon: MdCode,
   },
   {
@@ -99,7 +99,7 @@ const journeyStepsUnsorted = [
       "Facilitating NQF Level 5 software development learnerships while building and maintaining applications for the organisation. Split time between mentoring cohorts (HTML, CSS, JavaScript, React, Git) and delivering internal tools — combining teaching, delivery, and stakeholder communication in one role.",
     type: "experience",
     status: "current",
-    color: "#2363C7",
+    colorToken: "secondary",
     icon: MdFactory,
   },
   {
@@ -112,7 +112,7 @@ const journeyStepsUnsorted = [
       "Pursuing a Diploma in Application Development to formalise years of self-directed and bootcamp learning. Modules align with industry standards in software design, databases, and engineering practice — backing practical portfolio work with accredited structure and theory.",
     type: "education",
     status: "current",
-    color: "#0d9488",
+    colorToken: "primary",
     icon: HiOutlineAcademicCap,
   },
 ];
@@ -125,3 +125,16 @@ const startYearFrom = (year) => {
 export const journeySteps = [...journeyStepsUnsorted].sort(
   (a, b) => startYearFrom(a.year) - startYearFrom(b.year)
 );
+
+export const STEP_COLOR_TOKENS = {
+  warning: "var(--accent-warning)",
+  danger: "var(--accent-danger)",
+  primary: "var(--primary)",
+  "primary-light": "var(--primary-light)",
+  success: "var(--accent-success)",
+  secondary: "var(--secondary-color)",
+};
+
+export function getStepColor(step) {
+  return STEP_COLOR_TOKENS[step.colorToken] || "var(--primary)";
+}
