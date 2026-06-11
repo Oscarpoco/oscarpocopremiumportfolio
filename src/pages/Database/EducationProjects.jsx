@@ -19,8 +19,8 @@ export const educationData = [
             "Web Development",
             "Information Systems Security"
         ],
-   
-        icon: <FaGraduationCap />
+        icon: <FaGraduationCap />,
+        status: "in-progress",
     },
     {
         id: 2,
@@ -35,8 +35,24 @@ export const educationData = [
             "English FAL",
             "Geography",
         ],
-        icon: <FaUniversity />
+        icon: <FaUniversity />,
+        status: "completed",
     }
+];
+
+export const EDUCATION_FILTERS = [
+    { id: "all", label: "All qualifications" },
+    { id: "in-progress", label: "In progress" },
+    { id: "completed", label: "Completed" },
+];
+
+export const CERTIFICATE_CATEGORIES = [
+    { id: "all", label: "All certificates" },
+    { id: "development", label: "Development" },
+    { id: "cloud", label: "Cloud" },
+    { id: "security", label: "Security" },
+    { id: "professional", label: "Professional" },
+    { id: "other", label: "Other" },
 ];
 
 
@@ -47,7 +63,8 @@ export const certificateData = [
             issuer: "CodeTribe",
             date: "April 2025",
             icon: <FaLaptopCode  />,
-            color: "#FF9900"
+            color: "#FF9900",
+            category: "development",
         },
         {
             id: 2,
@@ -55,7 +72,8 @@ export const certificateData = [
             issuer: "PLP Academy",
             date: "December 2023",
             icon: <FaCode  />,
-            color: "#4285F4"
+            color: "#4285F4",
+            category: "development",
         },
         {
             id: 3,
@@ -63,7 +81,8 @@ export const certificateData = [
             issuer: "Umalusi",
             date: "December 2018",
             icon: <FaMedal />,
-            color: "#0078D4"
+            color: "#0078D4",
+            category: "other",
         },
         {
             id: 4,
@@ -71,7 +90,8 @@ export const certificateData = [
             issuer: "Microsoft",
             date: "June 2022",
             icon: <FaCertificate  />,
-            color: "#FF6F00"
+            color: "#FF6F00",
+            category: "professional",
         },
         {
             id: 5,
@@ -79,7 +99,8 @@ export const certificateData = [
             issuer: "ANOVA Health Institute",
             date: "January 2022",
             icon: <FaChalkboardTeacher  />,
-            color: "#01B3E3"
+            color: "#01B3E3",
+            category: "other",
         },
         {
             id: 6,
@@ -87,7 +108,8 @@ export const certificateData = [
             issuer: "Microsoft An LinkedIn",
             date: "December 2022",
             icon: <FaLaptopCode  />,
-            color: "#2A73CC"
+            color: "#2A73CC",
+            category: "development",
         },
         {
             id: 7,
@@ -95,7 +117,8 @@ export const certificateData = [
             issuer: "South African Licensing Department",
             date: "April 2024",
             icon: <FaCar />,
-            color: "#4CAF50"
+            color: "#4CAF50",
+            category: "other",
         },
         {
             id: 8,
@@ -103,7 +126,8 @@ export const certificateData = [
             issuer: "Oracle",
             date: "2025",
             icon: <FaCloud  />,
-            color: "#2A73CC"
+            color: "#2A73CC",
+            category: "cloud",
         },
         {
             id: 9,
@@ -111,7 +135,8 @@ export const certificateData = [
             issuer: "World Wide Industrial Systems & Engineers",
             date: "2025",
             icon: <FaCertificate  />,
-            color: "#0078D4"
+            color: "#0078D4",
+            category: "security",
         },
         {
             id: 10,
@@ -119,6 +144,7 @@ export const certificateData = [
             issuer: "Thuso Training",
             date: "October 2025",
             icon: <FaChalkboardTeacher  />,
-            color: "#01B3E3"
+            color: "#01B3E3",
+            category: "professional",
         }
     ];
