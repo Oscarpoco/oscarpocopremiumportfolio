@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import QRCode from "react-qr-code";
-
-const CV_PATH = "/oscarkylpoco.pdf";
+import { getResumeUrl } from "../config/siteUrl";
 
 function readThemeColors() {
     const style = getComputedStyle(document.documentElement);
@@ -17,10 +16,7 @@ export default function ResumeQrCode({ darkMode }) {
             ? readThemeColors()
             : { fg: "#0d9488", bg: "#ffffff" }
     );
-    const cvUrl =
-        typeof window !== "undefined"
-            ? new URL(CV_PATH, window.location.origin).href
-            : CV_PATH;
+    const cvUrl = getResumeUrl();
 
     useEffect(() => {
         setColors(readThemeColors());
