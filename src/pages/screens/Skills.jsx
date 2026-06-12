@@ -56,7 +56,7 @@ const SKILL_STATS = [
   },
 ];
 
-function AnimatedSkillCard({ skill, index }) {
+function AnimatedSkillCard({ skill, index, reduceMotion }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
   const controls = useAnimation();
@@ -71,23 +71,33 @@ function AnimatedSkillCard({ skill, index }) {
   const cardVariants = {
     hidden: {
       opacity: 0,
-      y: 60,
-      scale: 0.9,
+      y: reduceMotion ? 0 : 24,
+      x: reduceMotion ? 0 : index % 2 === 0 ? -36 : 36,
+      filter: reduceMotion ? "blur(0px)" : "blur(8px)",
     },
     visible: {
       opacity: 1,
       y: 0,
-      scale: 1,
-      transition: {
-        duration: 0.6,
-        delay: index * 0.08,
-        ease: [0.25, 0.46, 0.45, 0.94],
-      },
+      x: 0,
+      filter: "blur(0px)",
+      transition: reduceMotion
+        ? { duration: 0 }
+        : {
+            type: "spring",
+            stiffness: 130,
+            damping: 18,
+            mass: 0.85,
+            delay: index * 0.05,
+          },
     },
     exit: {
       opacity: 0,
-      scale: 0.92,
-      transition: { duration: 0.2 },
+      y: reduceMotion ? 0 : -12,
+      scale: reduceMotion ? 1 : 0.96,
+      filter: reduceMotion ? "blur(0px)" : "blur(6px)",
+      transition: reduceMotion
+        ? { duration: 0 }
+        : { duration: 0.22, ease: [0.4, 0, 0.2, 1] },
     },
   };
 
@@ -97,7 +107,7 @@ function AnimatedSkillCard({ skill, index }) {
 
   return (
     <motion.div
-      layout
+      layout={!reduceMotion}
       ref={ref}
       className={`skill-card-premium ${isHovered ? "hovered" : ""}`}
       variants={cardVariants}
@@ -106,11 +116,19 @@ function AnimatedSkillCard({ skill, index }) {
       exit="exit"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      whileHover={{
-        y: -12,
-        scale: 1.02,
-        transition: { duration: 0.3 },
+      transition={{
+        layout: reduceMotion
+          ? { duration: 0 }
+          : { type: "spring", stiffness: 280, damping: 28 },
       }}
+      whileHover={
+        reduceMotion
+          ? undefined
+          : {
+              y: -8,
+              transition: { type: "spring", stiffness: 420, damping: 26 },
+            }
+      }
     >
       <motion.div
         className="accent-line"
@@ -306,13 +324,22 @@ function Skills({ darkMode, toggleTheme, handleDownload }) {
         ))}
       </motion.div>
 
-      <motion.div className="skills-grid" layout={!reduceMotion}>
+      <motion.div
+        className="skills-grid"
+        layout={!reduceMotion}
+        transition={{
+          layout: reduceMotion
+            ? { duration: 0 }
+            : { type: "spring", stiffness: 260, damping: 30 },
+        }}
+      >
         <AnimatePresence mode="popLayout">
           {filteredSkills.map((skill, index) => (
             <AnimatedSkillCard
               key={skill.id}
               skill={skill}
               index={index}
+              reduceMotion={reduceMotion}
             />
           ))}
         </AnimatePresence>
