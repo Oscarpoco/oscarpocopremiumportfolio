@@ -266,14 +266,16 @@
 }
 
 .stats-value {
-  font-family: var(--font-display);
+  font-family: var(--font-primary);
   font-size: 26px;
   font-weight: 700;
   color: var(--text-primary);
 }
 
 .stats-label {
+  font-family: var(--font-primary);
   font-size: 13px;
+  font-weight: 500;
   color: var(--text-tertiary);
 }
 
