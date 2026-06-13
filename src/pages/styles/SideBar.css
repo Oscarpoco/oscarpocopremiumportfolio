@@ -7,8 +7,9 @@
   flex-shrink: 0;
   color: var(--text-primary);
   box-shadow: 4px 0 20px color-mix(in srgb, var(--text-primary) 8%, transparent);
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
   transition:
     background-color var(--transition-normal),
     color var(--transition-normal),
@@ -32,10 +33,12 @@
 }
 
 .sidebar-content {
-  padding: 24px 16px;
+  flex: 1;
+  min-height: 0;
+  padding: 18px 14px 14px;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  overflow: hidden;
   position: relative;
   z-index: 1;
 }
@@ -44,15 +47,18 @@
 .sidebar-navigation {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  margin-bottom: auto;
+  gap: 4px;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .navigation-item {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 8px 14px;
+  gap: 10px;
+  padding: 7px 12px;
+  flex-shrink: 0;
   cursor: pointer;
   transition:
     background-color var(--transition-normal),
@@ -78,8 +84,8 @@
 }
 
 .nav-icon-wrapper {
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -87,7 +93,7 @@
 }
 
 .navigation-icon {
-  font-size: 18px;
+  font-size: 17px;
   color: var(--text-tertiary);
   transition: color var(--transition-normal);
 }
@@ -121,105 +127,227 @@
   box-shadow: 0 0 10px color-mix(in srgb, var(--primary) 50%, transparent);
 }
 
-/* PORTFOLIO STATS */
-.portfolio-stats {
+/* AVENGERS.JSX CARD */
+.avengers-slot {
+  flex-shrink: 0;
   margin-top: auto;
-  padding-top: 20px;
+  padding-top: 12px;
   border-top: 2px dotted var(--border-color);
 }
 
-.stats-heading {
-  font-size: 11px;
-  font-weight: 600;
-  margin-bottom: 16px;
-  color: var(--text-tertiary);
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  font-family: "Indie Flower", "Comic Sans MS", "Caveat", cursive, sans-serif;
+.avengers-card {
+  position: relative;
+  overflow: hidden;
+  border: 2px dashed color-mix(in srgb, var(--primary) 40%, var(--border-color));
+  background:
+    linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--primary) 10%, var(--bg-secondary)) 0%,
+      var(--bg-tertiary) 55%,
+      var(--bg-secondary) 100%
+    );
+  box-shadow:
+    0 14px 34px color-mix(in srgb, var(--primary) 14%, transparent),
+    inset 0 1px 0 color-mix(in srgb, #fff 8%, transparent);
 }
 
-.stats-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 12px;
-  background: color-mix(in srgb, var(--primary) 6%, var(--bg-tertiary));
-  border: 2px dotted color-mix(in srgb, var(--primary) 35%, var(--border-color));
+.avengers-card-glow {
+  position: absolute;
+  top: -40px;
+  right: -30px;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--primary) 24%, transparent);
+  filter: blur(36px);
+  pointer-events: none;
 }
 
-.stats-icon-container {
-  width: 40px;
-  height: 40px;
-  background: var(--primary-soft);
+.avengers-card-scan {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    color-mix(in srgb, var(--primary) 8%, transparent) 48%,
+    transparent 100%
+  );
+  transform: translateY(-100%);
+  animation: avengers-scan 4.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes avengers-scan {
+  0%,
+  100% {
+    transform: translateY(-110%);
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.55;
+  }
+  45% {
+    transform: translateY(115%);
+    opacity: 0.2;
+  }
+}
+
+.avengers-card-header {
   display: flex;
-  justify-content: center;
   align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-bottom: 1px dashed color-mix(in srgb, var(--primary) 28%, var(--border-color));
+  background: color-mix(in srgb, var(--text-primary) 4%, var(--bg-secondary));
+}
+
+.avengers-window-dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.avengers-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.avengers-dot--close {
+  background: #ff5f57;
+}
+
+.avengers-dot--min {
+  background: #febc2e;
+}
+
+.avengers-dot--max {
+  background: #28c840;
+}
+
+.avengers-file-name {
+  flex: 1;
+  min-width: 0;
+  font-family: "Courier New", Consolas, "Liberation Mono", monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+  text-transform: lowercase;
+}
+
+.avengers-card-body {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 10px 8px;
+}
+
+.avengers-hero {
+  position: relative;
+  width: 48px;
+  height: 48px;
   flex-shrink: 0;
 }
 
-.stats-icon {
+.avengers-orbit {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px dashed color-mix(in srgb, var(--primary) 45%, transparent);
+}
+
+.avengers-hero-icon {
+  position: absolute;
+  inset: 6px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--primary-soft);
+  color: var(--primary);
   font-size: 18px;
-  color: var(--primary);
+  box-shadow: 0 8px 18px var(--primary-shadow-15);
 }
 
-.stats-info {
-  flex: 1;
-  min-width: 0;
-}
-
-.stats-label {
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 1px;
-  color: var(--text-tertiary);
+.avengers-hero-icon svg {
   display: block;
-  margin-bottom: 8px;
-  font-family: "Indie Flower", "Comic Sans MS", "Caveat", cursive, sans-serif;
+  width: 18px;
+  height: 18px;
 }
 
-.stats-progress-bar {
-  height: 6px;
-  background: color-mix(in srgb, var(--text-primary) 12%, transparent);
-  margin-bottom: 8px;
+.avengers-meta {
+  min-width: 0;
+  flex: 1;
+}
+
+.avengers-title {
+  margin: 0 0 2px;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  white-space: nowrap;
   overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.stats-progress-fill {
-  height: 100%;
-  background: var(--primary-gradient, var(--primary));
-  box-shadow: 0 0 8px color-mix(in srgb, var(--primary) 45%, transparent);
-}
-
-.stats-details {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.stats-text {
-  font-size: 12px;
-  color: var(--text-secondary);
+.avengers-alias {
+  margin: 0 0 6px;
   font-family: "Indie Flower", "Comic Sans MS", "Caveat", cursive, sans-serif;
+  font-size: 13px;
+  line-height: 1.2;
+  color: var(--text-secondary);
 }
 
-.stats-percentage {
-  font-size: 12px;
-  font-weight: 600;
+.avengers-alias strong {
   color: var(--primary);
 }
 
-/* Scrollbar */
-.Parent-sidebar::-webkit-scrollbar {
-  width: 4px;
+.avengers-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 10px;
+  border-top: 1px dashed color-mix(in srgb, var(--primary) 28%, var(--border-color));
+  background: color-mix(in srgb, var(--primary) 5%, var(--bg-secondary));
 }
 
-.Parent-sidebar::-webkit-scrollbar-track {
-  background: transparent;
+.avengers-footer-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  font-family: "Courier New", Consolas, "Liberation Mono", monospace;
 }
 
-.Parent-sidebar::-webkit-scrollbar-thumb {
-  background: color-mix(in srgb, var(--primary) 35%, var(--border-color));
-  border-radius: 4px;
+.avengers-footer-max {
+  padding: 2px 8px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: #fff;
+  background: var(--primary);
+  box-shadow: 0 0 14px var(--primary-shadow-35);
+}
+
+.dark-theme .avengers-footer-max {
+  background: var(--primary-gradient);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .avengers-card-scan,
+  .avengers-orbit,
+  .avengers-footer-max {
+    animation: none !important;
+  }
+
+  .avengers-orbit {
+    transform: none;
+  }
 }
 
 /* RESPONSIVE */
@@ -256,7 +384,7 @@
     font-size: 20px;
   }
 
-  .portfolio-stats {
+  .avengers-slot {
     display: none;
   }
 }

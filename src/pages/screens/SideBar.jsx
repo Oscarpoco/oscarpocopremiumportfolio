@@ -106,37 +106,59 @@ function SideBar({ activeItem, setActiveItem }) {
                     })}
                 </nav>
 
-                {/* PORTFOLIO STATS */}
-                <motion.div 
-                    className="portfolio-stats"
-                    initial={{ opacity: 0, y: 20 }}
+                {/* AVENGERS.JSX — personal powers card */}
+                <div className="avengers-slot">
+                <motion.div
+                    className="avengers-card"
+                    initial={{ opacity: 0, y: 24 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.8 }}
+                    transition={{ delay: 0.75, type: "spring", stiffness: 120, damping: 18 }}
                 >
-                    <h3 className="stats-heading">PERSONAL SUPAPOWERS</h3>
-                    <div className="stats-item">
-                        <div className="stats-icon-container">
-                            <FaLaptopCode className="stats-icon" />
+                    <div className="avengers-card-glow" aria-hidden />
+                    <div className="avengers-card-scan" aria-hidden />
+
+                    <div className="avengers-card-header">
+                        <div className="avengers-window-dots" aria-hidden>
+                            <span className="avengers-dot avengers-dot--close" />
+                            <span className="avengers-dot avengers-dot--min" />
+                            <span className="avengers-dot avengers-dot--max" />
                         </div>
-                        <div className="stats-info">
-                            <span className="stats-label">AVENGERS.JSX</span>
-                            <div className="stats-progress-bar">
-                                <motion.div 
-                                    className="stats-progress-fill"
-                                    initial={{ width: 0 }}
-                                    animate={{ width: "100%" }}
-                                    transition={{ delay: 1.2, duration: 1, ease: "easeOut" }}
-                                />
+                        <span className="avengers-file-name">avengers.jsx</span>
+                    </div>
+
+                    <div className="avengers-card-body">
+                        <div className="avengers-hero">
+                            <motion.div
+                                className="avengers-orbit"
+                                animate={{ rotate: 360 }}
+                                transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                                aria-hidden
+                            />
+                            <div className="avengers-hero-icon">
+                                <FaLaptopCode aria-hidden />
                             </div>
-                            <div className="stats-details">
-                                <span className="stats-text"><strong>SOFT </strong>WARE <strong>MAN</strong></span>
-                            </div>
+                        </div>
+
+                        <div className="avengers-meta">
+                            <h3 className="avengers-title">Personal Supapowers</h3>
+                            <p className="avengers-alias">
+                                <strong>SOFT</strong>WARE <strong>MAN</strong>
+                            </p>
                         </div>
                     </div>
 
-                
-
+                    <div className="avengers-footer">
+                        <span className="avengers-footer-label">Power level</span>
+                        <motion.span
+                            className="avengers-footer-max"
+                            animate={{ scale: [1, 1.04, 1] }}
+                            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+                        >
+                            MAX
+                        </motion.span>
+                    </div>
                 </motion.div>
+                </div>
             </div>
         </motion.div>
     )
