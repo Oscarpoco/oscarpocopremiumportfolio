@@ -1,0 +1,284 @@
+.github-contribution-graph {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 18px 16px 16px;
+  background: var(--bg-secondary);
+  border: 2px dashed var(--border-color);
+  overflow: hidden;
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.github-contribution-graph::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--primary) 0%,
+    color-mix(in srgb, var(--secondary-color, var(--primary-dark)) 80%, var(--primary)) 45%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+.github-contribution-graph:hover {
+  border-color: var(--primary-ring);
+  box-shadow: var(--shadow-md);
+}
+
+.github-contribution-graph__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.github-contribution-graph__legend {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.github-contribution-graph__legend-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  color: var(--primary);
+  background: var(--primary-soft);
+  border: 1px dashed var(--primary-ring);
+}
+
+.github-contribution-graph__header-meta {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.github-contribution-graph__total-badge,
+.github-contribution-graph__profile-link,
+.github-contribution-graph__live-badge {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--primary);
+  padding: 4px 10px;
+  border: 1px dashed color-mix(in srgb, var(--primary) 40%, var(--border-color));
+  background: var(--primary-soft);
+}
+
+.github-contribution-graph__total-badge {
+  font-family: var(--font-display);
+}
+
+.github-contribution-graph__profile-link {
+  text-decoration: none;
+  transition:
+    color var(--transition-fast),
+    border-color var(--transition-fast),
+    background var(--transition-fast);
+}
+
+.github-contribution-graph__profile-link:hover {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 12%, var(--bg-secondary));
+}
+
+.github-contribution-graph__canvas {
+  position: relative;
+  padding: 14px 12px 10px;
+  background: color-mix(in srgb, var(--primary) 5%, var(--bg-tertiary));
+  border: 2px dashed color-mix(in srgb, var(--primary) 22%, var(--border-color));
+}
+
+.github-contribution-graph__calendar-wrap {
+  width: 100%;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) transparent;
+}
+
+.github-contribution-graph__calendar-wrap::-webkit-scrollbar {
+  height: 6px;
+}
+
+.github-contribution-graph__calendar-wrap::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: var(--radius-full);
+}
+
+.github-contribution-graph__calendar-wrap svg {
+  display: block;
+  max-width: 100%;
+}
+
+.github-contribution-graph__calendar.react-activity-calendar {
+  width: 100%;
+  font-family: var(--font-display);
+}
+
+.github-contribution-graph__calendar .react-activity-calendar__scroll-container {
+  padding-bottom: 2px;
+}
+
+.github-contribution-graph__calendar .react-activity-calendar__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 2px dashed var(--border-color);
+}
+
+.github-contribution-graph__calendar .react-activity-calendar__legend-colors {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.github-contribution-graph__calendar .react-activity-calendar__legend-colors span {
+  color: var(--text-tertiary);
+}
+
+.github-contribution-graph__calendar .react-activity-calendar__legend-colors svg rect {
+  stroke: color-mix(in srgb, var(--primary) 35%, transparent);
+  stroke-width: 0.75;
+}
+
+.github-contribution-graph__calendar text {
+  fill: var(--text-tertiary);
+  font-family: var(--font-display);
+  font-weight: 600;
+}
+
+.github-contribution-graph__calendar .react-activity-calendar__calendar rect {
+  transition:
+    opacity var(--transition-fast),
+    filter var(--transition-fast);
+}
+
+.github-contribution-graph__calendar .react-activity-calendar__calendar rect:hover {
+  filter: brightness(1.08);
+  opacity: 0.95;
+}
+
+.github-contribution-graph__shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--primary) 10%, transparent),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: github-graph-shimmer 1.8s infinite;
+  pointer-events: none;
+}
+
+@keyframes github-graph-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.github-contribution-graph__status,
+.github-contribution-graph__footer-copy {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.github-contribution-graph__status a {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.github-contribution-graph__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-top: 12px;
+  border-top: 2px dashed var(--border-color);
+}
+
+.github-contribution-graph__live-badge {
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 10px;
+}
+
+.github-contribution-graph .react-activity-calendar__tooltip {
+  padding: 8px 12px;
+  border-radius: 0;
+  border: 2px dashed var(--primary-ring);
+  background-color: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+  box-shadow: var(--shadow-lg);
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.github-contribution-graph .react-activity-calendar__tooltip[data-color-scheme="dark"],
+.github-contribution-graph .react-activity-calendar__tooltip[data-color-scheme="light"] {
+  background-color: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+}
+
+.github-contribution-graph .react-activity-calendar__tooltip-arrow {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .github-contribution-graph__shimmer {
+    animation: none;
+    opacity: 0.35;
+  }
+}
+
+@media (max-width: 768px) {
+  .github-contribution-graph {
+    padding: 14px 12px 12px;
+  }
+
+  .github-contribution-graph__canvas {
+    padding: 10px 8px 8px;
+  }
+
+  .github-contribution-graph__calendar-wrap {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .github-contribution-graph__header-meta {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
