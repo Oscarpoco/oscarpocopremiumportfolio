@@ -349,7 +349,7 @@ function About({darkMode, toggleTheme, handleDownload, navigateToSection, partic
             >
                 <div className="about-focus-header">
                     <h2>GitHub collaboration graph</h2>
-                    <p>Live contribution activity from my public repositories over the last year.</p>
+                    <p>Live contribution activity from my public repositories across the last 16 months.</p>
                 </div>
 
                 <motion.div {...scrollIn(reduceMotion, 0.04, 20, scrollRoot)}>

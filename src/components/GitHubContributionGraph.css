@@ -71,6 +71,7 @@
 }
 
 .github-contribution-graph__total-badge,
+.github-contribution-graph__range-badge,
 .github-contribution-graph__profile-link,
 .github-contribution-graph__live-badge {
   font-size: 12px;
