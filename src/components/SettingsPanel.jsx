@@ -13,7 +13,18 @@ import {
   MdPlayArrow,
   MdPause,
   MdShuffle,
+  MdMan,
+  MdWoman,
+  MdPark,
+  MdWbTwilight,
+  MdWater,
+  MdSportsSoccer,
+  MdAcUnit,
+  MdLocalFlorist,
+  MdCode,
+  MdBlock,
 } from "react-icons/md";
+import { FaFutbol } from "react-icons/fa";
 import { usePaletteRandomizer } from "../hooks/usePaletteRandomizer";
 import { MUSIC_TRACK, MUSIC_COPYRIGHT_NOTICE } from "../config/backgroundMusic";
 import {
@@ -23,6 +34,24 @@ import {
   applyPreferences,
 } from "../config/themePreferences";
 import "./SettingsPanel.css";
+
+const PALETTE_ICONS = {
+  male: MdMan,
+  female: MdWoman,
+  forest: MdPark,
+  sunset: MdWbTwilight,
+  aurora: MdAutoAwesome,
+  ocean: MdWater,
+  worldcup: MdSportsSoccer,
+};
+
+const PARTICLE_ICONS = {
+  none: MdBlock,
+  snow: MdAcUnit,
+  flowers: MdLocalFlorist,
+  dev: MdCode,
+  worldcup: FaFutbol,
+};
 
 export default function SettingsPanel({
   open,
@@ -160,7 +189,9 @@ export default function SettingsPanel({
                   <MdPalette size={18} aria-hidden />
                   Color theme
                 </h3>
-                <p className="settings-hint">Choose a palette (Male = classic blue).</p>
+                <p className="settings-hint">
+                  Choose a palette — try World Cup for pitch green &amp; gold.
+                </p>
                 <button
                   type="button"
                   className={`settings-randomize-btn ${
@@ -195,11 +226,13 @@ export default function SettingsPanel({
                 </button>
                 {!draft.backgroundMusic && (
                   <p className="settings-randomize-locked">
-                    Enable background music above to unlock palette randomize.
+                    Enable background music to unlock palette randomize.
                   </p>
                 )}
                 <div className="settings-theme-grid">
-                  {THEME_PALETTES.map((theme) => (
+                  {THEME_PALETTES.map((theme) => {
+                    const ThemeIcon = PALETTE_ICONS[theme.id];
+                    return (
                     <button
                       key={theme.id}
                       type="button"
@@ -209,14 +242,22 @@ export default function SettingsPanel({
                       onClick={() => selectPalette(theme.id)}
                       disabled={draft.randomizePalette}
                     >
-                      <span className="settings-theme-swatches" aria-hidden>
-                        <span style={{ background: theme.swatch[0] }} />
-                        <span style={{ background: theme.swatch[1] }} />
+                      <span className="settings-theme-card-top" aria-hidden>
+                        {ThemeIcon ? (
+                          <span className="settings-theme-icon">
+                            <ThemeIcon size={18} />
+                          </span>
+                        ) : null}
+                        <span className="settings-theme-swatches">
+                          <span style={{ background: theme.swatch[0] }} />
+                          <span style={{ background: theme.swatch[1] }} />
+                        </span>
                       </span>
                       <span className="settings-theme-label">{theme.label}</span>
                       <span className="settings-theme-desc">{theme.description}</span>
                     </button>
-                  ))}
+                    );
+                  })}
                 </div>
               </section>
 
@@ -297,7 +338,9 @@ export default function SettingsPanel({
                   profile photo. Disabled if reduced motion is on.
                 </p>
                 <div className="settings-particle-list">
-                  {PARTICLE_EFFECTS.map((fx) => (
+                  {PARTICLE_EFFECTS.map((fx) => {
+                    const ParticleIcon = PARTICLE_ICONS[fx.id];
+                    return (
                     <button
                       key={fx.id}
                       type="button"
@@ -306,10 +349,18 @@ export default function SettingsPanel({
                       }`}
                       onClick={() => setDraft((d) => ({ ...d, particles: fx.id }))}
                     >
-                      <span className="settings-particle-label">{fx.label}</span>
-                      <span className="settings-particle-desc">{fx.description}</span>
+                      {ParticleIcon ? (
+                        <span className="settings-particle-icon" aria-hidden>
+                          <ParticleIcon size={20} />
+                        </span>
+                      ) : null}
+                      <span className="settings-particle-copy">
+                        <span className="settings-particle-label">{fx.label}</span>
+                        <span className="settings-particle-desc">{fx.description}</span>
+                      </span>
                     </button>
-                  ))}
+                    );
+                  })}
                 </div>
               </section>
             </div>

@@ -31,6 +31,15 @@
   opacity: 0.45;
 }
 
+.falling-particles--worldcup .falling-particle {
+  color: color-mix(in srgb, var(--primary) 55%, #eab308);
+  opacity: 0.55;
+}
+
+.falling-particles--worldcup .falling-particle:nth-child(3n) {
+  color: #eab308;
+}
+
 @keyframes particle-fall {
   0% {
     transform: translate3d(0, -10vh, 0) rotate(0deg);

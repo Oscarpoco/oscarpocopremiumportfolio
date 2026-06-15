@@ -8,9 +8,13 @@ import {
   MdStorage,
   MdApi,
   MdBugReport,
+  MdSportsSoccer,
+  MdEmojiEvents,
+  MdStadium,
 } from "react-icons/md";
-import { FaReact } from "react-icons/fa";
+import { FaReact, FaFutbol } from "react-icons/fa";
 import { BiCodeAlt } from "react-icons/bi";
+import { TbTrophy } from "react-icons/tb";
 import "./FallingParticles.css";
 
 const PARTICLE_COUNT = 22;
@@ -19,6 +23,7 @@ const ICON_SETS = {
   snow: [MdAcUnit],
   flowers: [MdLocalFlorist, MdSpa],
   dev: [MdCode, MdTerminal, FaReact, BiCodeAlt, MdStorage, MdApi, MdBugReport],
+  worldcup: [FaFutbol, MdSportsSoccer, MdEmojiEvents, TbTrophy, MdStadium],
 };
 
 function pickIcon(type, index) {

@@ -37,6 +37,12 @@ export const THEME_PALETTES = [
     description: "Deep navy & seafoam",
     swatch: ["#0369a1", "#22d3ee"],
   },
+  {
+    id: "worldcup",
+    label: "World Cup",
+    description: "Pitch green & trophy gold",
+    swatch: ["#0b6e3e", "#eab308"],
+  },
 ];
 
 export const PARTICLE_EFFECTS = [
@@ -44,6 +50,11 @@ export const PARTICLE_EFFECTS = [
   { id: "snow", label: "Snow", description: "Gentle snowflakes" },
   { id: "flowers", label: "Flowers", description: "Blossoms & petals" },
   { id: "dev", label: "Dev icons", description: "Software dev symbols" },
+  {
+    id: "worldcup",
+    label: "World Cup",
+    description: "Soccer balls & trophy confetti",
+  },
 ];
 
 export const DEFAULT_PREFERENCES = {
