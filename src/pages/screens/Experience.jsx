@@ -14,7 +14,9 @@ import {
   MdCode,
   MdTrendingUp,
 } from "react-icons/md";
-import { IoIosArrowForward, IoIosArrowDown } from "react-icons/io";
+import { IoIosArrowForward } from "react-icons/io";
+import DashboardScrollHint from "../../components/DashboardScrollHint";
+import { useDashboardScrollHint } from "../../hooks/useDashboardScrollHint";
 import { FaCalendarAlt } from "react-icons/fa";
 import { BsArrowRight, BsBriefcase } from "react-icons/bs";
 
@@ -225,10 +227,8 @@ function ExperienceCard({ exp, index, isActive, onHover, registerRef }) {
 function Experience({ darkMode, toggleTheme, handleDownload }) {
   const [activeRoleId, setActiveRoleId] = useState(experienceData[0]?.id ?? null);
   const [activeCategory, setActiveCategory] = useState("all");
-  const containerRef = useRef(null);
   const cardRefs = useRef({});
-  const [showScrollHint, setShowScrollHint] = useState(false);
-  const [hintCenterX, setHintCenterX] = useState(0);
+  const { containerRef, showScrollHint } = useDashboardScrollHint();
 
   const categoryCounts = useMemo(() => {
     const counts = { all: experienceData.length };
@@ -250,40 +250,6 @@ function Experience({ darkMode, toggleTheme, handleDownload }) {
       setActiveRoleId(id);
     }
   };
-
-  useEffect(() => {
-    const scrollRoot = containerRef.current?.closest(".Child-dashboard");
-    if (!scrollRoot) return;
-
-    const epsilon = 12;
-    const bottomSlack = 72;
-
-    const updateHint = () => {
-      const r = scrollRoot.getBoundingClientRect();
-      setHintCenterX(r.left + r.width / 2);
-
-      const { scrollTop, scrollHeight, clientHeight } = scrollRoot;
-      const scrollable = scrollHeight > clientHeight + epsilon;
-      const atBottom = scrollTop + clientHeight >= scrollHeight - bottomSlack;
-      setShowScrollHint(scrollable && !atBottom);
-    };
-
-    updateHint();
-    scrollRoot.addEventListener("scroll", updateHint, { passive: true });
-    window.addEventListener("resize", updateHint);
-
-    const ro = new ResizeObserver(updateHint);
-    ro.observe(scrollRoot);
-    if (containerRef.current) {
-      ro.observe(containerRef.current);
-    }
-
-    return () => {
-      scrollRoot.removeEventListener("scroll", updateHint);
-      window.removeEventListener("resize", updateHint);
-      ro.disconnect();
-    };
-  }, [filteredExperience.length]);
 
   return (
     <div
@@ -459,23 +425,7 @@ function Experience({ darkMode, toggleTheme, handleDownload }) {
         </AnimatePresence>
       </div>
 
-      <AnimatePresence>
-        {showScrollHint && (
-          <motion.div
-            key="experience-scroll-hint"
-            className="experience-scroll-hint"
-            style={{ left: hintCenterX }}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 4 }}
-            transition={{ duration: 0.28 }}
-            aria-hidden
-          >
-            <IoIosArrowDown className="experience-scroll-hint-icon" />
-            Scroll Down
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <DashboardScrollHint show={showScrollHint} />
     </div>
   );
 }

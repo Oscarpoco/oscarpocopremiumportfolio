@@ -1,10 +1,12 @@
-import React, {useState, useEffect, memo} from "react";
+import React, {useState, useEffect, useRef, memo} from "react";
 
 // STYLING
 import "../styles/About.css";
 import oscar from "../../assets/background-one.jpg";
 import ResumeQrCode from "../../components/ResumeQrCode";
 import GitHubContributionGraph from "../../components/GitHubContributionGraph";
+import DashboardScrollHint from "../../components/DashboardScrollHint";
+import { useDashboardScrollHint } from "../../hooks/useDashboardScrollHint";
 
 // ICONS
 import {FaGithub, FaLinkedin, FaTwitter, FaArrowRight} from "react-icons/fa";
@@ -153,6 +155,7 @@ function About({darkMode, toggleTheme, handleDownload, navigateToSection, partic
     const [commitDate, setCommitDate] = useState(null);
     const [scrollRoot, setScrollRoot] = useState(null);
     const [taglineIndex, setTaglineIndex] = useState(0);
+    const { containerRef, showScrollHint } = useDashboardScrollHint();
 
     useEffect(() => {
         setScrollRoot(document.querySelector(".Child-dashboard"));
@@ -187,7 +190,9 @@ function About({darkMode, toggleTheme, handleDownload, navigateToSection, partic
     const binaryActive = particles && particles !== "none";
 
     return (
-        <div className={
+        <div
+            ref={containerRef}
+            className={
             `about-container ${
                 darkMode ? "dark-theme" : ""
             }`
@@ -550,6 +555,8 @@ function About({darkMode, toggleTheme, handleDownload, navigateToSection, partic
                     </button>
                 </motion.div>
             </motion.div>
+
+            <DashboardScrollHint show={showScrollHint} />
         </div>
     );
 }

@@ -38,3 +38,79 @@
 @media (max-width: 576px) {
     /* No scrollbar styles needed since it's hidden */
 }
+
+/* Floating scroll hint — anchored to dashboard pane (right of sidebar) */
+.dashboard-scroll-hint-anchor {
+  position: fixed;
+  left: var(--sidebar-width);
+  right: 0;
+  bottom: 24px;
+  z-index: 900;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+}
+
+.dashboard-scroll-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 52px;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text-tertiary);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-family: var(--font-display);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-scroll-hint-icon {
+  font-size: 26px;
+  color: var(--primary);
+  line-height: 1;
+  animation: dashboard-scroll-hint-bounce 1.15s ease-in-out infinite;
+}
+
+@keyframes dashboard-scroll-hint-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  45% {
+    transform: translateY(9px);
+    opacity: 0.85;
+  }
+  70% {
+    transform: translateY(3px);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dashboard-scroll-hint-icon {
+    animation: none;
+  }
+}
+
+@media (max-width: 992px) {
+  .dashboard-scroll-hint-anchor {
+    left: var(--sidebar-width-md);
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-scroll-hint-anchor {
+    left: var(--sidebar-width-sm);
+  }
+}
+
+@media (max-width: 576px) {
+  .dashboard-scroll-hint-anchor {
+    left: var(--sidebar-width-xs);
+    bottom: 18px;
+  }
+}
