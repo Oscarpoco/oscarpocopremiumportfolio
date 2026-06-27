@@ -49,31 +49,14 @@ export const portfolioStats = [
 
 
 export const featuredProjects = [
+  
         {
             id: 1,
-            name: "Hotel Application",
-            category: "Web Development",
-            icon: "https://img.icons8.com/fluency/48/000000/online-store.png",
-            lastModified: "July 12, 2024",
-            type: "React.js", 
-            link: "https://hotel-application-beta.vercel.app"
-        },
-        {
-            id: 2,
-            name: "Restaurant Reservation CMS",
-            category: "Mobile App",
-            icon: "https://img.icons8.com/fluency/48/000000/todo-list.png",
-            lastModified: "January 10, 2025",
-            type: "React Native",
-            link: "https://github.com/mLab-alscar-projects"
-        },
-        {
-            id: 3,
-            name: "Hotel CMS Application",
+            name: "Poco TMS Application",
             category: "Web Development",
             icon: "https://img.icons8.com/fluency/48/000000/web-design.png",
             lastModified: "July 18, 2024",
             type: "React.js",
-            link: "https://hotel-management-system-iota.vercel.app/"
+            link: "https://task.oscarpoco.com"
         }
     ];
