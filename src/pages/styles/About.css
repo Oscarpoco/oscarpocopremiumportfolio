@@ -1484,16 +1484,31 @@
     display: none;
   }
 
+  .profile-section {
+    padding: 24px 0;
+  }
+
+  .about-showcase {
+    padding-inline: 0;
+  }
+
+  .about-marquee {
+    margin-inline: 0;
+    width: 100%;
+  }
+
+  .about-stat-chip,
+  .about-spotlight-card {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
   .profile-info {
     margin-top: -50px;
   }
 
   .about-header h1 {
     font-size: 22px;
-  }
-
-  .profile-section {
-    padding: 24px;
   }
 
   .profile-stack-section {
@@ -1642,7 +1657,7 @@
   }
 
   .profile-section {
-    padding: 20px 16px;
+    padding: 20px 0;
     margin-bottom: 0px;
   }
 

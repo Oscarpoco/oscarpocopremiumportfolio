@@ -932,6 +932,10 @@
     padding: 140px 16px 24px;
   }
 
+  .view-toggle {
+    display: none;
+  }
+
   .featured-header {
     flex-direction: column;
     align-items: flex-start;

@@ -839,7 +839,7 @@ function Journey({ handleDownload, navigateToSection }) {
     return (
       <JourneyShell
         handleDownload={handleDownload}
-        headerCenter={started ? headerProgress : null}
+        headerCenter={null}
       >
         <motion.div
           className="journey-mobile-board"

@@ -307,7 +307,8 @@ function Experience({ darkMode, toggleTheme, handleDownload }) {
       >
         <h2 className="section-title">
           <span className="title-accent" />
-          Professional Work Experience
+          <span className="experience-title-prefix">Professional </span>
+          Work Experience
         </h2>
         <p className="section-subtitle">
           A track record of hands-on experience in building, maintaining, and
