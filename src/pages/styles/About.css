@@ -771,6 +771,12 @@
   margin-bottom: 40px;
 }
 
+.about-github-section {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
 .about-focus-header h2,
 .about-spotlight-header h2 {
   margin: 0 0 6px;
@@ -1471,6 +1477,11 @@
 
   .about-header {
     margin-bottom: 24px;
+  }
+
+  .profile-meta-block,
+  .about-github-section {
+    display: none;
   }
 
   .profile-info {

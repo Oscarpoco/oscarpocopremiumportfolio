@@ -58,5 +58,14 @@ export const featuredProjects = [
             lastModified: "July 18, 2024",
             type: "React.js",
             link: "https://task.oscarpoco.com"
-        }
+        },
+        {
+            id: 2,
+            name: "Buszbee web app",
+            category: "Web Development",
+            icon: "https://img.icons8.com/fluency/48/000000/web-design.png",
+            lastModified: "July 18, 2024",
+            type: "React.js",
+            link: "https://buszbee.com"
+        },
     ];

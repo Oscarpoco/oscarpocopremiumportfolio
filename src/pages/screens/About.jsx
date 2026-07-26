@@ -352,14 +352,16 @@ function About({darkMode, toggleTheme, handleDownload, navigateToSection, partic
                 aria-label="Portfolio highlights"
                 {...scrollIn(reduceMotion, 0.04, 24, scrollRoot)}
             >
-                <div className="about-focus-header">
-                    <h2>GitHub collaboration graph</h2>
-                    <p>Live contribution activity from my public repositories across the last 16 months.</p>
-                </div>
+                <div className="about-github-section">
+                    <div className="about-focus-header">
+                        <h2>GitHub collaboration graph</h2>
+                        <p>Live contribution activity from my public repositories across the last 16 months.</p>
+                    </div>
 
-                <motion.div {...scrollIn(reduceMotion, 0.04, 20, scrollRoot)}>
-                    <GitHubContributionGraph darkMode={darkMode} />
-                </motion.div>
+                    <motion.div {...scrollIn(reduceMotion, 0.04, 20, scrollRoot)}>
+                        <GitHubContributionGraph darkMode={darkMode} />
+                    </motion.div>
+                </div>
 
                 <div className="about-focus-header">
                     <h2>Currently focused on</h2>
